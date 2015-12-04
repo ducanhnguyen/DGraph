@@ -9,32 +9,53 @@
     <script src="JsonParser.js"></script>
     <script src="NodeTreeGeneration.js"></script>
     <script>
-      
         iniWebPage();
-        //--------------Group 1--------------
-        var parentNode = new Node();
-        iniParent(parentNode, 60, 60);
-        iniChild(2, parentNode);
-        drag(parentNode);
-        for (i = 0; i < parentNode.children.length; i++) {
-            drag(parentNode.children[i]);
-        }
-        console.log(parentNode);
 
-        //--------------Group 1--------------
-        var parentNode2 = new Node();
-        iniParent(parentNode2, 260, 260);
-        iniChild(3, parentNode2);
-        drag(parentNode2);
-        for (i = 0; i < parentNode2.children.length; i++) {
-            drag(parentNode2.children[i]);
-        }
-        console.log(parentNode2);
-        //-------------Line---------------------
-        var lines = [
-            {gayPhuThuoc: parentNode,
-                biPhuThuoc: parentNode2}
-        ];
-        createLine(parentNode, parentNode2);
+        /**
+         * Lay noi dung file json
+         * @type type
+         */
+        setTimeout(function () {
+            loadFile("jsonForMai2.json");
+            addFileContentToHtml();
+            var jsonObject = null;
+            var content = document.getElementById('main').innerHTML;
+            jsonObject = JSON.parse(content);
+            alert(jsonObject['name']);
+        }, 500);
+        setTimeout(function () {
+            /**
+             * Khoi tao cay Node
+             * @type Array
+             */
+            var parentNode = new Node();
+            var parentNode2 = new Node();
+            var lines = [
+                {gayPhuThuoc: parentNode,
+                    biPhuThuoc: parentNode2}
+            ];
+
+            iniParent(parentNode, 60, 60);
+            iniParent(parentNode2, 260, 260);
+
+            iniChild(2, parentNode);
+            drag(parentNode, lines);
+            for (i = 0; i < parentNode.children.length; i++) {
+                drag(parentNode.children[i], lines);
+            }
+            console.log(parentNode);
+
+            //--------------Group 2--------------
+
+            iniChild(3, parentNode2);
+            drag(parentNode2, lines);
+            for (i = 0; i < parentNode2.children.length; i++) {
+                drag(parentNode2.children[i], lines);
+            }
+            console.log(parentNode2);
+
+            //-------------Line---------------------
+            createLine(lines);
+        }, 1500);
     </script>
 </body>

@@ -73,7 +73,7 @@ function updateSizeOfParent(childNode) {
  * @param {type} myNode
  * @returns {undefined}
  */
-function drag(myNode) {
+function drag(myNode,lines) {
     var deltaX, deltaY;
     var dragEvent =
             d3.behavior.drag()
