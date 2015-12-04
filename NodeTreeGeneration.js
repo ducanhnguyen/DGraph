@@ -140,11 +140,15 @@ function drag(myNode,lines) {
  * @param {type} parentNode
  * @returns {undefined}
  */
-function iniParent(parentNode, x, y) {
+function iniRectangleOfNode(parentNode, x, y) {
     var WIDTH_CHILD = 160;
     var HEIGHT_CHILD = 160;
-    var X = x;
-    var Y = y;
+    
+    var X = 0;
+    var Y = 0;
+    if (typeof(x)==='undefined') X = -1000;
+    if (typeof(y)==='undefined') Y = -1000;
+    
     parentNode.rectangle = d3.select('body').select('svg').append("rect")
             .attr("x", X)
             .attr("y", Y)
