@@ -1,4 +1,6 @@
 function Node() {
+    this.id = null;
+    this.path = null;
     this.clickInfor = {
         xClick: 10,
         yClick: 10,
