@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+    <div id="main" style="display: block">
+    </div>
+    <!-- load the d3.js library -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="Node.js"></script>
+    <script src="JsonParser.js"></script>
+    <script src="NodeTreeGeneration.js"></script>
+    <script>
+      
+        iniWebPage();
+        //--------------Group 1--------------
+        var parentNode = new Node();
+        iniParent(parentNode, 60, 60);
+        iniChild(2, parentNode);
+        drag(parentNode);
+        for (i = 0; i < parentNode.children.length; i++) {
+            drag(parentNode.children[i]);
+        }
+        console.log(parentNode);
+
+        //--------------Group 1--------------
+        var parentNode2 = new Node();
+        iniParent(parentNode2, 260, 260);
+        iniChild(3, parentNode2);
+        drag(parentNode2);
+        for (i = 0; i < parentNode2.children.length; i++) {
+            drag(parentNode2.children[i]);
+        }
+        console.log(parentNode2);
+        //-------------Line---------------------
+        var lines = [
+            {gayPhuThuoc: parentNode,
+                biPhuThuoc: parentNode2}
+        ];
+        createLine(parentNode, parentNode2);
+    </script>
+</body>
