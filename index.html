@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-    <div id="main" style="display: block">
+    <div id="main" style="display: none">
     </div>
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="Node.js"></script>
+    <script src="NodeEvent.js"></script>
     <script src="JsonParser.js"></script>
     <script src="NodeTreeGeneration.js"></script>
     <script>
@@ -25,6 +26,7 @@
                 node.id = jsonTmp.name + ""; // fix code later
                 node.path = jsonTmp.name + "";
                 iniRectangleOfNode(node);
+                doubleClick(node);
                 drag(node, lines);
                 console.log(jsonTmp.name);
                 if (jsonTmp.children.length > 0)
@@ -43,7 +45,10 @@
 
             var rootNode = new Node();
             traverse(jsonTmp, rootNode, lines);
-            
+            /**
+             * Hien thi root
+             */
+            rootNode.rectangle.attr('x', 120).attr('y',120);
             createLine(lines);
         }, 1500);
     </script>

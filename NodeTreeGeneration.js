@@ -14,7 +14,8 @@ function iniChild(numChild, parentNode) {
                 .attr("y", parseInt(parentNode.rectangle.attr('y')) + HEIGHT_CHILD * i + 10)
                 .attr("width", WIDTH_CHILD)
                 .attr("height", HEIGHT_CHILD)
-                .style("fill", "blue");
+                .style("stroke", "black")
+                .style("fill", "white");
         parentNode.children.push(nChild);
         nChild.parent = parentNode;
     }
@@ -36,7 +37,7 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
                 .attr('y', parseInt(node.children[i].rectangle.attr('y')) + deltaY);
     }
 }
-function updateSizeOfParent(childNode) {
+function packParent(childNode) {
     if (childNode.parent != null) {
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
         for (i = 0; i < childNode.parent.children.length; i++) {
@@ -69,73 +70,6 @@ function updateSizeOfParent(childNode) {
     }
 }
 /**
- * Tạo hành vi di chuyển cho một Node
- * @param {type} myNode
- * @returns {undefined}
- */
-function drag(myNode,lines) {
-    var deltaX, deltaY;
-    var dragEvent =
-            d3.behavior.drag()
-            .on('dragstart', function () {
-                /**
-                 * Bat toa do click chuot
-                 */
-                myNode.clickInfor.xClick = parseInt(d3.mouse(this)[0]);
-                myNode.clickInfor.yClick = parseInt(d3.mouse(this)[1]);
-                /**
-                 * Bat toa do doi tuong truoc khi di chuyen
-                 */
-                myNode.clickInfor.xCurrent = parseInt(myNode.rectangle.attr('x'));
-                myNode.clickInfor.yCurrent = parseInt(myNode.rectangle.attr('y'));
-            })
-            .on('drag', function () {
-                var mouseXY = {
-                    x: parseInt(d3.mouse(this)[0]),
-                    y: parseInt(d3.mouse(this)[1])
-                };
-                /**
-                 * Tinh toan delta can phai di chuyen doi tuong tu vi tri click den vi tri moi
-                 */
-                deltaX = mouseXY.x - myNode.clickInfor.xClick;
-                deltaY = mouseXY.y - myNode.clickInfor.yClick;
-                /**
-                 * Cap nhat toa do moi cua doi tuong
-                 */
-                myNode.rectangle.attr('x', myNode.clickInfor.xCurrent + deltaX)
-                        .attr('y', myNode.clickInfor.yCurrent + deltaY);
-                /**
-                 * Cap nhat toa do moi
-                 * @returns {undefined}
-                 */
-                myNode.clickInfor.xCurrent = parseInt(myNode.rectangle.attr('x'));
-                myNode.clickInfor.yCurrent = parseInt(myNode.rectangle.attr('y'));
-                myNode.clickInfor.xClick = mouseXY.x;
-                myNode.clickInfor.yClick = mouseXY.y;
-                /**
-                 * Di chuyen children
-                 * @returns {undefined}
-                 */
-                updateLocationOfChildren(myNode, deltaX, deltaY);
-                /**
-                 * Cap nhat parent
-                 * @returns {undefined}
-                 */
-                updateSizeOfParent(myNode);
-
-                /**
-                 * Ve quan he phu thuoc
-                 * @returns {undefined}
-                 */
-                createLine(lines);
-            })
-            .on('dragend', function () {
-            });
-    myNode.rectangle.call(dragEvent);
-}
-
-
-/**
  * Khởi tạo parent
  * @param {type} parentNode
  * @returns {undefined}
@@ -143,34 +77,24 @@ function drag(myNode,lines) {
 function iniRectangleOfNode(parentNode, x, y) {
     var WIDTH_CHILD = 160;
     var HEIGHT_CHILD = 160;
-    
+
     var X = 0;
     var Y = 0;
-    if (typeof(x)==='undefined') X = -1000;
-    if (typeof(y)==='undefined') Y = -1000;
-    
+    if (typeof (x) === 'undefined')
+        X = -1000;
+    if (typeof (y) === 'undefined')
+        Y = -1000;
+
     parentNode.rectangle = d3.select('body').select('svg').append("rect")
             .attr("x", X)
             .attr("y", Y)
             .attr("width", WIDTH_CHILD)
             .attr("height", HEIGHT_CHILD)
-            .style("fill", "purple")
-            .on('mouseenter', function () {
-                // select element in current context
-                d3.select(this)
-                        // add transition
-                        .transition()
-                        // change attribute
-                        .style('fill', 'green');
-            })
-            .on('mouseout', function () {
-                // select element in current context
-                d3.select(this)
-                        // add transition
-                        .transition()
-                        // change attribute
-                        .style('fill', 'purple');
-            });
+            .style("stroke", "black")
+            .style("fill", "white");
+    mouseEnter(parentNode);
+    mouseOut(parentNode);
+    doubleClick(parentNode);
 }
 function createLine(lines) {
     for (i = 0; i < lines.length; i++) {
@@ -178,7 +102,7 @@ function createLine(lines) {
         var nGayPhuThuoc = lines[i].gayPhuThuoc;
         d3.select('body').select('svg').select("line").remove();
         d3.select('body').select('svg').append("line")          // attach a line
-                .style("stroke", "black")  // colour the line
+                .style("fill", "black")
                 .attr("x1", parseInt(nBiPhuThuoc.rectangle.attr('x')) +
                         parseInt(nBiPhuThuoc.rectangle.attr('width')) / 2)     // x position of the first end of the line
                 .attr("y1", parseInt(nBiPhuThuoc.rectangle.attr('y')) + parseInt(nBiPhuThuoc.rectangle.attr('height')) / 2)      // y position of the first end of the line
