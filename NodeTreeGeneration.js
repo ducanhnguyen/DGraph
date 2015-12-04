@@ -31,10 +31,11 @@ function iniWebPage() {
             .attr("height", 3000);
 }
 function updateLocationOfChildren(node, deltaX, deltaY) {
-    for (i = 0; i < node.children.length; i++) {
+    for (var i = 0; i < node.children.length; i++) {
         node.children[i].rectangle
                 .attr('x', parseInt(node.children[i].rectangle.attr('x')) + deltaX)
                 .attr('y', parseInt(node.children[i].rectangle.attr('y')) + deltaY);
+        updateLocationOfChildren(node.children[i], deltaX, deltaY);
     }
 }
 function packParent(childNode) {
@@ -62,11 +63,28 @@ function packParent(childNode) {
         var parentWidth = parseInt(childNode.parent.rectangle.attr('width'));
         var xOldParent = parseInt(childNode.parent.rectangle.attr('x')) + parentWidth;
         var yOldParent = parseInt(childNode.parent.rectangle.attr('y')) + parentHeight;
+
         childNode.parent.rectangle
                 .attr('x', xMinLeft)
                 .attr('y', yMinTop)
                 .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
+
+        packParent(childNode.parent);
+    }
+}
+function addBorderForNode(node) {
+    if (node.rectangle.attr('x') > 0) {
+        var xNode = parseInt(node.rectangle.attr('x'));
+        var yNode = parseInt(node.rectangle.attr('y'));
+        var widthNode = parseInt(node.rectangle.attr('width'));
+        var heightNode = parseInt(node.rectangle.attr('height'));
+
+        node.rectangle
+                .attr('x', xNode - BORDER_OF_NODE.left)
+                .attr('y', yNode - BORDER_OF_NODE.top)
+                .attr('width', widthNode + BORDER_OF_NODE.left + BORDER_OF_NODE.right)
+                .attr('height', heightNode + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
     }
 }
 /**

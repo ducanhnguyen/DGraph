@@ -5,6 +5,7 @@
     </div>
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="Configuration.js"></script>
     <script src="Node.js"></script>
     <script src="NodeEvent.js"></script>
     <script src="JsonParser.js"></script>
@@ -33,6 +34,7 @@
                     for (var i = 0; i < jsonTmp.children.length; i++) {
                         var child = new Node();
                         node.children.push(child);
+                        child.parent = node;
                         traverse(jsonTmp.children[i], child);
                     }
             }

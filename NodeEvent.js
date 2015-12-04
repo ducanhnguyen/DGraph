@@ -52,7 +52,7 @@ function drag(myNode, lines) {
                  * @returns {undefined}
                  */
                 packParent(myNode);
-
+                addBorderForNode(myNode.parent);
                 /**
                  * Ve quan he phu thuoc
                  * @returns {undefined}
@@ -88,8 +88,11 @@ function doubleClick(node) {
                         .attr('width', DEFAULT_WIDTH_CHILDREN)
                         .attr('height', DEFAULT_HEIGHT_CHILDREN)
                         .style('stroke', 'red');
-                packParent(node.children[i]);
             }
+            for (i = 0; i < nChildren; i++)
+                packParent(node.children[i]);
+            addBorderForNode(node);
+            packParent(node);
             /*
              * Expand node to see children if children are hidden
              */
@@ -114,6 +117,17 @@ function mouseEnter(node) {
                 // change attribute
                 .style('stroke', 'red');
     });
+//    for (var i = 0; i < node.children.length; i++) {
+//        var rect = node.children[i].rectangle;
+//        rect.on('mouseenter', function () {
+//            // select element in current context
+//            d3.select(this)
+//                    // add transition
+//                    .transition()
+//                    // change attribute
+//                    .style('fill', 'blue');
+//        });
+//    }
 }
 /**
  * When mouse out a node
@@ -129,4 +143,13 @@ function mouseOut(node) {
                 // change attribute
                 .style('stroke', 'black');
     });
+//    for (i = 0; i < node.children.length; i++)
+//        node.children[i].rectangle.on('mouseout', function () {
+//            // select element in current context
+//            d3.select(this)
+//                    // add transition
+//                    .transition()
+//                    // change attribute
+//                    .style('stroke', 'black');
+//        });
 }
