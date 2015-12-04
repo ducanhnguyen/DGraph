@@ -32,6 +32,7 @@ function iniWebPage() {
 }
 function updateLocationOfChildren(node, deltaX, deltaY) {
     for (var i = 0; i < node.children.length; i++) {
+//        var row = Math.round(i / Configuration.DISPLAY_CHILDREN_STRATEGY.NUMBER_CHILDREN_IN_ROW);
         node.children[i].rectangle
                 .attr('x', parseInt(node.children[i].rectangle.attr('x')) + deltaX)
                 .attr('y', parseInt(node.children[i].rectangle.attr('y')) + deltaY);
@@ -69,7 +70,7 @@ function packParent(childNode) {
                 .attr('y', yMinTop)
                 .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
-
+        
         packParent(childNode.parent);
     }
 }
