@@ -9,6 +9,8 @@ function Node() {
     };
     this.children = [];
     this.parent = null;
+    this.callee = [];
+    this.caller = [];
 }
 /**
  * Lay thong tin ve Node
@@ -152,4 +154,17 @@ function getRoot(currentNode) {
         return getRoot(currentNode.parent);
     else
         return currentNode;
+}
+/**
+ * Tim kiem Node co id xac dinh
+ */
+function search(node, id, refNode) {
+    if (node != null && node.id == id)
+        refNode.push(node);
+    else {
+        for (var k = 0; k < node.children.length; k++) {
+//            console.log(node.children[j].id);
+            search(node.children[k], id, refNode);
+        }
+    }
 }

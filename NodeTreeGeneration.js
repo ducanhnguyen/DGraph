@@ -158,18 +158,25 @@ function setTextLocationForNode(node) {
             .attr("y", getY(node) + 10);
     setDisplayOfText(node);
 }
-function createLine(lines) {
-    for (i = 0; i < lines.length; i++) {
-        var nBiPhuThuoc = lines[i].biPhuThuoc;
-        var nGayPhuThuoc = lines[i].gayPhuThuoc;
+function createLine(node) {
+    if (node.parent == null)//root of tree
         d3.select('body').select('svg').select("line").remove();
-        d3.select('body').select('svg').append("line")          // attach a line
-                .style("fill", "black")
-                .attr("x1", parseInt(nBiPhuThuoc.rectangle.attr('x')) +
-                        parseInt(nBiPhuThuoc.rectangle.attr('width')) / 2)     // x position of the first end of the line
-                .attr("y1", parseInt(nBiPhuThuoc.rectangle.attr('y')) + parseInt(nBiPhuThuoc.rectangle.attr('height')) / 2)      // y position of the first end of the line
-                .attr("x2", parseInt(nGayPhuThuoc.rectangle.attr('x')) + parseInt(nGayPhuThuoc.rectangle.attr('width')) / 2)     // x position of the second end of the line
-                .attr("y2", parseInt(nGayPhuThuoc.rectangle.attr('y')) + parseInt(nGayPhuThuoc.rectangle.attr('height')) / 2);
+    for (i = 0; i < node.callee.length; i++) {
+        var nBiPhuThuoc = node.callee[i];
+        var nGayPhuThuoc = node;
+        if (getX(nBiPhuThuoc) >= 0 && getX(nGayPhuThuoc) >= 0) {
+            console.log("----------");
+            console.log(nBiPhuThuoc);
+            console.log(nGayPhuThuoc);
+            d3.select('body').select('svg').append("line")          // attach a line
+                    .style("stroke", "black")
+                    .attr("x1", getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2)
+                    .attr("y1", getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2)
+                    .attr("x2", getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2)
+                    .attr("y2", getY(nGayPhuThuoc) + getHeight(nBiPhuThuoc) / 2);
+        }
     }
+    for (var i = 0; i < node.children.length; i++)
+        createLine(node.children[i]);
 }
 //----------------------------------------------------------------------

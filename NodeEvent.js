@@ -3,7 +3,7 @@
  * @param {type} myNode
  * @returns {undefined}
  */
-function drag(myNode, lines) {
+function drag(myNode) {
     var deltaX, deltaY;
     var dragEvent =
             d3.behavior.drag()
@@ -58,7 +58,8 @@ function drag(myNode, lines) {
                  * Ve quan he phu thuoc
                  * @returns {undefined}
                  */
-                createLine(lines);
+                
+                createLine(getRoot(myNode));
                 /**
                  * Move text
                  * @returns {undefined}
@@ -188,6 +189,8 @@ function doubleClick(node) {
                     packParent(node.parent.children[i]);
                 }
             }
+            
+            createLine(getRoot(node));
 //            var root = getRoot(node);
 //            expandAllNodes(root, oldNode, node);
         } else {

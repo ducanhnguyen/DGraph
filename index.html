@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-    <div id="main" style="display: none">
+    <div id="structure" style="display: none">
     </div>
+    <div id="dependency" style="display: none">
+    </div>
+
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="Configuration.js"></script>
@@ -17,8 +20,8 @@
          * Lay noi dung file json
          * @type type
          */
-        loadFile("json2.json");
-        addFileContentToHtml();
+        loadStructureFile("json2.json");
+        loadDependencyFile("jsonDependency.json");
         /**
          * Sau 500ms 99% file json da load xong
          * @returns {undefined}
@@ -28,8 +31,8 @@
              * Khoi tao cay Node
              * @type Array
              */
-            function traverse(jsonTmp, node, lines) {
-                node.id = jsonTmp.id + ""; // fix code later
+            function traverse(jsonTmp, node) {
+                node.id = jsonTmp.id + "";
                 node.path = jsonTmp.path + "";
                 iniRectangleOfNode(node);
                 iniNameOfNode(node);
@@ -42,24 +45,40 @@
                     }
             }
 
-            var content = document.getElementById('main').innerHTML;
+            var content = document.getElementById('structure').innerHTML;
             var jsonTmp = JSON.parse(content);
-            var lines = [];
             var rootNode = new Node();
-            traverse(jsonTmp, rootNode, lines);
+            traverse(jsonTmp, rootNode);
+            /**
+             * Tao su phu thuoc giua cac Node
+             */
+            var dependency = document.getElementById('dependency').innerHTML;
+            var jsonDependency = JSON.parse(dependency);
+            for (i = 0; i < jsonDependency.length; i++) {
+                var nodeGayPhuThuoc = [];
+                search(rootNode, jsonDependency[i].id, nodeGayPhuThuoc);
+                var idBiPhuThuoc_s = jsonDependency[i].depends;
+                for (j = 0; j < idBiPhuThuoc_s.length; j++) {
+                    var nodeBiPhuThuoc = [];
+                    search(rootNode, idBiPhuThuoc_s[j], nodeBiPhuThuoc);
+                    nodeGayPhuThuoc[0].callee.push(nodeBiPhuThuoc[0]);
+                    nodeBiPhuThuoc[0].caller.push(nodeGayPhuThuoc[0]);
+                }
+            }
             /**
              * Hien thi root
              */
             rootNode.rectangle.attr('x', 120).attr('y', 120);
             setTextLocationForAllNode(rootNode);
-            createLine(lines);
+            
+            createLine(rootNode);
             /**
              * Su dung 1000ms de cho thong tin cau hinh
              * @returns {undefined}
              */
             setTimeout(function () {
                 function setDrag(node) {
-                    drag(node, lines);
+                    drag(node);
                     for (var i = 0; i < node.children.length; i++)
                         setDrag(node.children[i]);
                 }
