@@ -51,3 +51,94 @@ function setBackground(node, color) {
 function setStroke(node, strokeColor) {
     node.rectangle.style('stroke', strokeColor);
 }
+/**
+ * 
+ */
+function moveLeft(node, distance) {
+    setX(node, getX(node) - distance);
+}
+function moveRight(node, distance) {
+    setX(node, getX(node) + distance);
+}
+function moveTop(node, distance) {
+    setY(node, getY(node) - distance);
+}
+function moveBottom(node, distance) {
+    setY(node, getY(node) + distance);
+}
+/**
+ * node A co nam ben trai nodeB hay khong
+ * @param {type} nodeA
+ * @param {type} nodeB
+ * @returns {undefined}
+ */
+function isLeft(nodeA, nodeB) {
+    var xA = getX(nodeA), xB = getX(nodeB);
+    var widthA = getWidth(nodeA);
+    if (xA + widthA <= xB)
+        return true;
+    return false;
+}
+/**
+ * node A co nam ben phai nodeB hay khong
+ * @param {type} nodeA
+ * @param {type} nodeB
+ * @returns {undefined}
+ */
+function isRight(nodeA, nodeB) {
+    var xA = getX(nodeA), xB = getX(nodeB);
+    var widthB = getWidth(nodeB);
+    if (xB + widthB <= xA)
+        return true;
+    return false;
+}
+/**
+ * node A co nam ben tren nodeB hay khong
+ * @param {type} nodeA
+ * @param {type} nodeB
+ * @returns {undefined}
+ */
+function isTop(nodeA, nodeB) {
+    var yA = getY(nodeA), yB = getY(nodeB);
+    var heightA = getHeight(nodeA);
+    if (yA + heightA <= yB)
+        return true;
+    return false;
+}
+/**
+ * node A co nam ben duoi nodeB hay khong
+ * @param {type} nodeA
+ * @param {type} nodeB
+ * @returns {undefined}
+ */
+function isBottom(nodeA, nodeB) {
+    var yB = getY(nodeB), yA = getY(nodeA);
+    var heightB = getHeight(nodeB);
+    if (yB + heightB <= yA)
+        return true;
+    return false;
+}
+/**
+ * Xac dinh vi tri nodeA so voi nodeB
+ */
+var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3, LEFT_TOP = 4, LEFT_BOTTOM = 5, RIGHT_TOP = 6, RIGHT_BOTTOM = 7;
+function getRelativeLocation(nodeA, nodeB) {
+    if (isLeft(nodeA, nodeB)) {
+        if (isTop(nodeA, nodeB))
+            return LEFT_TOP;
+        else if (isBottom(nodeA, nodeB))
+            return LEFT_BOTTOM;
+        else
+            return LEFT_ONLY;
+    } else if (isRight(nodeA, nodeB)) {
+        if (isTop(nodeA, nodeB))
+            return RIGHT_TOP;
+        else if (isBottom(nodeA, nodeB))
+            return RIGHT_BOTTOM;
+        else
+            return RIGHT_ONLY;
+    } else if (isTop(nodeA, nodeB))
+        return TOP_ONLY;
+    else
+        return BOTTOM_ONLY;
+}

@@ -84,8 +84,25 @@ function doubleClick(node) {
                 width: getWidth(node),
                 height: getHeight(node)
             };
-
-            setStroke(node, 'blue');
+            /**
+             * Vi tri các node cùng một cha so với node hiện tại
+             * @type Number|Number
+             */
+            var relativeItem = function (key, relativeLocation) {
+                this.key = key;
+                this.relativeLocation = relativeLocation;
+            }
+            var relativeLocationWithNodes = [];
+            if (node.parent != null)
+                for (var i = 0; i < node.parent.children.length; i++) {
+                    var child = node.parent.children[i];
+                    if (child != node) {
+                        var relativeLocation = getRelativeLocation(child, node);
+                        var myRelativeItem = new relativeItem(i, relativeLocation);
+                        relativeLocationWithNodes.push(myRelativeItem);
+                    }
+                }
+            console.log(relativeLocationWithNodes);
             /**
              * Display children
              * @type Number
@@ -120,7 +137,62 @@ function doubleClick(node) {
                 top: oldLocationParent.y - newLocationParent.y,
                 bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
             }
-            
+            /**
+             * NodeA nam vi tri nhu the nao so voi nodeB
+             * @param {type} nodeB
+             * @param {type} nodeA
+             * @returns {undefined}
+             */
+            for (var i = 0; i < relativeLocationWithNodes.length; i++) {
+                var key = relativeLocationWithNodes[i].key;
+                var child = node.parent.children[key];
+                var relativeLocation = relativeLocationWithNodes[i].relativeLocation;
+
+                switch (relativeLocation) {
+                    case LEFT_ONLY:
+                        moveLeft(child, expandArea.left);
+                        console.log('left-only');
+                        break;
+                    case LEFT_BOTTOM:
+                        moveLeft(child, expandArea.left);
+                        moveBottom(child, expandArea.bottom);
+                        console.log('left-bottom');
+                        break;
+                    case LEFT_TOP:
+                        moveLeft(child, expandArea.left);
+                        moveTop(child, expandArea.top);
+                        console.log('left-top');
+                        break;
+                    case RIGHT_ONLY:
+                        moveRight(child, expandArea.right);
+                        console.log('right-only');
+                        break;
+                    case RIGHT_BOTTOM:
+                        moveRight(child, expandArea.right);
+                        moveBottom(child, expandArea.bottom);
+                        console.log('right-bottom');
+                        break;
+                    case RIGHT_TOP:
+                        moveRight(child, expandArea.right);
+                        moveTop(child, expandArea.top);
+                        console.log('right-top');
+                        break;
+                    case TOP_ONLY:
+                        moveTop(child, expandArea.top);
+                        console.log('top-only');
+                        break;
+                    case BOTTOM_ONLY:
+                        moveBottom(child, expandArea.bottom);
+                        console.log('bottom-only');
+                        break;
+                }
+            }
+            /**
+             * pack parent of this node to minimum size
+             */
+            for (i = 0; i < node.parent.children.length; i++) {
+                packParent(node.parent.children[i]);
+            }
         } else {
             /*
              * Collapse node to see children if children are shown
