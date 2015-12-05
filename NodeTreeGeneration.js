@@ -160,7 +160,7 @@ function setTextLocationForNode(node) {
 }
 function createLine(node) {
     if (node.parent == null)//root of tree
-        d3.select('body').select('svg').select("line").remove();
+        d3.select('body').select('svg').selectAll("line").remove();
     for (i = 0; i < node.callee.length; i++) {
         var nBiPhuThuoc = node.callee[i];
         var nGayPhuThuoc = node;
