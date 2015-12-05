@@ -1,8 +1,8 @@
 var BORDER_OF_NODE = {
-    top: 15,
-    left: 15,
-    right: 15,
-    bottom: 15
+    top: 10,
+    left: 10,
+    right: 10,
+    bottom: 10
 }
 var DISPLAY_CHILDREN_STRATEGY = {
     NUMBER_CHILDREN_IN_ROW: 2,
@@ -15,6 +15,7 @@ var DISPLAY_CHILDREN_STRATEGY = {
 };
 var TEXT = {
     SIZE_TEXT: 8,
-    MARGIN_TOP: 12,
-    MARGIN_LEFT: 5
+    MARGIN_TOP: 9,
+    MARGIN_LEFT: 5,
+    DISPLAY_RANGE: DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN // Neu lon hon thi hien thi full text
 }

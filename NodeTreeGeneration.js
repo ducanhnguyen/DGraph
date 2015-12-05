@@ -129,7 +129,6 @@ function iniRectangleOfNode(parentNode, x, y) {
  * @returns {undefined}
  */
 function iniNameOfNode(node) {
-
     node.text = d3.select('body').select('svg').append("text")
             .attr("x", getX(node) + TEXT.MARGIN_LEFT)
             .attr("y", getY(node) + TEXT.MARGIN_TOP)
@@ -138,8 +137,14 @@ function iniNameOfNode(node) {
             .style('font-size', TEXT.SIZE_TEXT)
             .style('font-weight', 'bold')
             .style('font-family', 'Arial');
-//    node.rectangle.attr('width', node.text.attr('textLength'));
-
+    setDisplayOfText(node);
+}
+function setDisplayOfText(node) {
+    if (getWidth(node) - BORDER_OF_NODE.left - BORDER_OF_NODE.right >=  TEXT.DISPLAY_RANGE) {
+        node.text.text(node.path);
+    } else {
+        node.text.text(getName(node.path));
+    }
 }
 function setTextLocationForAllNode(node) {
     node.text.attr("x", getX(node) + TEXT.MARGIN_LEFT)
@@ -147,11 +152,13 @@ function setTextLocationForAllNode(node) {
     for (var i = 0; i < node.children.length; i++) {
         var child = node.children[i];
         setTextLocationForAllNode(child);
+        setDisplayOfText(child);
     }
 }
 function setTextLocationForNode(node) {
     node.text.attr("x", getX(node) + 10)
             .attr("y", getY(node) + 10);
+    setDisplayOfText(node);
 }
 function createLine(lines) {
     for (i = 0; i < lines.length; i++) {
