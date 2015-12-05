@@ -158,6 +158,11 @@ function setTextLocationForNode(node) {
             .attr("y", getY(node) + 10);
     setDisplayOfText(node);
 }
+/**
+ * Ve cac duong phu thuoc giua cac Node
+ * @param {type} node
+ * @returns {undefined}
+ */
 function createLine(node) {
     if (node.parent == null)//root of tree
         d3.select('body').select('svg').selectAll("line").remove();
@@ -178,5 +183,38 @@ function createLine(node) {
     }
     for (var i = 0; i < node.children.length; i++)
         createLine(node.children[i]);
+}
+/**
+ * NodeA va NodeB co ton tai quan he phu thuoc hay khong
+ * @param {type} nodeA
+ * @param {type} nodeB
+ * @returns {undefined}
+ */
+function isDependencyRelation(nodeA, nodeB) {
+    var listNodeA = [];
+    getListNode(nodeA, listNodeA);
+
+    var listNodeB = [];
+    getListNode(nodeB, listNodeB);
+
+    for (i = 0; i < listNodeA.length; i++)
+        for (j = 0; j < listNodeB.length; j++) {
+            for (k = 0; k < listNodeA[i].callee.length; k++)
+                if (listNodeA[i].callee[k] == listNodeB[j])
+                    return true;
+        }
+    return false;
+}
+/**
+ *  Get all nodes inside
+ * @param {type} node the root of a sub-tree
+ * @param {type} listNode an array
+ * @returns {undefined}
+ */
+function getListNode(node, listNode) {
+    for (var i = 0; i < node.children.length; i++) {
+        listNode.push(node.children[i]);
+        getListNode(node.children[i], listNode);
+    }
 }
 //----------------------------------------------------------------------
