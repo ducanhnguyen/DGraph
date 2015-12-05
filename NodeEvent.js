@@ -72,12 +72,13 @@ function doubleClick(node) {
         /**
          * Check the status of node
          */
+        console.log('dbCLick: 1');
         var displayChildren = true;
         var nChildren = node.children.length;
         for (i = 0; i < nChildren; i++)
             if (getX(node.children[i]) < 0)
                 displayChildren = false;
-
+        console.log('dbCLick: 2');
         if (!displayChildren) {
             /**
              * Save the current state of parent before changing attributes
@@ -89,6 +90,7 @@ function doubleClick(node) {
                 width: getWidth(node),
                 height: getHeight(node)
             };
+            console.log('dbCLick: 3');
             /**
              * Clone node
              * @param {type} currentNode
@@ -101,6 +103,7 @@ function doubleClick(node) {
                     .attr('width', getWidth(node))
                     .attr('height', getHeight(node))
                     .style('visibility', "hidden");
+            console.log('dbCLick: 4');
             /**
              * Display children
              * @type Number
@@ -114,12 +117,16 @@ function doubleClick(node) {
                         .style('stroke', 'red');
                 setTextLocationForNode(node.children[i]);
             }
+            console.log('dbCLick: 5');
             /**
              * pack parent to minimum size
              */
-            for (i = 0; i < nChildren; i++) {
-                packParent(node.children[i]);
-            }
+//            for (i = 0; i < nChildren; i++) {
+//                console.log(i + "----------------------");
+//                packParent(node.children[i]);
+//            }
+            packParent(node.children[0]);
+            console.log('dbCLick: 6');
             /*
              * Expand node to see children if children are hidden
              */
@@ -193,6 +200,7 @@ function doubleClick(node) {
                     packParent(node.parent.children[i]);
                 }
             }
+            console.log('dbCLick: 7');
 //            var root = getRoot(node);
 //            expandAllNodes(root, oldNode, node);
         } else {

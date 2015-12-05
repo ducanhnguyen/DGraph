@@ -46,7 +46,10 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
  * @returns {undefined}
  */
 function packParent(childNode) {
-    if (childNode.parent != null) {
+    if (childNode.parent != null)
+    {
+        console.log('5-start');
+        console.log(childNode.parent);
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
         for (i = 0; i < childNode.parent.children.length; i++) {
             var nChild = childNode.parent.children[i];
@@ -63,6 +66,7 @@ function packParent(childNode) {
             if (yMaxBottom < yChild + heightChild)
                 yMaxBottom = yChild + heightChild;
         }
+        console.log('5-1');
         /**
          * Neu di chuyen goc phan tu I, II
          */
@@ -76,9 +80,11 @@ function packParent(childNode) {
                 .attr('y', yMinTop)
                 .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
-
+        console.log('5-2');
         addBorderForNode(childNode.parent);
+        console.log('5-3');
         setTextLocationForNode(childNode.parent);
+        console.log('5-4');
         packParent(childNode.parent);
     }
 }
@@ -140,11 +146,11 @@ function iniNameOfNode(node) {
     setDisplayOfText(node);
 }
 function setDisplayOfText(node) {
-    if (getWidth(node) - BORDER_OF_NODE.left - BORDER_OF_NODE.right >=  TEXT.DISPLAY_RANGE) {
-        node.text.text(node.path);
-    } else {
-        node.text.text(getName(node.path));
-    }
+//    if (getWidth(node) - BORDER_OF_NODE.left - BORDER_OF_NODE.right >=  TEXT.DISPLAY_RANGE) {
+    node.text.text(node.path);
+//    } else {
+//        node.text.text(getName(node.path));
+//    }
 }
 function setTextLocationForAllNode(node) {
     node.text.attr("x", getX(node) + TEXT.MARGIN_LEFT)
