@@ -48,7 +48,6 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
 function packParent(childNode) {
     if (childNode.parent != null)
     {
-        console.log(childNode.parent);
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
         for (i = 0; i < childNode.parent.children.length; i++) {
             var nChild = childNode.parent.children[i];
@@ -120,8 +119,6 @@ function iniRectangleOfNode(parentNode, x, y) {
             .attr("height", HEIGHT_CHILD)
             .style("stroke", "black")
             .style("fill", "white");
-//    mouseEnter(parentNode);
-//    mouseOut(parentNode);
     doubleClick(parentNode);
 }
 /**
@@ -141,11 +138,11 @@ function iniNameOfNode(node) {
     setDisplayOfText(node);
 }
 function setDisplayOfText(node) {
-//    if (getWidth(node) - BORDER_OF_NODE.left - BORDER_OF_NODE.right >=  TEXT.DISPLAY_RANGE) {
-    node.text.text(node.path);
-//    } else {
-//        node.text.text(getName(node.path));
-//    }
+    if (getWidth(node) - BORDER_OF_NODE.left - BORDER_OF_NODE.right >= TEXT.DISPLAY_RANGE) {
+        node.text.text(getName(node.path));
+    } else {
+        node.text.text(getSimplifiedName(node.path));
+    }
 }
 function setTextLocationForAllNode(node) {
     node.text.attr("x", getX(node) + TEXT.MARGIN_LEFT)

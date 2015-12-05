@@ -179,11 +179,6 @@ function doubleClick(node) {
                         }
                         expandAllNodes(child, oldNode, newNode);
                     }
-                else {
-                    // nothing to do
-                    console.log(root);
-                }
-
             }
             /**
              * pack parent of this node to minimum size
@@ -211,19 +206,14 @@ function doubleClick(node) {
 function mouseEnter(node) {
     node.rectangle.on('mouseenter', function () {
         // select element in current context
-        d3.select(this)
-                // add transition
-                .transition()
-                .duration(350)
-                .style("fill", d3.rgb(250, 248, 245))
-                .style('stroke', 'red')
-                .style('stroke-width', 5)
-                .style('stroke-width', 3);
-        for (i = 0; i < node.children.length; i++)
-            node.children[i].rectangle.transition()
-                    .duration(1750)
-                    .style('stroke', 'blue')
-                    .style('stroke-width', 2);
+//        d3.select(this)
+//                // add transition
+//                .transition()
+//                .duration(350)
+//                .style("fill", d3.rgb(250, 248, 245))
+//                .style('stroke', 'red')
+//                .style('stroke-width', 5)
+//                .style('stroke-width', 3);
     });
 }
 /**
@@ -234,18 +224,12 @@ function mouseEnter(node) {
 function mouseOut(node) {
     node.rectangle.on('mouseout', function () {
         // select element in current context
-        d3.select(this)
-                // add transition
-                .transition()
-                // change attribute
-                .style('stroke', 'black')
-                .style('stroke-width', 1);
-        for (i = 0; i < node.children.length; i++)
-            node.children[i].rectangle.
-                    transaction()
-                    .style("fill", white)
-                    .style('stroke', 'black')
-                    .style('stroke-width', 1);
+//        d3.select(this)
+//                // add transition
+//                .transition()
+//                // change attribute
+//                .style('stroke', 'black')
+//                .style('stroke-width', 1);
     });
 }
 function hightLightNode(node) {
@@ -257,7 +241,7 @@ function hightLightNode(node) {
             .style('stroke-width', 3);
     for (i = 0; i < node.children.length; i++)
         node.children[i].rectangle.transition()
-                .duration(1750)
+                .duration(750)
                 .style('stroke', 'blue')
                 .style('stroke-width', 2);
 }

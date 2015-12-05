@@ -29,9 +29,8 @@
              * @type Array
              */
             function traverse(jsonTmp, node, lines) {
-                node.id = jsonTmp.name + ""; // fix code later
-                node.path = jsonTmp.name + "";
-//                console.log(node);
+                node.id = jsonTmp.id + ""; // fix code later
+                node.path = jsonTmp.path + "";
                 iniRectangleOfNode(node);
                 iniNameOfNode(node);
                 if (jsonTmp.children.length > 0)
