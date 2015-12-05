@@ -6,6 +6,7 @@
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="Configuration.js"></script>
+    <script src="Utils.js"></script>
     <script src="Node.js"></script>
     <script src="NodeEvent.js"></script>
     <script src="JsonParser.js"></script>
@@ -31,6 +32,7 @@
                 node.id = jsonTmp.name + ""; // fix code later
                 node.path = jsonTmp.name + "";
                 iniRectangleOfNode(node);
+                iniNameOfNode(node);
                 if (jsonTmp.children.length > 0)
                     for (var i = 0; i < jsonTmp.children.length; i++) {
                         var child = new Node();
@@ -49,6 +51,7 @@
              * Hien thi root
              */
             rootNode.rectangle.attr('x', 120).attr('y', 120);
+            setTextLocationForAllNode(rootNode);
             createLine(lines);
             /**
              * Su dung 1000ms de cho thong tin cau hinh

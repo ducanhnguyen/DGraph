@@ -37,6 +37,7 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
                 .attr('x', parseInt(node.children[i].rectangle.attr('x')) + deltaX)
                 .attr('y', parseInt(node.children[i].rectangle.attr('y')) + deltaY);
         updateLocationOfChildren(node.children[i], deltaX, deltaY);
+        setTextLocationForNode(node.children[i]);
     }
 }
 /**
@@ -77,6 +78,7 @@ function packParent(childNode) {
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
 
         addBorderForNode(childNode.parent);
+        setTextLocationForNode(childNode.parent);
         packParent(childNode.parent);
     }
 }
@@ -122,14 +124,34 @@ function iniRectangleOfNode(parentNode, x, y) {
     doubleClick(parentNode);
 }
 /**
- * Khởi tạo parent
- * @param {type} parentNode
+ * 
+ * @param {type} node
  * @returns {undefined}
  */
-function iniNameOfNode(parentNode) {
-    parentNode.text = d3.select('body').select('svg').append("text")
-            .attr("x", getX(parentNode) + 10)
-            .attr("y", getY(parentNode) + 20);
+function iniNameOfNode(node) {
+
+    node.text = d3.select('body').select('svg').append("text")
+            .attr("x", getX(node) + TEXT.MARGIN_LEFT)
+            .attr("y", getY(node) + TEXT.MARGIN_TOP)
+            .text(getName(node.path))
+            .style('fill', 'black')
+            .style('font-size', TEXT.SIZE_TEXT)
+            .style('font-weight', 'bold')
+            .style('font-family', 'Arial');
+//    node.rectangle.attr('width', node.text.attr('textLength'));
+
+}
+function setTextLocationForAllNode(node) {
+    node.text.attr("x", getX(node) + TEXT.MARGIN_LEFT)
+            .attr("y", getY(node) + TEXT.MARGIN_TOP);
+    for (var i = 0; i < node.children.length; i++) {
+        var child = node.children[i];
+        setTextLocationForAllNode(child);
+    }
+}
+function setTextLocationForNode(node) {
+    node.text.attr("x", getX(node) + 10)
+            .attr("y", getY(node) + 10);
 }
 function createLine(lines) {
     for (i = 0; i < lines.length; i++) {

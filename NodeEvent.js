@@ -57,6 +57,11 @@ function drag(myNode, lines) {
                  * @returns {undefined}
                  */
                 createLine(lines);
+                /**
+                 * Move text
+                 * @returns {undefined}
+                 */
+                setTextLocationForNode(myNode);
             })
             .on('dragend', function () {
             });
@@ -100,14 +105,14 @@ function doubleClick(node) {
              * Display children
              * @type Number
              */
-            var DEFAULT_WIDTH_CHILDREN = 40;
-            var DEFAULT_HEIGHT_CHILDREN = 40;
             for (i = 0; i < nChildren; i++) {
-                node.children[i].rectangle.attr('x', getX(node) + DEFAULT_WIDTH_CHILDREN * (i + 0.5))
-                        .attr('y', getY(node) + 20)
-                        .attr('width', DEFAULT_WIDTH_CHILDREN)
-                        .attr('height', DEFAULT_HEIGHT_CHILDREN)
+                node.children[i].rectangle.attr('x', getX(node) +
+                        DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN * i + randomInt(10))
+                        .attr('y', getY(node) + randomInt(70))
+                        .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
+                        .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN)
                         .style('stroke', 'red');
+                setTextLocationForNode(node.children[i]);
             }
             /**
              * pack parent to minimum size
@@ -132,6 +137,7 @@ function doubleClick(node) {
             }
 
             /**
+             * (fix later)
              * update location of others
              * @param {type} node
              * @returns {undefined}
@@ -182,13 +188,13 @@ function doubleClick(node) {
             /**
              * pack parent of this node to minimum size
              */
-            if (node.parent != null)
+            if (node.parent != null) {
                 for (i = 0; i < node.parent.children.length; i++) {
                     packParent(node.parent.children[i]);
                 }
-
-            var root = getRoot(node);
-            expandAllNodes(root, oldNode, node);
+            }
+//            var root = getRoot(node);
+//            expandAllNodes(root, oldNode, node);
         } else {
             /*
              * Collapse node to see children if children are shown

@@ -1,13 +1,20 @@
 var BORDER_OF_NODE = {
-    top: 30,
-    left: 30,
-    right: 30,
-    bottom: 30
+    top: 15,
+    left: 15,
+    right: 15,
+    bottom: 15
 }
 var DISPLAY_CHILDREN_STRATEGY = {
     NUMBER_CHILDREN_IN_ROW: 2,
     DISTANCE_BETWEEN_CHILDREN: {
         VERTICAL: 20,
         HORIZONTAL: 20
-    }
+    },
+    DEFAULT_WIDTH_CHILDREN: 50,
+    DEFAULT_HEIGHT_CHILDREN: 20
 };
+var TEXT = {
+    SIZE_TEXT: 8,
+    MARGIN_TOP: 12,
+    MARGIN_LEFT: 5
+}
