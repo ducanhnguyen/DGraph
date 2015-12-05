@@ -16,8 +16,8 @@ function drag(myNode, lines) {
                 /**
                  * Bat toa do doi tuong truoc khi di chuyen
                  */
-                myNode.clickInfor.xCurrent = parseInt(myNode.rectangle.attr('x'));
-                myNode.clickInfor.yCurrent = parseInt(myNode.rectangle.attr('y'));
+                myNode.clickInfor.xCurrent = getX(myNode);
+                myNode.clickInfor.yCurrent = getY(myNode);
             })
             .on('drag', function () {
                 var mouseXY = {
@@ -38,8 +38,8 @@ function drag(myNode, lines) {
                  * Cap nhat toa do moi
                  * @returns {undefined}
                  */
-                myNode.clickInfor.xCurrent = parseInt(myNode.rectangle.attr('x'));
-                myNode.clickInfor.yCurrent = parseInt(myNode.rectangle.attr('y'));
+                myNode.clickInfor.xCurrent = getX(myNode);
+                myNode.clickInfor.yCurrent = getY(myNode);
                 myNode.clickInfor.xClick = mouseXY.x;
                 myNode.clickInfor.yClick = mouseXY.y;
                 /**
@@ -70,37 +70,64 @@ function doubleClick(node) {
         var displayChildren = true;
         var nChildren = node.children.length;
         for (i = 0; i < nChildren; i++)
-            if (node.children[i].rectangle.attr('x') < 0)
+            if (getX(node.children[i]) < 0)
                 displayChildren = false;
 
         if (!displayChildren) {
-            var xParent = parseInt(node.rectangle.attr('x'));
-            var yParent = parseInt(node.rectangle.attr('y'));
+            /**
+             * Save the current state of parent before changing attributes
+             * @type type
+             */
+            var oldLocationParent = {
+                x: getX(node),
+                y: getY(node),
+                width: getWidth(node),
+                height: getHeight(node)
+            };
 
+            setStroke(node, 'blue');
+            /**
+             * Display children
+             * @type Number
+             */
             var DEFAULT_WIDTH_CHILDREN = 40;
             var DEFAULT_HEIGHT_CHILDREN = 40;
-
-            node.rectangle.style('stroke', 'blue');
             for (i = 0; i < nChildren; i++) {
-                node.children[i].rectangle.attr('x', xParent + DEFAULT_WIDTH_CHILDREN * (i + 0.5))
-                        .attr('y', yParent + 20)
+                node.children[i].rectangle.attr('x', getX(node) + DEFAULT_WIDTH_CHILDREN * (i + 0.5))
+                        .attr('y', getY(node) + 20)
                         .attr('width', DEFAULT_WIDTH_CHILDREN)
                         .attr('height', DEFAULT_HEIGHT_CHILDREN)
                         .style('stroke', 'red');
             }
-
+            /**
+             * pack parent to minimum size
+             */
             for (i = 0; i < nChildren; i++) {
                 packParent(node.children[i]);
             }
             /*
              * Expand node to see children if children are hidden
              */
+            var newLocationParent = {
+                x: getX(node),
+                y: getY(node),
+                width: getWidth(node),
+                height: getHeight(node)
+            };
+            var expandArea = {
+                left: oldLocationParent.x - newLocationParent.x,
+                right: (newLocationParent.x + newLocationParent.width) - (oldLocationParent.x + oldLocationParent.width),
+                top: oldLocationParent.y - newLocationParent.y,
+                bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
+            }
+            
         } else {
             /*
              * Collapse node to see children if children are shown
              */
         }
-    });
+    }
+    );
 }
 /**
  * When mouse enter a node
