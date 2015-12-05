@@ -39,6 +39,11 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
         updateLocationOfChildren(node.children[i], deltaX, deltaY);
     }
 }
+/**
+ * Minimum size of parent with border
+ * @param {type} childNode
+ * @returns {undefined}
+ */
 function packParent(childNode) {
     if (childNode.parent != null) {
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
@@ -70,7 +75,8 @@ function packParent(childNode) {
                 .attr('y', yMinTop)
                 .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
-        
+
+        addBorderForNode(childNode.parent);
         packParent(childNode.parent);
     }
 }

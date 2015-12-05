@@ -52,7 +52,6 @@ function drag(myNode, lines) {
                  * @returns {undefined}
                  */
                 packParent(myNode);
-                addBorderForNode(myNode.parent);
                 /**
                  * Ve quan he phu thuoc
                  * @returns {undefined}
@@ -88,14 +87,11 @@ function doubleClick(node) {
                         .attr('width', DEFAULT_WIDTH_CHILDREN)
                         .attr('height', DEFAULT_HEIGHT_CHILDREN)
                         .style('stroke', 'red');
-            } 
-           
-            for (i = 0; i < nChildren; i++){
+            }
+
+            for (i = 0; i < nChildren; i++) {
                 packParent(node.children[i]);
             }
-             addBorderForNode(node);
-             packParent(node);
-              addBorderForNode(node.parent);
             /*
              * Expand node to see children if children are hidden
              */
