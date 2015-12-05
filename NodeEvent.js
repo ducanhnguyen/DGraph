@@ -8,6 +8,8 @@ function drag(myNode, lines) {
     var dragEvent =
             d3.behavior.drag()
             .on('dragstart', function () {
+                resetAttributesOfAllNodes(getRoot(myNode));
+                hightLightNode(myNode);
                 /**
                  * Bat toa do click chuot
                  */
@@ -69,16 +71,16 @@ function drag(myNode, lines) {
 }
 function doubleClick(node) {
     node.rectangle.on('dblclick', function () {
+        resetAttributesOfAllNodes(getRoot(node));
+        hightLightNode(node);
         /**
          * Check the status of node
          */
-        console.log('dbCLick: 1');
         var displayChildren = true;
         var nChildren = node.children.length;
         for (i = 0; i < nChildren; i++)
             if (getX(node.children[i]) < 0)
                 displayChildren = false;
-        console.log('dbCLick: 2');
         if (!displayChildren) {
             /**
              * Save the current state of parent before changing attributes
@@ -90,7 +92,6 @@ function doubleClick(node) {
                 width: getWidth(node),
                 height: getHeight(node)
             };
-            console.log('dbCLick: 3');
             /**
              * Clone node
              * @param {type} currentNode
@@ -103,7 +104,6 @@ function doubleClick(node) {
                     .attr('width', getWidth(node))
                     .attr('height', getHeight(node))
                     .style('visibility', "hidden");
-            console.log('dbCLick: 4');
             /**
              * Display children
              * @type Number
@@ -113,20 +113,13 @@ function doubleClick(node) {
                         DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN * i + randomInt(10))
                         .attr('y', getY(node) + randomInt(70))
                         .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
-                        .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN)
-                        .style('stroke', 'red');
+                        .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
                 setTextLocationForNode(node.children[i]);
             }
-            console.log('dbCLick: 5');
             /**
              * pack parent to minimum size
              */
-//            for (i = 0; i < nChildren; i++) {
-//                console.log(i + "----------------------");
-//                packParent(node.children[i]);
-//            }
             packParent(node.children[0]);
-            console.log('dbCLick: 6');
             /*
              * Expand node to see children if children are hidden
              */
@@ -200,7 +193,6 @@ function doubleClick(node) {
                     packParent(node.parent.children[i]);
                 }
             }
-            console.log('dbCLick: 7');
 //            var root = getRoot(node);
 //            expandAllNodes(root, oldNode, node);
         } else {
@@ -222,20 +214,17 @@ function mouseEnter(node) {
         d3.select(this)
                 // add transition
                 .transition()
-                // change attribute
-                .style('stroke', 'red');
+                .duration(350)
+                .style("fill", d3.rgb(250, 248, 245))
+                .style('stroke', 'red')
+                .style('stroke-width', 5)
+                .style('stroke-width', 3);
+        for (i = 0; i < node.children.length; i++)
+            node.children[i].rectangle.transition()
+                    .duration(1750)
+                    .style('stroke', 'blue')
+                    .style('stroke-width', 2);
     });
-//    for (var i = 0; i < node.children.length; i++) {
-//        var rect = node.children[i].rectangle;
-//        rect.on('mouseenter', function () {
-//            // select element in current context
-//            d3.select(this)
-//                    // add transition
-//                    .transition()
-//                    // change attribute
-//                    .style('fill', 'blue');
-//        });
-//    }
 }
 /**
  * When mouse out a node
@@ -249,15 +238,26 @@ function mouseOut(node) {
                 // add transition
                 .transition()
                 // change attribute
-                .style('stroke', 'black');
+                .style('stroke', 'black')
+                .style('stroke-width', 1);
+        for (i = 0; i < node.children.length; i++)
+            node.children[i].rectangle.
+                    transaction()
+                    .style("fill", white)
+                    .style('stroke', 'black')
+                    .style('stroke-width', 1);
     });
-//    for (i = 0; i < node.children.length; i++)
-//        node.children[i].rectangle.on('mouseout', function () {
-//            // select element in current context
-//            d3.select(this)
-//                    // add transition
-//                    .transition()
-//                    // change attribute
-//                    .style('stroke', 'black');
-//        });
+}
+function hightLightNode(node) {
+    node.rectangle.transition()
+            .duration(350)
+            .style("fill", d3.rgb(250, 248, 245))
+            .style('stroke', 'red')
+            .style('stroke-width', 5)
+            .style('stroke-width', 3);
+    for (i = 0; i < node.children.length; i++)
+        node.children[i].rectangle.transition()
+                .duration(1750)
+                .style('stroke', 'blue')
+                .style('stroke-width', 2);
 }

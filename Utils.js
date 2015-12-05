@@ -10,3 +10,15 @@ function getName(path) {
     else
         return path;
 }
+/**
+ * 
+ * @param {type} node
+ * @returns {undefined}
+ */
+function resetAttributesOfAllNodes(node) {
+    node.rectangle.style("fill", 'white')
+            .style('stroke', 'black')
+            .style('stroke-width', 1);
+    for (var i = 0; i < node.children.length; i++)
+        resetAttributesOfAllNodes(node.children[i]);
+}

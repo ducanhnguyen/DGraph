@@ -42,13 +42,12 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
 }
 /**
  * Minimum size of parent with border
- * @param {type} childNode
- * @returns {undefined}
+ * @param {type} childNode mot Node bat ki trong parent
+ * @returns {undefined} Parent se bound vua du moi Node trong do, khong tinh border
  */
 function packParent(childNode) {
     if (childNode.parent != null)
     {
-        console.log('5-start');
         console.log(childNode.parent);
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
         for (i = 0; i < childNode.parent.children.length; i++) {
@@ -66,7 +65,6 @@ function packParent(childNode) {
             if (yMaxBottom < yChild + heightChild)
                 yMaxBottom = yChild + heightChild;
         }
-        console.log('5-1');
         /**
          * Neu di chuyen goc phan tu I, II
          */
@@ -80,11 +78,8 @@ function packParent(childNode) {
                 .attr('y', yMinTop)
                 .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
                 .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
-        console.log('5-2');
         addBorderForNode(childNode.parent);
-        console.log('5-3');
         setTextLocationForNode(childNode.parent);
-        console.log('5-4');
         packParent(childNode.parent);
     }
 }
@@ -125,8 +120,8 @@ function iniRectangleOfNode(parentNode, x, y) {
             .attr("height", HEIGHT_CHILD)
             .style("stroke", "black")
             .style("fill", "white");
-    mouseEnter(parentNode);
-    mouseOut(parentNode);
+//    mouseEnter(parentNode);
+//    mouseOut(parentNode);
     doubleClick(parentNode);
 }
 /**
