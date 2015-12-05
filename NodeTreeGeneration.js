@@ -5,8 +5,8 @@
  * @returns {undefined}
  */
 function iniChild(numChild, parentNode) {
-    var WIDTH_CHILD = 20;
-    var HEIGHT_CHILD = 20;
+    var WIDTH_CHILD = 50;
+    var HEIGHT_CHILD = 10;
     for (i = 0; i < numChild; i++) {
         var nChild = new Node();
         nChild.rectangle = d3.select('body').select('svg').append("rect")
@@ -101,7 +101,7 @@ function addBorderForNode(node) {
  */
 function iniRectangleOfNode(parentNode, x, y) {
     var WIDTH_CHILD = 160;
-    var HEIGHT_CHILD = 160;
+    var HEIGHT_CHILD = 60;
 
     var X = 0;
     var Y = 0;
@@ -120,6 +120,16 @@ function iniRectangleOfNode(parentNode, x, y) {
     mouseEnter(parentNode);
     mouseOut(parentNode);
     doubleClick(parentNode);
+}
+/**
+ * Khởi tạo parent
+ * @param {type} parentNode
+ * @returns {undefined}
+ */
+function iniNameOfNode(parentNode) {
+    parentNode.text = d3.select('body').select('svg').append("text")
+            .attr("x", getX(parentNode) + 10)
+            .attr("y", getY(parentNode) + 20);
 }
 function createLine(lines) {
     for (i = 0; i < lines.length; i++) {

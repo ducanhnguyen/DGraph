@@ -18,18 +18,19 @@
          */
         loadFile("jsonForMai2.json");
         addFileContentToHtml();
+        /**
+         * Sau 500ms 99% file json da load xong
+         * @returns {undefined}
+         */
         setTimeout(function () {
             /**
              * Khoi tao cay Node
              * @type Array
              */
-            function traverse(jsonTmp, node, line) {
+            function traverse(jsonTmp, node, lines) {
                 node.id = jsonTmp.name + ""; // fix code later
                 node.path = jsonTmp.name + "";
                 iniRectangleOfNode(node);
-                doubleClick(node);
-                drag(node, lines);
-                console.log(jsonTmp.name);
                 if (jsonTmp.children.length > 0)
                     for (var i = 0; i < jsonTmp.children.length; i++) {
                         var child = new Node();
@@ -41,17 +42,39 @@
 
             var content = document.getElementById('main').innerHTML;
             var jsonTmp = JSON.parse(content);
-
-            var lines = [
-            ];
-
+            var lines = [];
             var rootNode = new Node();
             traverse(jsonTmp, rootNode, lines);
             /**
              * Hien thi root
              */
-            rootNode.rectangle.attr('x', 120).attr('y',120);
+            rootNode.rectangle.attr('x', 120).attr('y', 120);
             createLine(lines);
-        }, 1500);
+            /**
+             * Su dung 1000ms de cho thong tin cau hinh
+             * @returns {undefined}
+             */
+            setTimeout(function () {
+                function setDrag(node) {
+                    drag(node, lines);
+                    for (var i = 0; i < node.children.length; i++)
+                        setDrag(node.children[i]);
+                }
+                setDrag(rootNode);
+            }, 1000);
+            /**
+             * Su dung 1000ms de cho thong tin cau hinh
+             * @returns {undefined}
+             */
+            setTimeout(function () {
+                function setDoubleClick(node) {
+                    doubleClick(node);
+                    for (var i = 0; i < node.children.length; i++)
+                        setDoubleClick(node.children[i]);
+                }
+                setDoubleClick(rootNode);
+            }, 1000);
+        }, 300);
+
     </script>
 </body>

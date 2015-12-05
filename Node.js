@@ -1,6 +1,7 @@
 function Node() {
     this.id = null;
     this.path = null;
+    this.name = "";
     this.clickInfor = {
         xClick: 10,
         yClick: 10,
@@ -141,4 +142,15 @@ function getRelativeLocation(nodeA, nodeB) {
         return TOP_ONLY;
     else
         return BOTTOM_ONLY;
+}
+/**
+ * 
+ * @param {type} currentNode
+ * @returns {unresolved}
+ */
+function getRoot(currentNode) {
+    if (currentNode.parent != null)
+        return getRoot(currentNode.parent);
+    else
+        return currentNode;
 }
