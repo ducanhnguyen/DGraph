@@ -82,9 +82,7 @@ function doubleClick(node) {
             nodes.forEach(function (childNode) {
                 setInvisible(childNode);
             });
-            console.log("packing");
             pack(node);
-            console.log("packing done");
         }
     }
     );
