@@ -44,26 +44,10 @@ function drag(myNode) {
                 myNode.clickInfor.yCurrent = getY(myNode);
                 myNode.clickInfor.xClick = mouseXY.x;
                 myNode.clickInfor.yClick = mouseXY.y;
-                /**
-                 * Di chuyen children
-                 * @returns {undefined}
-                 */
-                updateLocationOfChildren(myNode, deltaX, deltaY);
-                /**
-                 * Cap nhat parent
-                 * @returns {undefined}
-                 */
-                packParent(myNode);
-                /**
-                 * Ve quan he phu thuoc
-                 * @returns {undefined}
-                 */
 
+                updateLocationOfChildren(myNode, deltaX, deltaY);
+                packParent(myNode);
                 createLine(getRoot(myNode));
-                /**
-                 * Move text
-                 * @returns {undefined}
-                 */
                 setTextLocationForNode(myNode);
             })
             .on('dragend', function () {
@@ -83,18 +67,7 @@ function doubleClick(node) {
             if (getX(node.children[i]) < 0)
                 displayChildren = false;
         if (!displayChildren) {
-            /**
-             * Display children
-             * @type Number
-             */
-            for (i = 0; i < nChildren; i++) {
-                node.children[i].rectangle.attr('x', getX(node) +
-                        DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN * i + randomInt(10))
-                        .attr('y', getY(node) + randomInt(70))
-                        .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
-                        .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
-                setTextLocationForNode(node.children[i]);
-            }
+            calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
             packParent(node.children[0]);
             packParent(node);
             createLine(getRoot(node));
