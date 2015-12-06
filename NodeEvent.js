@@ -58,7 +58,7 @@ function drag(myNode) {
                  * Ve quan he phu thuoc
                  * @returns {undefined}
                  */
-                
+
                 createLine(getRoot(myNode));
                 /**
                  * Move text
@@ -185,11 +185,9 @@ function doubleClick(node) {
              * pack parent of this node to minimum size
              */
             if (node.parent != null) {
-                for (i = 0; i < node.parent.children.length; i++) {
-                    packParent(node.parent.children[i]);
-                }
+                packParent(node);
             }
-            
+
             createLine(getRoot(node));
 //            var root = getRoot(node);
 //            expandAllNodes(root, oldNode, node);
