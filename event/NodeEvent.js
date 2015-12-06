@@ -46,7 +46,7 @@ function drag(myNode) {
                 myNode.clickInfor.yClick = mouseXY.y;
 
                 updateLocationOfChildren(myNode, deltaX, deltaY);
-                packParent(myNode);
+                pack(myNode.parent);
                 createLine(getRoot(myNode));
                 setTextLocationForNode(myNode);
             })
@@ -62,19 +62,29 @@ function doubleClick(node) {
          * Check the status of node
          */
         var displayChildren = true;
-        var nChildren = node.children.length;
-        for (i = 0; i < nChildren; i++)
-            if (getX(node.children[i]) < 0)
+        node.children.forEach(function (childNode) {
+            if (!isAvailable(childNode))
                 displayChildren = false;
+        });
         if (!displayChildren) {
             calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
-            packParent(node.children[0]);
-            packParent(node);
+            node.children.forEach(function (childNode) {
+                setVisible(childNode);
+            });
+            pack(node);
             createLine(getRoot(node));
         } else {
             /*
              * Collapse node to see children if children are shown
              */
+            var nodes = [];
+            searchAllNodes(node, nodes);
+            nodes.forEach(function (childNode) {
+                setInvisible(childNode);
+            });
+            console.log("packing");
+            pack(node);
+            console.log("packing done");
         }
     }
     );

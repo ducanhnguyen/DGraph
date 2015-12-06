@@ -22,41 +22,49 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
  * @param {type} childNode mot Node bat ki trong parent
  * @returns {undefined} Parent se bound vua du moi Node trong do, khong tinh border
  */
-function packParent(childNode) {
-    if (childNode.parent != null) {
+function pack(node) {
+    if (node != null) {
         var xMinLeft = 100000, xMaxRight = 0, yMinTop = 100000, yMaxBottom = 0;
-        for (i = 0; i < childNode.parent.children.length; i++) {
-            var nChild = childNode.parent.children[i];
-            var xChild = getX(nChild)
-            var yChild = getY(nChild);
-            var widthChild = getWidth(nChild);
-            var heightChild = getHeight(nChild);
+        var isPackedByChildren = false;
+        node.children.forEach(function (childNode) {
+            if (isAvailable(childNode)) {
+                isPackedByChildren = true;
 
-            if (xMinLeft > xChild)
-                xMinLeft = xChild;
-            if (xMaxRight < xChild + widthChild)
-                xMaxRight = xChild + widthChild;
-            if (yMinTop > yChild)
-                yMinTop = yChild;
-            if (yMaxBottom < yChild + heightChild)
-                yMaxBottom = yChild + heightChild;
+                var xChild = getX(childNode)
+                var yChild = getY(childNode);
+                var widthChild = getWidth(childNode);
+                var heightChild = getHeight(childNode);
+
+                if (xMinLeft > xChild)
+                    xMinLeft = xChild;
+                if (xMaxRight < xChild + widthChild)
+                    xMaxRight = xChild + widthChild;
+                if (yMinTop > yChild)
+                    yMinTop = yChild;
+                if (yMaxBottom < yChild + heightChild)
+                    yMaxBottom = yChild + heightChild;
+            }
+        });
+        if (isPackedByChildren) {
+            var heightNode = getHeight(node);
+            var widthNode = getWidth(node);
+            var xOldNode = getX(node) + widthNode;
+            var yOldNode = getY(node) + heightNode;
+
+            node.rectangle
+                    .attr('x', xMinLeft)
+                    .attr('y', yMinTop)
+                    .attr('width', widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode))
+                    .attr('height', heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
+            addBorderForNode(node);
+            setTextLocationForNode(node);
+            pack(node.parent);
+        } else {
+            node.rectangle
+                    .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
+                    .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+            pack(node.parent);
         }
-        /**
-         * Neu di chuyen goc phan tu I, II
-         */
-        var parentHeight = getHeight(childNode.parent);
-        var parentWidth = getWidth(childNode.parent);
-        var xOldParent = getX(childNode.parent) + parentWidth;
-        var yOldParent = getY(childNode.parent) + parentHeight;
-
-        childNode.parent.rectangle
-                .attr('x', xMinLeft)
-                .attr('y', yMinTop)
-                .attr('width', parentWidth + (xOldParent - xMinLeft) + (xMaxRight - xOldParent - parentWidth))
-                .attr('height', parentHeight + (yOldParent - yMinTop) + (yMaxBottom - yOldParent - parentHeight));
-        addBorderForNode(childNode.parent);
-        setTextLocationForNode(childNode.parent);
-        packParent(childNode.parent);
     }
 }
 /**

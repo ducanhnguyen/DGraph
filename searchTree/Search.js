@@ -27,3 +27,14 @@ function searchVisibleLeaf(node, refNode) {
             searchVisibleLeaf(node.children[k], refNode);
         }
 }
+/**
+ * Lay danh sach nodes trong sub-tree xac dinh
+ * @param {type} node
+ * @returns {undefined}
+ */
+function searchAllNodes(node, nodes) {
+    for (var k = 0; k < node.children.length; k++) {
+        nodes.push(node.children[k]);
+        searchAllNodes(node.children[k], nodes);
+    }
+}

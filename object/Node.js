@@ -11,6 +11,7 @@ function Node() {
     this.parent = null;
     this.callee = [];
     this.caller = [];
+    this.visibility = false;
 }
 /**
  * Lay thong tin ve Node
@@ -154,4 +155,27 @@ function getRoot(currentNode) {
         return getRoot(currentNode.parent);
     else
         return currentNode;
+}
+
+/**
+ * Disable a Node
+ */
+function setInvisible(node) {
+    node.rectangle.style('visibility', "hidden");
+    node.text.style('visibility', "hidden");
+    node.visibility = false;
+}
+function setVisible(node) {
+    node.rectangle.style('visibility', "visible");
+    node.text.style('visibility', "visible");
+    node.visibility = true;
+}
+/**
+ * Enable a Node
+ */
+function isAvailable(node) {
+    console.log(node.visibility);
+    if (getX(node) >= 0 && getY(node) >= 0 && node.visibility == true)
+        return true;
+    return false;
 }
