@@ -29,12 +29,27 @@ function searchVisibleLeaf(node, refNode) {
 }
 /**
  * Lay danh sach nodes trong sub-tree xac dinh
- * @param {type} node
+ * @param {type} node Root của sub-trê
+ * @param {type} nodes Danh sách lưu các node thỏa mãn trong sub-tree 
  * @returns {undefined}
  */
 function searchAllNodes(node, nodes) {
     for (var k = 0; k < node.children.length; k++) {
         nodes.push(node.children[k]);
         searchAllNodes(node.children[k], nodes);
+    }
+}
+/**
+ * Lấy danh sách node lá trong sub-tree
+ * @param {type} node Root của sub-tree
+ * @param {type} leafs Danh sách lưu các node lá
+ * @returns {undefined}
+ */
+function searchLeaf(node, leafs) {
+    for (var i = 0; i < node.children.length; i++) {
+        if (node.children[i].children.length == 0)
+            leafs.push(node.children[i]);
+        else
+            getLeafs(node.children[i], leafs);
     }
 }
