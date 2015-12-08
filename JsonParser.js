@@ -8,7 +8,6 @@ function loadStructureFile(path) {
         }
     }
     reader.send(null);
-
 }
 //------------------
 function loadDependencyFile(path) {

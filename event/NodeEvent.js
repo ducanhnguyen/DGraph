@@ -47,7 +47,7 @@ function drag(myNode) {
 
                 updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
-                createLine(getRoot(myNode));
+                createLine(dependencies);
                 setTextLocationForNode(myNode);
             })
             .on('dragend', function () {
@@ -72,7 +72,6 @@ function doubleClick(node) {
                 setVisible(childNode);
             });
             pack(node);
-            createLine(getRoot(node));
         } else {
             /*
              * Collapse node to see children if children are shown
@@ -84,6 +83,17 @@ function doubleClick(node) {
             });
             pack(node);
         }
+        /**
+         * Cap nhat lai danh sach phu thuoc
+         * @type Array
+         */
+        console.log("double click");
+        console.log(dependencies);
+        dependencies.list = [];
+        updateDependency(getRoot(node), dependencies);
+        console.log("DANH SACH PHU THUOC");
+        console.log(dependencies);
+        createLine(dependencies);
     }
     );
 }

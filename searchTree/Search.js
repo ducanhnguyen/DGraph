@@ -16,7 +16,7 @@ function search(node, id, refNode) {
 function searchVisibleLeaf(node, refNode) {
     var isDisplayChildren = false;
     for (i = 0; i < node.children.length; i++)
-        if (getX(node.children[i]) >= 0) {
+        if (node.children[i].visibility == true) {
             isDisplayChildren = true;
             break;
         }
@@ -50,6 +50,6 @@ function searchLeaf(node, leafs) {
         if (node.children[i].children.length == 0)
             leafs.push(node.children[i]);
         else
-            getLeafs(node.children[i], leafs);
+            searchLeaf(node.children[i], leafs);
     }
 }
