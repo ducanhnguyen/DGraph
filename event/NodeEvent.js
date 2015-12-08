@@ -88,7 +88,6 @@ function doubleClick(node) {
          * @type Array
          */
         console.log("double click");
-        console.log(dependencies);
         dependencies.list = [];
         updateDependency(getRoot(node), dependencies);
         console.log("DANH SACH PHU THUOC");
