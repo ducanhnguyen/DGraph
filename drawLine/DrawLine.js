@@ -2,7 +2,7 @@ function removeAllLines() {
     d3.select('body').select('svg').selectAll("line").remove();
 }
 /**
- * NodeA va NodeB co ton tai quan he phu thuoc hay khong
+ * NodeA co gay phu thuoc len NodeB khong
  * @param {type} nodeA
  * @param {type} nodeB
  * @returns {undefined}
@@ -28,33 +28,50 @@ function isDependencyRelation(nodeA, nodeB) {
                 }
 
         }
-    for (var i = 0; i < leafNodeA.length; i++)
-        for (var j = 0; j < leafNodeB.length; j++) {
-            for (var k = 0; k < leafNodeA[i].caller.length; k++)
-                if (leafNodeA[i].caller[k] == leafNodeB[j]) {
-                    console.log('found dependency');
-                    return true;
-                }
-
-        }
     console.log('not found dependency');
     return false;
 }
 function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
+    var startPoint = {
+        x: 0,
+        y: 0
+    };
+    var endPoint = {
+        x: 0,
+        y: 0
+    };
+    if (isTop(nGayPhuThuoc, nBiPhuThuoc)) {
+        startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2;
+        startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc);
+
+        endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2;
+        endPoint.y = getY(nBiPhuThuoc);
+    } else if (isBottom(nGayPhuThuoc, nBiPhuThuoc)) {
+        startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2;
+        startPoint.y = getY(nGayPhuThuoc);
+
+        endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2;
+        endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc);
+    } else if (isLeft(nGayPhuThuoc, nBiPhuThuoc)) {
+        startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc);
+        startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc) / 2;
+
+        endPoint.x = getX(nBiPhuThuoc);
+        endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
+    } else if (isRight(nGayPhuThuoc, nBiPhuThuoc)) {
+        startPoint.x = getX(nGayPhuThuoc);
+        startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc) / 2;
+
+        endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc);
+        endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
+    }
+
     d3.select('body').select('svg').append("line")
             .style("stroke", "black")
-            .attr("x1", getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2)
-            .attr("y1", getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2)
-            .attr("x2", getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2)
-            .attr("y2", getY(nGayPhuThuoc) + getHeight(nBiPhuThuoc) / 2);
-    var p1 = {
-        x: getX(nBiPhuThuoc),
-        y: getY(nBiPhuThuoc)
-    };
-    var p2 = {
-        x: getX(nGayPhuThuoc),
-        y: getY(nGayPhuThuoc)
-    };
+            .attr("x1", startPoint.x)
+            .attr("y1", startPoint.y)
+            .attr("x2", endPoint.x)
+            .attr("y2", endPoint.y);
 }
 /**
  * 
@@ -82,11 +99,22 @@ function updateDependency(node, dependencies) {
     if (visibleLeafNodes.length >= 2)
         for (var i = 0; i < visibleLeafNodes.length - 1; i++) {
             for (var j = i + 1; j < visibleLeafNodes.length; j++) {
+                /**NodeA co gay phu thuoc len NodeB khong*/
                 if (isDependencyRelation(visibleLeafNodes[i], visibleLeafNodes[j]) == true) {
                     console.log("add new dependency");
                     var dependency = {
                         gayPhuPhuoc: visibleLeafNodes[i],
                         biPhuThuoc: visibleLeafNodes[j]
+                    };
+                    dependencies.list.push(dependency);
+                }
+                else
+                /**NodeB co gay phu thuoc len NodeA khong*/
+                if (isDependencyRelation(visibleLeafNodes[j], visibleLeafNodes[i]) == true) {
+                    console.log("add new dependency");
+                    var dependency = {
+                        gayPhuPhuoc: visibleLeafNodes[j],
+                        biPhuThuoc: visibleLeafNodes[i]
                     };
                     dependencies.list.push(dependency);
                 }
