@@ -8,7 +8,7 @@ function getName(path) {
     var nameFile = elements[elements.length - 1];
     return nameFile;
 }
-function getSimplifiedName(path) {  
+function getSimplifiedName(path) {
     var nameFile = getName(path);
     var len = nameFile.length;
     if (len > 8)
@@ -22,9 +22,8 @@ function getSimplifiedName(path) {
  * @returns {undefined}
  */
 function resetAttributesOfAllNodes(node) {
-    node.rectangle.style("fill", 'white')
-            .style('stroke', 'black')
-            .style('stroke-width', 1);
+    node.rectangle.style("stroke", d3.rgb(230, 153, 0))
+            .style("fill", "white");
     for (var i = 0; i < node.children.length; i++)
         resetAttributesOfAllNodes(node.children[i]);
 }

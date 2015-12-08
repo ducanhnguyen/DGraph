@@ -102,6 +102,21 @@ function doubleClick(node) {
  * @param {type} node
  * @returns {undefined}
  */
+function mouseCLick(node) {
+    node.rectangle.on('click', function () {
+        d3.select(this)
+                // add transition
+                .transition()
+                .duration(350)
+                .style("fill", d3.rgb(53, 155, 251))
+                .style('stroke-width', 2)
+    });
+}
+/**
+ * When mouse enter a node
+ * @param {type} node
+ * @returns {undefined}
+ */
 function mouseEnter(node) {
     node.rectangle.on('mouseenter', function () {
         // select element in current context
@@ -134,13 +149,11 @@ function mouseOut(node) {
 function hightLightNode(node) {
     node.rectangle.transition()
             .duration(350)
-            .style("fill", d3.rgb(80, 157, 43))
-            .style('stroke', 'red')
-            .style('stroke-width', 5)
-            .style('stroke-width', 3);
+            .style('stroke', d3.rgb(30, 144, 255))
+            .style('stroke-width', 2);
     for (i = 0; i < node.children.length; i++)
         node.children[i].rectangle.transition()
-                .duration(750)
-                .style('stroke', 'blue')
-                .style('stroke-width', 2);
+                .duration(350)
+                .style('stroke', d3.rgb(95, 140, 0))
+                .style('fill', d3.rgb(172, 230, 0));
 }

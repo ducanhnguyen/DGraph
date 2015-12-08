@@ -94,12 +94,13 @@
              * @returns {undefined}
              */
             setTimeout(function () {
-                function setDoubleClick(node) {
+                function setClick(node) {
                     doubleClick(node);
+//                    mouseCLick(node);
                     for (var i = 0; i < node.children.length; i++)
-                        setDoubleClick(node.children[i]);
+                        setClick(node.children[i]);
                 }
-                setDoubleClick(rootNode);
+                setClick(rootNode);
             }, 1000);
         }, 300);
     </script>

@@ -108,6 +108,6 @@ function iniRectangleOfNode(parentNode, x, y) {
             .attr("y", Y)
             .attr("width", DEFAULT_WIDTH_NODE)
             .attr("height", DEFAULT_HEIGHT_NODE)
-            .style("stroke", "black")
+            .style("stroke", d3.rgb(230, 153, 0))
             .style("fill", "white");
 }
