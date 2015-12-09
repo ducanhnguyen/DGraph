@@ -8,27 +8,27 @@ function removeAllLines() {
  * @returns {undefined}
  */
 function isDependencyRelation(nodeA, nodeB) {
-    console.log("Pair----------------------");
+//    console.log("Pair----------------------");
     var leafNodeA = [];
     searchLeaf(nodeA, leafNodeA);
     leafNodeA.push(nodeA);
-    console.log(leafNodeA);
+//    console.log(leafNodeA);
 
     var leafNodeB = [];
     searchLeaf(nodeB, leafNodeB);
     leafNodeB.push(nodeB);
-    console.log(leafNodeB);
+//    console.log(leafNodeB);
 
     for (var i = 0; i < leafNodeA.length; i++)
         for (var j = 0; j < leafNodeB.length; j++) {
             for (var k = 0; k < leafNodeA[i].callee.length; k++)
                 if (leafNodeA[i].callee[k] == leafNodeB[j]) {
-                    console.log('found dependency');
+//                    console.log('found dependency');
                     return true;
                 }
 
         }
-    console.log('not found dependency');
+//    console.log('not found dependency');
     return false;
 }
 function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
@@ -80,7 +80,7 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
  */
 function createLine(dependencies) {
     removeAllLines();
-    console.log(dependencies);
+//    console.log(dependencies);
     dependencies.list.forEach(function (dependency) {
         drawLine(dependency.gayPhuPhuoc, dependency.biPhuThuoc)
     });
@@ -94,14 +94,11 @@ function createLine(dependencies) {
 function updateDependency(node, dependencies) {
     var visibleLeafNodes = [];
     searchVisibleLeaf(node, visibleLeafNodes);
-    console.log('Danh sach visible leaf');
-    console.log(visibleLeafNodes);
     if (visibleLeafNodes.length >= 2)
         for (var i = 0; i < visibleLeafNodes.length - 1; i++) {
             for (var j = i + 1; j < visibleLeafNodes.length; j++) {
                 /**NodeA co gay phu thuoc len NodeB khong*/
                 if (isDependencyRelation(visibleLeafNodes[i], visibleLeafNodes[j]) == true) {
-                    console.log("add new dependency");
                     var dependency = {
                         gayPhuPhuoc: visibleLeafNodes[i],
                         biPhuThuoc: visibleLeafNodes[j]
@@ -111,7 +108,6 @@ function updateDependency(node, dependencies) {
                 else
                 /**NodeB co gay phu thuoc len NodeA khong*/
                 if (isDependencyRelation(visibleLeafNodes[j], visibleLeafNodes[i]) == true) {
-                    console.log("add new dependency");
                     var dependency = {
                         gayPhuPhuoc: visibleLeafNodes[j],
                         biPhuThuoc: visibleLeafNodes[i]

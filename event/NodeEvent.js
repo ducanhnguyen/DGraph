@@ -13,13 +13,13 @@ function drag(myNode) {
                 /**
                  * Bat toa do click chuot
                  */
-                myNode.clickInfor.xClick = parseInt(d3.mouse(this)[0]);
-                myNode.clickInfor.yClick = parseInt(d3.mouse(this)[1]);
+                myNode.xClick = parseInt(d3.mouse(this)[0]);
+                myNode.yClick = parseInt(d3.mouse(this)[1]);
                 /**
                  * Bat toa do doi tuong truoc khi di chuyen
                  */
-                myNode.clickInfor.xCurrent = getX(myNode);
-                myNode.clickInfor.yCurrent = getY(myNode);
+                myNode.xCurrent = getX(myNode);
+                myNode.yCurrent = getY(myNode);
             })
             .on('drag', function () {
                 var mouseXY = {
@@ -29,22 +29,29 @@ function drag(myNode) {
                 /**
                  * Tinh toan delta can phai di chuyen doi tuong tu vi tri click den vi tri moi
                  */
-                deltaX = mouseXY.x - myNode.clickInfor.xClick;
-                deltaY = mouseXY.y - myNode.clickInfor.yClick;
+                deltaX = mouseXY.x - myNode.xClick;
+                deltaY = mouseXY.y - myNode.yClick;
                 /**
                  * Cap nhat toa do moi cua doi tuong
                  */
-                myNode.rectangle.attr('x', myNode.clickInfor.xCurrent + deltaX)
-                        .attr('y', myNode.clickInfor.yCurrent + deltaY);
+                myNode.rectangle.attr('x', myNode.xCurrent + deltaX)
+                        .attr('y', myNode.yCurrent + deltaY);
                 /**
                  * Cap nhat toa do moi
                  * @returns {undefined}
                  */
-                myNode.clickInfor.xCurrent = getX(myNode);
-                myNode.clickInfor.yCurrent = getY(myNode);
-                myNode.clickInfor.xClick = mouseXY.x;
-                myNode.clickInfor.yClick = mouseXY.y;
-
+                myNode.xCurrent = getX(myNode);
+                myNode.yCurrent = getY(myNode);
+                myNode.xClick = mouseXY.x;
+                myNode.yClick = mouseXY.y;
+                /**
+                 * Xác định va chạm
+                 */
+                var collisions = [];
+                if (myNode.parent != null)
+                    collisions = findCollision(myNode.parent, myNode);
+                console.log(collisions);
+                // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
                 createLine(dependencies);
@@ -87,11 +94,8 @@ function doubleClick(node) {
          * Cap nhat lai danh sach phu thuoc
          * @type Array
          */
-        console.log("double click");
         dependencies.list = [];
         updateDependency(getRoot(node), dependencies);
-        console.log("DANH SACH PHU THUOC");
-        console.log(dependencies);
         createLine(dependencies);
     }
     );
