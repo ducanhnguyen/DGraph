@@ -100,7 +100,7 @@ function expandAllNodes(node, oldNode, newNode) {
                 .attr('width', getWidth(node))
                 .attr('height', getHeight(node))
                 .style('visibility', "hidden");
-        
+
         node.children.forEach(function (child) {
             if (child != newNode) {
                 var relativeLocation = getRelativeLocation(child, oldNode);
@@ -110,34 +110,51 @@ function expandAllNodes(node, oldNode, newNode) {
                         console.log(getName(child.path) + " move left");
                         break;
                     case LEFT_BOTTOM:
+                        setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
+                        
+                        setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
                         console.log(getName(child.path) + " move left bottom");
                         break;
                     case LEFT_TOP:
+                        setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
+                        
+                        setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
                         console.log(getName(child.path) + " move left top");
                         break;
                     case RIGHT_ONLY:
+                        setX(child, getX(child) + expandArea.right);
                         moveRight(child, expandArea.right);
+                        
                         console.log(getName(child.path) + " move right");
                         break;
                     case RIGHT_BOTTOM:
+                        setX(child, getX(child) + expandArea.right);
                         moveRight(child, expandArea.right);
+                        
+                        setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
                         console.log(getName(child.path) + " move right bottom");
                         break;
                     case RIGHT_TOP:
                         moveRight(child, expandArea.right);
+                        setY(child, getY(child) - expandArea.right);
+                        
+                        setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
                         console.log(getName(child.path) + " move right top");
                         break;
                     case TOP_ONLY:
+                        setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
+                        
                         console.log(getName(child.path) + " move top");
                         break;
                     case BOTTOM_ONLY:
+                        setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
                         console.log(getName(child.path) + " move bottom");
                         break;

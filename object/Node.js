@@ -61,19 +61,16 @@ function moveLeft(node, distance) {
             moveLeft(child, distance)
         }
     });
-    setX(node, getX(node) - distance);
+   
     pack(node);
 }
 function moveRight(node, distance) {
-//    console.log(node);
     node.children.forEach(function (child) {
         if (isAvailable(child)) {
             setX(child, getX(child) + distance);
-//        console.log("move "+ distance);
             moveRight(child, distance);
         }
     });
-    setX(node, getX(node) + distance);
     pack(node);
 }
 function moveTop(node, distance) {
@@ -83,7 +80,7 @@ function moveTop(node, distance) {
             moveTop(child, distance);
         }
     });
-    setY(node, getY(node) - distance);
+    
     pack(node);
 }
 function moveBottom(node, distance) {
@@ -93,7 +90,7 @@ function moveBottom(node, distance) {
             moveBottom(child, distance);
         }
     });
-    setY(node, getY(node) + distance);
+    
     pack(node);
 }
 /**
