@@ -1,11 +1,12 @@
 function Node() {
-    this.id = null;
-    this.path = null;
-    this.children = [];
-    this.parent = null;
-    this.callee = [];
-    this.caller = [];
-    this.visibility = false;
+    this.id = null; // id cua Node
+    this.path = null; // duong dan tuyet doi hoac tuong doi
+    this.children = []; // danh sach Nodes con
+    this.parent = null; // cha Node
+    this.callee = []; // danh sach Node duoc goi
+    this.caller = [];// danh sach goi Node
+    this.visibility = false; // Node duoc visible hay invisible
+    
 }
 /**
  * Lay thong tin ve Node
