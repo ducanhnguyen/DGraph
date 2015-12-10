@@ -105,7 +105,7 @@ function expandAllNodes(node, oldNode, newNode, expandArea) {
                         break;
                 }
             }
-            //                        expandAllNodes(child, oldNode, newNode);
+//            expandAllNodes(child, oldNode, newNode);
         });
 }
 function doubleClick(node) {
@@ -157,7 +157,7 @@ function doubleClick(node) {
                 top: oldLocationParent.y - newLocationParent.y,
                 bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
             }
-            
+
             console.log(expandArea);
             expandAllNodes(node.parent, oldNode, node, expandArea);
             pack(node.parent);

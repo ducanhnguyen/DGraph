@@ -58,16 +58,36 @@ function setStroke(node, strokeColor) {
  * 
  */
 function moveLeft(node, distance) {
+    node.children.forEach(function (child) {
+        setX(child, getX(child) - distance);
+        moveLeft(child, distance);
+    });
     setX(node, getX(node) - distance);
+    pack(node);
 }
 function moveRight(node, distance) {
+    node.children.forEach(function (child) {
+        setX(child, getX(child) + distance);
+        moveRight(child, distance);
+    });
     setX(node, getX(node) + distance);
+    pack(node);
 }
 function moveTop(node, distance) {
+    node.children.forEach(function (child) {
+        setX(child, getY(child) - distance);
+        moveTop(child, distance);
+    });
     setY(node, getY(node) - distance);
+    pack(node);
 }
 function moveBottom(node, distance) {
+    node.children.forEach(function (child) {
+        setX(child, getY(child) + distance);
+        moveBottom(child, distance);
+    });
     setY(node, getY(node) + distance);
+    pack(node);
 }
 /**
  * node A co nam ben trai nodeB hay khong
@@ -174,7 +194,6 @@ function setVisible(node) {
  * Enable a Node
  */
 function isAvailable(node) {
-    console.log(node.visibility);
     if (getX(node) >= 0 && getY(node) >= 0 && node.visibility == true)
         return true;
     return false;
