@@ -47,10 +47,10 @@ function drag(myNode) {
                 /**
                  * Xác định va chạm
                  */
-                var collisions = [];
-                if (myNode.parent != null)
-                    collisions = findCollision(myNode.parent, myNode);
-                console.log(collisions);
+//                var collisions = [];
+//                if (myNode.parent != null)
+//                    collisions = findCollision(myNode.parent, myNode);
+//                console.log(collisions);
                 // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
@@ -61,10 +61,58 @@ function drag(myNode) {
             });
     myNode.rectangle.call(dragEvent);
 }
+function expandAllNodes(node, oldNode, newNode, expandArea) {
+    if (node != null)
+        node.children.forEach(function (child) {
+            if (child != newNode) {
+                var relativeLocation = getRelativeLocation(child, oldNode);
+                switch (relativeLocation) {
+                    case LEFT_ONLY:
+                        moveLeft(child, expandArea.left);
+                        console.log(getName(child.path) + " move left");
+                        break;
+                    case LEFT_BOTTOM:
+                        moveLeft(child, expandArea.left);
+                        moveBottom(child, expandArea.bottom);
+                        console.log(getName(child.path) + " move left bottom");
+                        break;
+                    case LEFT_TOP:
+                        moveLeft(child, expandArea.left);
+                        moveTop(child, expandArea.top);
+                        console.log(getName(child.path) + " move left top");
+                        break;
+                    case RIGHT_ONLY:
+                        moveRight(child, expandArea.right);
+                        console.log(getName(child.path) + " move right");
+                        break;
+                    case RIGHT_BOTTOM:
+                        moveRight(child, expandArea.right);
+                        moveBottom(child, expandArea.bottom);
+                        console.log(getName(child.path) + " move right bottom");
+                        break;
+                    case RIGHT_TOP:
+                        moveRight(child, expandArea.right);
+                        moveTop(child, expandArea.top);
+                        console.log(getName(child.path) + " move right top");
+                        break;
+                    case TOP_ONLY:
+                        moveTop(child, expandArea.top);
+                        console.log(getName(child.path) + " move top");
+                        break;
+                    case BOTTOM_ONLY:
+                        moveBottom(child, expandArea.bottom);
+                        console.log(getName(child.path) + " move bottom");
+                        break;
+                }
+            }
+            //                        expandAllNodes(child, oldNode, newNode);
+        });
+}
 function doubleClick(node) {
     node.rectangle.on('dblclick', function () {
         resetAttributesOfAllNodes(getRoot(node));
         hightLightNode(node);
+
         /**
          * Check the status of node
          */
@@ -74,11 +122,46 @@ function doubleClick(node) {
                 displayChildren = false;
         });
         if (!displayChildren) {
+            // add here
+            var oldLocationParent = {
+                x: getX(node),
+                y: getY(node),
+                width: getWidth(node),
+                height: getHeight(node)
+            };
+            var oldNode = new Node();
+            oldNode.rectangle = d3.select('body').select('svg').append("rect")
+                    .attr('x', getX(node))
+                    .attr('y', getY(node))
+                    .attr('width', getWidth(node))
+                    .attr('height', getHeight(node))
+                    .style('visibility', "hidden");
+            //end
             calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
             node.children.forEach(function (childNode) {
                 setVisible(childNode);
             });
             pack(node);
+
+            // add here
+            var newLocationParent = {
+                x: getX(node),
+                y: getY(node),
+                width: getWidth(node),
+                height: getHeight(node)
+            };
+
+            var expandArea = {
+                left: oldLocationParent.x - newLocationParent.x,
+                right: (newLocationParent.x + newLocationParent.width) - (oldLocationParent.x + oldLocationParent.width),
+                top: oldLocationParent.y - newLocationParent.y,
+                bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
+            }
+            
+            console.log(expandArea);
+            expandAllNodes(node.parent, oldNode, node, expandArea);
+            pack(node.parent);
+            // end
         } else {
             /*
              * Collapse node to see children if children are shown
@@ -122,15 +205,14 @@ function mouseCLick(node) {
  */
 function mouseEnter(node) {
     node.rectangle.on('mouseenter', function () {
-        // select element in current context
-//        d3.select(this)
+        // select element in current context //        d3.select(this)
 //                // add transition
 //                .transition()
 //                .duration(350)
 //                .style("fill", d3.rgb(250, 248, 245))
 //                .style('stroke', 'red')
 //                .style('stroke-width', 5)
-//                .style('stroke-width', 3);
+        //                .style('stroke-width', 3);
     });
 }
 /**
@@ -139,14 +221,12 @@ function mouseEnter(node) {
  * @returns {undefined}
  */
 function mouseOut(node) {
-    node.rectangle.on('mouseout', function () {
-        // select element in current context
-//        d3.select(this)
+    node.rectangle.on('mouseout', function () {         // select element in current context //        d3.select(this)
 //                // add transition
 //                .transition()
 //                // change attribute
 //                .style('stroke', 'black')
-//                .style('stroke-width', 1);
+        //                .style('stroke-width', 1);
     });
 }
 function hightLightNode(node) {

@@ -6,7 +6,6 @@ function Node() {
     this.callee = []; // danh sach Node duoc goi
     this.caller = [];// danh sach goi Node
     this.visibility = false; // Node duoc visible hay invisible
-    
 }
 /**
  * Lay thong tin ve Node
@@ -33,15 +32,21 @@ function getHeight(node) {
  */
 function setX(node, x) {
     node.rectangle.attr('x', x);
+    node.text.attr('x', x + TEXT.MARGIN_LEFT);
+    pack(node);
 }
 function setY(node, y) {
     node.rectangle.attr('y', y);
+    node.text.attr('y', y + TEXT.MARGIN_TOP);
+    pack(node);
 }
 function setWidth(node, width) {
     node.rectangle.attr('width', width);
+    pack(node);
 }
 function setHeight(node, height) {
     node.rectangle.attr('height', height);
+    pack(node);
 }
 function setBackground(node, color) {
     node.rectangle.style('fill', color);
