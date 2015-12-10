@@ -106,6 +106,7 @@ function expandAllNodes(node, oldNode, newNode) {
                 var relativeLocation = getRelativeLocation(child, oldNode);
                 switch (relativeLocation) {
                     case LEFT_ONLY:
+                        setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
                         console.log(getName(child.path) + " move left");
                         break;
@@ -141,7 +142,7 @@ function expandAllNodes(node, oldNode, newNode) {
                         break;
                     case RIGHT_TOP:
                         moveRight(child, expandArea.right);
-                        setY(child, getY(child) - expandArea.right);
+                        setY(child, getY(child) + expandArea.right);
                         
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
