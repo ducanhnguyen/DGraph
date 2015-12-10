@@ -33,20 +33,20 @@ function getHeight(node) {
 function setX(node, x) {
     node.rectangle.attr('x', x);
     node.text.attr('x', x + TEXT.MARGIN_LEFT);
-    pack(node);
+//    pack(node);
 }
 function setY(node, y) {
     node.rectangle.attr('y', y);
     node.text.attr('y', y + TEXT.MARGIN_TOP);
-    pack(node);
+//    pack(node);
 }
 function setWidth(node, width) {
     node.rectangle.attr('width', width);
-    pack(node);
+//    pack(node);
 }
 function setHeight(node, height) {
     node.rectangle.attr('height', height);
-    pack(node);
+//    pack(node);
 }
 function setBackground(node, color) {
     node.rectangle.style('fill', color);
@@ -54,37 +54,44 @@ function setBackground(node, color) {
 function setStroke(node, strokeColor) {
     node.rectangle.style('stroke', strokeColor);
 }
-/**
- * 
- */
 function moveLeft(node, distance) {
     node.children.forEach(function (child) {
-        setX(child, getX(child) - distance);
-        moveLeft(child, distance);
+        if (isAvailable(child)) {
+            setX(child, getX(child) - distance);
+            moveLeft(child, distance)
+        }
     });
     setX(node, getX(node) - distance);
     pack(node);
 }
 function moveRight(node, distance) {
+//    console.log(node);
     node.children.forEach(function (child) {
-        setX(child, getX(child) + distance);
-        moveRight(child, distance);
+        if (isAvailable(child)) {
+            setX(child, getX(child) + distance);
+//        console.log("move "+ distance);
+            moveRight(child, distance);
+        }
     });
     setX(node, getX(node) + distance);
     pack(node);
 }
 function moveTop(node, distance) {
     node.children.forEach(function (child) {
-        setX(child, getY(child) - distance);
-        moveTop(child, distance);
+        if (isAvailable(child)) {
+            setX(child, getY(child) - distance);
+            moveTop(child, distance);
+        }
     });
     setY(node, getY(node) - distance);
     pack(node);
 }
 function moveBottom(node, distance) {
     node.children.forEach(function (child) {
-        setX(child, getY(child) + distance);
-        moveBottom(child, distance);
+        if (isAvailable(child)) {
+            setX(child, getY(child) + distance);
+            moveBottom(child, distance);
+        }
     });
     setY(node, getY(node) + distance);
     pack(node);

@@ -61,8 +61,46 @@ function drag(myNode) {
             });
     myNode.rectangle.call(dragEvent);
 }
-function expandAllNodes(node, oldNode, newNode, expandArea) {
-    if (node != null)
+/**
+ * 
+ * @param {type} node Node cha
+ * @param {type} oldNode Trang thai Node chua mo rong
+ * @param {type} newNode Trang thai Node da mo rong
+ * @param {type} expandArea vung mo rong
+ * @returns {undefined}
+ */
+function expandAllNodes(node, oldNode, newNode) {
+    if (node != null) {
+        // add here
+        var oldLocationParent = {
+            x: getX(oldNode),
+            y: getY(oldNode),
+            width: getWidth(oldNode),
+            height: getHeight(oldNode)
+        };
+        // add here
+        var newLocationParent = {
+            x: getX(newNode),
+            y: getY(newNode),
+            width: getWidth(newNode),
+            height: getHeight(newNode)
+        };
+
+        var expandArea = {
+            left: oldLocationParent.x - newLocationParent.x,
+            right: (newLocationParent.x + newLocationParent.width) - (oldLocationParent.x + oldLocationParent.width),
+            top: oldLocationParent.y - newLocationParent.y,
+            bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
+        }
+        console.log(expandArea);
+        var oldParentNode = new Node();
+        oldParentNode.rectangle = d3.select('body').select('svg').append("rect")
+                .attr('x', getX(node))
+                .attr('y', getY(node))
+                .attr('width', getWidth(node))
+                .attr('height', getHeight(node))
+                .style('visibility', "hidden");
+        
         node.children.forEach(function (child) {
             if (child != newNode) {
                 var relativeLocation = getRelativeLocation(child, oldNode);
@@ -105,8 +143,9 @@ function expandAllNodes(node, oldNode, newNode, expandArea) {
                         break;
                 }
             }
-//            expandAllNodes(child, oldNode, newNode);
         });
+//        expandAllNodes(node.parent, oldParentNode, node);
+    }
 }
 function doubleClick(node) {
     node.rectangle.on('dblclick', function () {
@@ -122,13 +161,6 @@ function doubleClick(node) {
                 displayChildren = false;
         });
         if (!displayChildren) {
-            // add here
-            var oldLocationParent = {
-                x: getX(node),
-                y: getY(node),
-                width: getWidth(node),
-                height: getHeight(node)
-            };
             var oldNode = new Node();
             oldNode.rectangle = d3.select('body').select('svg').append("rect")
                     .attr('x', getX(node))
@@ -142,24 +174,8 @@ function doubleClick(node) {
                 setVisible(childNode);
             });
             pack(node);
-
-            // add here
-            var newLocationParent = {
-                x: getX(node),
-                y: getY(node),
-                width: getWidth(node),
-                height: getHeight(node)
-            };
-
-            var expandArea = {
-                left: oldLocationParent.x - newLocationParent.x,
-                right: (newLocationParent.x + newLocationParent.width) - (oldLocationParent.x + oldLocationParent.width),
-                top: oldLocationParent.y - newLocationParent.y,
-                bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
-            }
-
-            console.log(expandArea);
-            expandAllNodes(node.parent, oldNode, node, expandArea);
+            //
+            expandAllNodes(node.parent, oldNode, node);
             pack(node.parent);
             // end
         } else {
