@@ -13,4 +13,4 @@ Gồm hai file json: file mô tả cấu trúc(data/Structure.json), file mô t�
 #Change Set
 Mỗi một phần tử trong tập change set là ID một Node.
 
-Danh sách change set được lưu trong mảng *changeSet* trong file *changeSet.js*
+Danh sách change set được lưu trong mảng *changeSet* trong *object/ChangeSet.js*
