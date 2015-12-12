@@ -7,7 +7,7 @@
             margin: 0px;
         }
         .option{
-            
+
         }
     </style>
     <div id="structure" style="display: none">
@@ -16,27 +16,30 @@
     </div>
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="Configuration.js"></script>
+    <script src="config/Configuration.js"></script>
+    <script src="data/JsonParser.js"></script>
+
     <script src="object/ChangeSet.js"></script>
     <script src="object/Dependencies.js"></script>
-    <script src="Utils.js"></script>
-    <script src="event/CollisionHandle.js"></script>
     <script src="object/Node.js"></script>
-    <script src="TextDisplayer.js"></script>
-    <script src="DrawLine.js"></script>
-    <script src="Search.js"></script>
-    <script src="ChildrenLocation.js"></script>
-    <script src="event/NodeEvent.js"></script>
-    <script src="JsonParser.js"></script>
-    <script src="NodeTreeGeneration.js"></script>
+    <script src="object/utils/Utils.js"></script>
+
+    <script src="object/event/CollisionHandle.js"></script>
+    <script src="object/event/DrawLine.js"></script>
+    <script src="object/event/NodeEvent.js"></script>
+    <script src="object/event/TextDisplayer.js"></script>
+
+    <script src="tree/ChildrenLocation.js"></script>
+    <script src="tree/Search.js"></script>
+    <script src="tree/NodeTreeGeneration.js"></script>
     <script>
         iniWebPage();
         /**
          * Lay noi dung file json
          * @type type
          */
-        loadStructureFile("data/structure.json");
-        loadDependencyFile("data/dependency.json");
+        loadStructureFile("data/Structure.json");
+        loadDependencyFile("data/Dependency.json");
         /**
          * Sau 500ms 99% file json da load xong
          * @returns {undefined}
