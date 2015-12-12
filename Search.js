@@ -53,3 +53,8 @@ function searchLeaf(node, leafs) {
             searchLeaf(node.children[i], leafs);
     }
 }
+function isLeaf(node) {
+    if (node.children.length == 0)
+        return true;
+    return false;
+}

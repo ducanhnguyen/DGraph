@@ -277,7 +277,6 @@ function mouseOut(node) {
  * @returns {undefined}
  */
 function rightMouseCLick(node) {
-
     node.rectangle.on('contextmenu', function (data, index) {
         d3.event.preventDefault();
         /**
@@ -319,7 +318,11 @@ function rightMouseCLick(node) {
         add_group.on('click', function () {
             // Thêm tất cả node lá vào change set
             var leafs = [];
-            searchLeaf(node, leafs);
+            if (isLeaf(node))
+                leafs.push(node);
+            else
+                searchLeaf(node, leafs);
+
             leafs.forEach(function (leaf) {
                 if (!containID(changeSet, leaf.id))
                     changeSet.push(leaf.id);
@@ -334,7 +337,10 @@ function rightMouseCLick(node) {
         remove_group.on('click', function () {
             // Thêm tất cả node lá vào change set
             var deletedLeafs = [];
-            searchLeaf(node, deletedLeafs);
+            if (isLeaf(node))
+                deletedLeafs.push(node);
+            else
+                searchLeaf(node, deletedLeafs);
             deletedLeafs.forEach(function (deletedLeaf) {
                 changeSet = removeFromArray(changeSet, deletedLeaf.id);
             });
