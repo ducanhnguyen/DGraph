@@ -61,7 +61,7 @@ function moveLeft(node, distance) {
             moveLeft(child, distance)
         }
     });
-   
+
     pack(node);
 }
 function moveRight(node, distance) {
@@ -80,7 +80,7 @@ function moveTop(node, distance) {
             moveTop(child, distance);
         }
     });
-    
+
     pack(node);
 }
 function moveBottom(node, distance) {
@@ -90,7 +90,7 @@ function moveBottom(node, distance) {
             moveBottom(child, distance);
         }
     });
-    
+
     pack(node);
 }
 /**
@@ -170,7 +170,7 @@ function getRelativeLocation(nodeA, nodeB) {
         return BOTTOM_ONLY;
 }
 /**
- * 
+ * Lấy root của cây Node
  * @param {type} currentNode
  * @returns {unresolved}
  */

@@ -6,6 +6,9 @@ function iniWebPage() {
     d3.select('body').append('svg')
             .attr("width", 3000)
             .attr("height", 3000);
+
+    d3.select('svg').append('rect').attr('class', 'add-option');
+    d3.select('svg').append('rect').attr('class', 'remove-option');
 }
 /**
  * Di chuyển tất cả các Node con trong một node cha một khoảng cách nào đó

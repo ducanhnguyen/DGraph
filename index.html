@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        .option{
+            
+        }
+    </style>
     <div id="structure" style="display: none">
     </div>
     <div id="dependency" style="display: none">
     </div>
-
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="Configuration.js"></script>
+    <script src="object/ChangeSet.js"></script>
     <script src="object/Dependencies.js"></script>
     <script src="Utils.js"></script>
     <script src="event/CollisionHandle.js"></script>
@@ -67,6 +76,7 @@
                 for (j = 0; j < idBiPhuThuoc_s.length; j++) {
                     var nodeBiPhuThuoc = [];
                     search(rootNode, idBiPhuThuoc_s[j], nodeBiPhuThuoc);
+
                     nodeGayPhuThuoc[0].callee.push(nodeBiPhuThuoc[0]);
                     nodeBiPhuThuoc[0].caller.push(nodeGayPhuThuoc[0]);
                 }
@@ -74,34 +84,26 @@
             /**
              * Hien thi root
              */
-            rootNode.rectangle.attr('x', 120).attr('y', 120);
+            rootNode.rectangle.attr('x', 420).attr('y', 420);
             setTextLocationForAllNode(rootNode);
-
+            /**
+             * Vẽ đường nối các node lá
+             * @returns {undefined}
+             */
             createLine(dependencies);
             /**
              * Su dung 1000ms de cho thong tin cau hinh
              * @returns {undefined}
              */
             setTimeout(function () {
-                function setDrag(node) {
+                function setEvent(node) {
                     drag(node);
-                    for (var i = 0; i < node.children.length; i++)
-                        setDrag(node.children[i]);
-                }
-                setDrag(rootNode);
-            }, 1000);
-            /**
-             * Su dung 1000ms de cho thong tin cau hinh
-             * @returns {undefined}
-             */
-            setTimeout(function () {
-                function setClick(node) {
                     doubleClick(node);
-//                    mouseCLick(node);
+                    rightMouseCLick(node);
                     for (var i = 0; i < node.children.length; i++)
-                        setClick(node.children[i]);
+                        setEvent(node.children[i]);
                 }
-                setClick(rootNode);
+                setEvent(rootNode);
             }, 1000);
         }, 300);
     </script>

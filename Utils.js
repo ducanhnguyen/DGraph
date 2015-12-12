@@ -17,7 +17,7 @@ function getSimplifiedName(path) {
         return nameFile;
 }
 /**
- * 
+ * Reset lại thuộc tính một Node về mặc định
  * @param {type} node
  * @returns {undefined}
  */
@@ -26,4 +26,20 @@ function resetAttributesOfAllNodes(node) {
             .style("fill", "white");
     for (var i = 0; i < node.children.length; i++)
         resetAttributesOfAllNodes(node.children[i]);
+}
+/**
+ * Hightlight một Node
+ * @param {type} node Node cần highlight
+ * @returns {undefined}
+ */
+function hightLightNode(node) {
+    node.rectangle.transition()
+            .duration(350)
+            .style('stroke', d3.rgb(30, 144, 255))
+            .style('stroke-width', 2);
+    for (i = 0; i < node.children.length; i++)
+        node.children[i].rectangle.transition()
+                .duration(350)
+                .style('stroke', d3.rgb(95, 140, 0))
+                .style('fill', d3.rgb(172, 230, 0));
 }

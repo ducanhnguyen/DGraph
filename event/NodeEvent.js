@@ -8,6 +8,8 @@ function drag(myNode) {
     var dragEvent =
             d3.behavior.drag()
             .on('dragstart', function () {
+                removeSubMenu();
+
                 resetAttributesOfAllNodes(getRoot(myNode));
                 hightLightNode(myNode);
                 /**
@@ -113,7 +115,7 @@ function expandAllNodes(node, oldNode, newNode) {
                     case LEFT_BOTTOM:
                         setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
-                        
+
                         setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
                         console.log(getName(child.path) + " move left bottom");
@@ -121,7 +123,7 @@ function expandAllNodes(node, oldNode, newNode) {
                     case LEFT_TOP:
                         setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
-                        
+
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
                         console.log(getName(child.path) + " move left top");
@@ -129,13 +131,13 @@ function expandAllNodes(node, oldNode, newNode) {
                     case RIGHT_ONLY:
                         setX(child, getX(child) + expandArea.right);
                         moveRight(child, expandArea.right);
-                        
+
                         console.log(getName(child.path) + " move right");
                         break;
                     case RIGHT_BOTTOM:
                         setX(child, getX(child) + expandArea.right);
                         moveRight(child, expandArea.right);
-                        
+
                         setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
                         console.log(getName(child.path) + " move right bottom");
@@ -143,7 +145,7 @@ function expandAllNodes(node, oldNode, newNode) {
                     case RIGHT_TOP:
                         moveRight(child, expandArea.right);
                         setY(child, getY(child) + expandArea.right);
-                        
+
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
                         console.log(getName(child.path) + " move right top");
@@ -151,7 +153,7 @@ function expandAllNodes(node, oldNode, newNode) {
                     case TOP_ONLY:
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
-                        
+
                         console.log(getName(child.path) + " move top");
                         break;
                     case BOTTOM_ONLY:
@@ -171,14 +173,20 @@ function doubleClick(node) {
         hightLightNode(node);
 
         /**
-         * Check the status of node
+         * Node được click có hiển thị con hay không
          */
         var displayChildren = true;
         node.children.forEach(function (childNode) {
             if (!isAvailable(childNode))
                 displayChildren = false;
         });
+        /**
+         * Nếu Node được click chưa hiển thị con
+         */
         if (!displayChildren) {
+            /**
+             * Tạo bản sao Node được click
+             */
             var oldNode = new Node();
             oldNode.rectangle = d3.select('body').select('svg').append("rect")
                     .attr('x', getX(node))
@@ -186,8 +194,11 @@ function doubleClick(node) {
                     .attr('width', getWidth(node))
                     .attr('height', getHeight(node))
                     .style('visibility', "hidden");
-            //end
+            /**
+             * Tính toán tọa độ các Node con trong Node được click
+             */
             calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
+
             node.children.forEach(function (childNode) {
                 setVisible(childNode);
             });
@@ -207,6 +218,7 @@ function doubleClick(node) {
             });
             pack(node);
         }
+
         /**
          * Cap nhat lai danh sach phu thuoc
          * @type Array
@@ -224,6 +236,7 @@ function doubleClick(node) {
  */
 function mouseCLick(node) {
     node.rectangle.on('click', function () {
+        removeSubMenu();
         d3.select(this)
                 // add transition
                 .transition()
@@ -239,14 +252,9 @@ function mouseCLick(node) {
  */
 function mouseEnter(node) {
     node.rectangle.on('mouseenter', function () {
-        // select element in current context //        d3.select(this)
-//                // add transition
-//                .transition()
-//                .duration(350)
-//                .style("fill", d3.rgb(250, 248, 245))
-//                .style('stroke', 'red')
-//                .style('stroke-width', 5)
-        //                .style('stroke-width', 3);
+        // select element in current context 
+        d3.select(this)
+                .style("cursor", "pointer");
     });
 }
 /**
@@ -263,14 +271,97 @@ function mouseOut(node) {
         //                .style('stroke-width', 1);
     });
 }
-function hightLightNode(node) {
-    node.rectangle.transition()
-            .duration(350)
-            .style('stroke', d3.rgb(30, 144, 255))
-            .style('stroke-width', 2);
-    for (i = 0; i < node.children.length; i++)
-        node.children[i].rectangle.transition()
-                .duration(350)
-                .style('stroke', d3.rgb(95, 140, 0))
-                .style('fill', d3.rgb(172, 230, 0));
+/**
+ * When mouse enter a node
+ * @param {type} node
+ * @returns {undefined}
+ */
+function rightMouseCLick(node) {
+
+    node.rectangle.on('contextmenu', function (data, index) {
+        d3.event.preventDefault();
+        /**
+         * Tạo menu
+         */
+        removeSubMenu();
+        var option_group = d3.select('svg').append('g').attr('class', 'popup');
+
+        var add_group = option_group.append('g');
+        var addToChangeSet = add_group.append('rect')
+                .attr('x', parseInt(d3.mouse(this)[0]))
+                .attr('y', parseInt(d3.mouse(this)[1]))
+                .attr('width', 100)
+                .attr('height', 20)
+                .style('fill', 'red');
+        var txtAddToChangeSet = add_group.append('text')
+                .attr('x', parseInt(addToChangeSet.attr('x')) + 5)
+                .attr('y', parseInt(addToChangeSet.attr('y')) + 12)
+                .style('font-size', 9)
+                .style('fill', 'white')
+                .text('Add to change set');
+
+        var remove_group = option_group.append('g');
+        var removeFromChangeSet = remove_group.append('rect')
+                .attr('x', parseInt(d3.mouse(this)[0]))
+                .attr('y', parseInt(addToChangeSet.attr('y')) + parseInt(addToChangeSet.attr('height')))
+                .attr('width', 100)
+                .attr('height', 20)
+                .style('fill', 'blue');
+        var txtRemoveFromChangeSet = remove_group.append('text')
+                .attr('x', parseInt(removeFromChangeSet.attr('x')) + 5)
+                .attr('y', parseInt(removeFromChangeSet.attr('y')) + 12)
+                .style('font-size', 9)
+                .style('fill', 'white')
+                .text('Remove from change set');
+        /**
+         * Thêm một phần tử vào changeSet
+         */
+        add_group.on('click', function () {
+            // Thêm tất cả node lá vào change set
+            var leafs = [];
+            searchLeaf(node, leafs);
+            leafs.forEach(function (leaf) {
+                changeSet.push(leaf.id);
+            });
+
+            // xóa menu hiện tại
+            removeSubMenu();
+        });
+        /**
+         * Xóa một phần tử khỏi changeSet
+         */
+        remove_group.on('click', function () {
+            // Thêm tất cả node lá vào change set
+            var deletedLeafs = [];
+            searchLeaf(node, deletedLeafs);
+            deletedLeafs.forEach(function (deletedLeaf) {
+                changeSet = removeFromArray(changeSet, deletedLeaf.id);
+            });
+
+            // xóa menu hiện tại
+            removeSubMenu();
+        });
+    });
+}
+/**
+ * 
+ * @param {type} arrayNode danh sách id Node trong tập change set
+ * @param {type} IddeletedNode Id Node cần xóa
+ * @returns {undefined}
+ */
+function removeFromArray(arrayNode, IddeletedNode) {
+    var arrayNodeTmp = [];
+    arrayNode.forEach(function (node) {
+        if (node != IddeletedNode) {
+            arrayNodeTmp.push(node);
+        }
+    });
+    return arrayNodeTmp;
+}
+function removeSubMenu() {
+    d3.selectAll("g.popup").remove();
+    displayChangeSet();
+}
+function displayChangeSet(){
+    console.log(changeSet);
 }
