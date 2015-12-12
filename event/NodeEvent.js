@@ -321,7 +321,8 @@ function rightMouseCLick(node) {
             var leafs = [];
             searchLeaf(node, leafs);
             leafs.forEach(function (leaf) {
-                changeSet.push(leaf.id);
+                if (!containID(changeSet, leaf.id))
+                    changeSet.push(leaf.id);
             });
 
             // xóa menu hiện tại
@@ -362,6 +363,14 @@ function removeSubMenu() {
     d3.selectAll("g.popup").remove();
     displayChangeSet();
 }
-function displayChangeSet(){
+function displayChangeSet() {
     console.log(changeSet);
+}
+function containID(arrayNode, id) {
+    arrayNode.forEach(function (item) {
+        if (item == id) {
+            return true;
+        }
+    });
+    return false;
 }
