@@ -4,14 +4,12 @@
  * @param {type} movedNode
  * @returns {undefined}
  */
-function detectCollision(movedNode, deltaX, deltaY) {
-    var parent = movedNode.parent;
-    var collisions = [];
+function detectInnerCollision(movedNode, deltaX, deltaY) {
+    if (movedNode != null && movedNode.parent != null) {
+        var parent = movedNode.parent;
+        var movedNodePoint = getPoints(movedNode);
+        movedNode.isMoved = true;
 
-    var movedNodePoint = getPoints(movedNode);
-    movedNode.isMoved = true;
-
-    if (parent != null) {
         parent.children.forEach(function (child) {
             if (child != movedNode && isAvailable(child) && child.isMoved == false) {
                 var childPoint = getPoints(child);
@@ -26,13 +24,46 @@ function detectCollision(movedNode, deltaX, deltaY) {
                         || isInRectangle(childPoint.D, movedNodePoint)) {
                     child.isMoved = true;
                     moveNode(child, deltaX, deltaY);
-                    detectCollision(child, deltaX, deltaY);
+                    detectInnerCollision(child, deltaX, deltaY);
                 }
 
             }
         });
     }
-    return collisions;
+}
+/**
+ * 
+ * @param {type} movedNode
+ * @param {type} deltaX
+ * @param {type} deltaY
+ * @returns {Array}
+ */
+function detectOuterCollision(movedNode, deltaX, deltaY) {
+    if (movedNode != null && movedNode.parent != null) {
+        var parent = movedNode.parent;
+        var movedNodePoint = getPoints(movedNode);
+        movedNode.isMoved = true;
+        parent.children.forEach(function (child) {
+            if (child != movedNode && isAvailable(child) && child.isMoved == false) {
+                var childPoint = getPoints(child);
+                // va chạm loại I
+                if (isInRectangle(movedNodePoint.A, childPoint)
+                        || isInRectangle(movedNodePoint.B, childPoint)
+                        || isInRectangle(movedNodePoint.C, childPoint)
+                        || isInRectangle(movedNodePoint.D, childPoint)
+                        || isInRectangle(childPoint.A, movedNodePoint)
+                        || isInRectangle(childPoint.B, movedNodePoint)
+                        || isInRectangle(childPoint.C, movedNodePoint)
+                        || isInRectangle(childPoint.D, movedNodePoint)) {
+                    child.isMoved = true;
+                    moveNode(child, deltaX, deltaY);
+                    detectOuterCollision(child, deltaX, deltaY);
+                }
+
+            }
+        });
+        detectOuterCollision(parent, deltaX, deltaY);
+    }
 }
 /**
  * Lấy danh sách các điểm tạo nên Node

@@ -4,7 +4,6 @@
  * @returns {undefined}
  */
 function drag(myNode) {
-    var deltaX, deltaY;
     var dragEvent =
             d3.behavior.drag()
             .on('dragstart', function () {
@@ -57,8 +56,16 @@ function drag(myNode) {
                  * Xác định va chạm
                  */
                 resetMoveState(getRoot(myNode));
-                if (myNode.parent != null)
-                    detectCollision(myNode, deltaX, deltaY);
+                if (deltaX > 0)
+                    deltaX += 2;
+                else
+                    deltaX -= 2;
+                if (deltaY > 0)
+                    deltaY += 2;
+                else
+                    deltaY -= 2;
+                detectInnerCollision(myNode, deltaX, deltaY);
+                detectOuterCollision(myNode.parent, deltaX, deltaY);
             })
             .on('dragend', function () {
             });

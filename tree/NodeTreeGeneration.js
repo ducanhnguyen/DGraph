@@ -69,6 +69,9 @@ function pack(node) {
             addBorderForNode(node);
             setTextLocationForNode(node);
             pack(node.parent);
+            
+            // di chuyển những Node bị đè
+            
         } else {
             node.rectangle
                     .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
