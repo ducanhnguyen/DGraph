@@ -9,25 +9,22 @@ function detectCollision(movedNode, deltaX, deltaY) {
     var collisions = [];
 
     var movedNodePoint = getPoints(movedNode);
+    movedNode.isMoved = true;
 
     if (parent != null) {
         parent.children.forEach(function (child) {
-            if (child != movedNode && isAvailable(child)) {
+            if (child != movedNode && isAvailable(child) && child.isMoved == false) {
                 var childPoint = getPoints(child);
                 // va chạm loại I
                 if (isInRectangle(movedNodePoint.A, childPoint)
                         || isInRectangle(movedNodePoint.B, childPoint)
                         || isInRectangle(movedNodePoint.C, childPoint)
-                        || isInRectangle(movedNodePoint.D, childPoint)) {
-                    moveNode(child, deltaX, deltaY);
-                    detectCollision(child, deltaX, deltaY);
-                }
-                else
-                // va chạm loại II
-                if (isInRectangle(childPoint.A, movedNodePoint)
+                        || isInRectangle(movedNodePoint.D, childPoint)
+                        || isInRectangle(childPoint.A, movedNodePoint)
                         || isInRectangle(childPoint.B, movedNodePoint)
                         || isInRectangle(childPoint.C, movedNodePoint)
                         || isInRectangle(childPoint.D, movedNodePoint)) {
+                    child.isMoved = true;
                     moveNode(child, deltaX, deltaY);
                     detectCollision(child, deltaX, deltaY);
                 }
@@ -74,4 +71,10 @@ function isInRectangle(point, rect) {
             && point.y >= rect.A.y && point.y <= rect.D.y)
         return true;
     return false;
+}
+function resetMoveState(node) {
+    node.isMoved = false;
+    node.children.forEach(function (child) {
+        resetMoveState(child);
+    });
 }

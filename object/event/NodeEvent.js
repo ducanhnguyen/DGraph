@@ -46,22 +46,19 @@ function drag(myNode) {
                 myNode.yCurrent = getY(myNode);
                 myNode.xClick = mouseXY.x;
                 myNode.yClick = mouseXY.y;
-                /**
-                 * Xác định va chạm
-                 */
-                var collisions = [];
-                if (myNode.parent != null)
-                    collisions = detectCollision(myNode, deltaX, deltaY);
 
-//                collisions.forEach(function (collision) {
-//                    moveNode(collision, deltaX, deltaY);
-//                });
-                console.log(collisions);
                 // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
                 createLine(dependencies);
                 setTextLocationForNode(myNode);
+
+                /**
+                 * Xác định va chạm
+                 */
+                resetMoveState(getRoot(myNode));
+                if (myNode.parent != null)
+                    detectCollision(myNode, deltaX, deltaY);
             })
             .on('dragend', function () {
             });
