@@ -11,7 +11,7 @@ function drag(myNode) {
                 removeSubMenu();
 
                 resetAttributesOfAllNodes(getRoot(myNode));
-                hightLightNode(myNode);
+                hightlightNode(myNode);
                 /**
                  * Bat toa do click chuot
                  */
@@ -49,10 +49,10 @@ function drag(myNode) {
                 /**
                  * Xác định va chạm
                  */
-//                var collisions = [];
-//                if (myNode.parent != null)
-//                    collisions = findCollision(myNode.parent, myNode);
-//                console.log(collisions);
+                var collisions = [];
+                if (myNode.parent != null)
+                    collisions = detectCollision(myNode);
+                console.log(collisions);
                 // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
@@ -64,37 +64,21 @@ function drag(myNode) {
     myNode.rectangle.call(dragEvent);
 }
 /**
- * 
+ * Mở rộng một Node
  * @param {type} node Node cha
- * @param {type} oldNode Trang thai Node chua mo rong
- * @param {type} newNode Trang thai Node da mo rong
- * @param {type} expandArea vung mo rong
+ * @param {type} oldChild Trang thai Node chua mo rong
+ * @param {type} newChild Trang thai Node da mo rong
  * @returns {undefined}
  */
-function expandAllNodes(node, oldNode, newNode) {
+function expandAllNodes(node, oldChild, newChild) {
     if (node != null) {
-        // add here
-        var oldLocationParent = {
-            x: getX(oldNode),
-            y: getY(oldNode),
-            width: getWidth(oldNode),
-            height: getHeight(oldNode)
-        };
-        // add here
-        var newLocationParent = {
-            x: getX(newNode),
-            y: getY(newNode),
-            width: getWidth(newNode),
-            height: getHeight(newNode)
-        };
-
         var expandArea = {
-            left: oldLocationParent.x - newLocationParent.x,
-            right: (newLocationParent.x + newLocationParent.width) - (oldLocationParent.x + oldLocationParent.width),
-            top: oldLocationParent.y - newLocationParent.y,
-            bottom: (newLocationParent.y + newLocationParent.height) - (oldLocationParent.y + oldLocationParent.height)
+            left: getX(oldChild) - getX(newChild),
+            right: (getX(newChild) + getWidth(newChild)) - (getX(oldChild) + getWidth(oldChild)),
+            top: getY(oldChild) - getY(newChild),
+            bottom: (getY(newChild) + getHeight(newChild)) - (getY(oldChild) + getHeight(oldChild))
         }
-        console.log(expandArea);
+
         var oldParentNode = new Node();
         oldParentNode.rectangle = d3.select('body').select('svg').append("rect")
                 .attr('x', getX(node))
@@ -104,13 +88,13 @@ function expandAllNodes(node, oldNode, newNode) {
                 .style('visibility', "hidden");
 
         node.children.forEach(function (child) {
-            if (child != newNode) {
-                var relativeLocation = getRelativeLocation(child, oldNode);
+            if (child != newChild) {
+                var relativeLocation = getRelativeLocation(child, oldChild);
                 switch (relativeLocation) {
                     case LEFT_ONLY:
                         setX(child, getX(child) - expandArea.left);
                         moveLeft(child, expandArea.left);
-                        console.log(getName(child.path) + " move left");
+                        //console.log(getName(child.path) + " move left");
                         break;
                     case LEFT_BOTTOM:
                         setX(child, getX(child) - expandArea.left);
@@ -118,7 +102,7 @@ function expandAllNodes(node, oldNode, newNode) {
 
                         setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
-                        console.log(getName(child.path) + " move left bottom");
+                        //console.log(getName(child.path) + " move left bottom");
                         break;
                     case LEFT_TOP:
                         setX(child, getX(child) - expandArea.left);
@@ -126,13 +110,13 @@ function expandAllNodes(node, oldNode, newNode) {
 
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
-                        console.log(getName(child.path) + " move left top");
+                        //console.log(getName(child.path) + " move left top");
                         break;
                     case RIGHT_ONLY:
                         setX(child, getX(child) + expandArea.right);
                         moveRight(child, expandArea.right);
 
-                        console.log(getName(child.path) + " move right");
+                        //console.log(getName(child.path) + " move right");
                         break;
                     case RIGHT_BOTTOM:
                         setX(child, getX(child) + expandArea.right);
@@ -140,7 +124,7 @@ function expandAllNodes(node, oldNode, newNode) {
 
                         setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
-                        console.log(getName(child.path) + " move right bottom");
+                        //console.log(getName(child.path) + " move right bottom");
                         break;
                     case RIGHT_TOP:
                         moveRight(child, expandArea.right);
@@ -148,18 +132,18 @@ function expandAllNodes(node, oldNode, newNode) {
 
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
-                        console.log(getName(child.path) + " move right top");
+                        //console.log(getName(child.path) + " move right top");
                         break;
                     case TOP_ONLY:
                         setY(child, getY(child) - expandArea.top);
                         moveTop(child, expandArea.top);
 
-                        console.log(getName(child.path) + " move top");
+                        //console.log(getName(child.path) + " move top");
                         break;
                     case BOTTOM_ONLY:
                         setY(child, getY(child) + expandArea.bottom);
                         moveBottom(child, expandArea.bottom);
-                        console.log(getName(child.path) + " move bottom");
+                        //console.log(getName(child.path) + " move bottom");
                         break;
                 }
             }
@@ -170,7 +154,7 @@ function expandAllNodes(node, oldNode, newNode) {
 function doubleClick(node) {
     node.rectangle.on('dblclick', function () {
         resetAttributesOfAllNodes(getRoot(node));
-        hightLightNode(node);
+        hightlightNode(node);
 
         /**
          * Node được click có hiển thị con hay không
@@ -209,7 +193,7 @@ function doubleClick(node) {
             // end
         } else {
             /*
-             * Collapse node to see children if children are shown
+             * Ẩn các node con
              */
             var nodes = [];
             searchAllNodes(node, nodes);
@@ -221,13 +205,11 @@ function doubleClick(node) {
 
         /**
          * Cap nhat lai danh sach phu thuoc
-         * @type Array
          */
         dependencies.list = [];
         updateDependency(getRoot(node), dependencies);
         createLine(dependencies);
-    }
-    );
+    });
 }
 /**
  * When mouse enter a node
@@ -370,7 +352,7 @@ function removeSubMenu() {
     displayChangeSet();
 }
 function displayChangeSet() {
-    console.log(changeSet);
+    //console.log(changeSet);
 }
 function containID(arrayNode, id) {
     arrayNode.forEach(function (item) {

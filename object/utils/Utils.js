@@ -17,7 +17,7 @@ function getSimplifiedName(path) {
         return nameFile;
 }
 /**
- * Reset lại thuộc tính một Node về mặc định
+ * Reset lại thuộc tính mọi Node về mặc định
  * @param {type} node
  * @returns {undefined}
  */
@@ -32,7 +32,7 @@ function resetAttributesOfAllNodes(node) {
  * @param {type} node Node cần highlight
  * @returns {undefined}
  */
-function hightLightNode(node) {
+function hightlightNode(node) {
     node.rectangle.transition()
             .duration(350)
             .style('stroke', d3.rgb(30, 144, 255))
