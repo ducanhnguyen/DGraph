@@ -51,7 +51,11 @@ function drag(myNode) {
                  */
                 var collisions = [];
                 if (myNode.parent != null)
-                    collisions = detectCollision(myNode);
+                    collisions = detectCollision(myNode, deltaX, deltaY);
+
+//                collisions.forEach(function (collision) {
+//                    moveNode(collision, deltaX, deltaY);
+//                });
                 console.log(collisions);
                 // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);

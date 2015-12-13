@@ -43,3 +43,20 @@ function hightlightNode(node) {
                 .style('stroke', d3.rgb(95, 140, 0))
                 .style('fill', d3.rgb(172, 230, 0));
 }
+/**
+ * Di chuyển một Node
+ * @param {type} node
+ * @param {type} deltaX
+ * @param {type} deltaY
+ * @returns {undefined}
+ */
+function moveNode(node, deltaX, deltaY) {
+    node.rectangle.attr('x', getX(node) + deltaX)
+            .attr('y', getY(node) + deltaY);
+    node.text.attr('x',parseInt(node.text.attr('x')) + deltaX)
+            .attr('y',parseInt(node.text.attr('y')) + deltaY);
+    node.children.forEach(function (child){
+       if (isAvailable(child)) 
+            moveNode(child, deltaX, deltaY);
+    });
+}

@@ -4,7 +4,7 @@
  * @param {type} movedNode
  * @returns {undefined}
  */
-function detectCollision(movedNode) {
+function detectCollision(movedNode, deltaX, deltaY) {
     var parent = movedNode.parent;
     var collisions = [];
 
@@ -12,13 +12,26 @@ function detectCollision(movedNode) {
 
     if (parent != null) {
         parent.children.forEach(function (child) {
-            if (child != movedNode) {
+            if (child != movedNode && isAvailable(child)) {
                 var childPoint = getPoints(child);
+                // va chạm loại I
+                if (isInRectangle(movedNodePoint.A, childPoint)
+                        || isInRectangle(movedNodePoint.B, childPoint)
+                        || isInRectangle(movedNodePoint.C, childPoint)
+                        || isInRectangle(movedNodePoint.D, childPoint)) {
+                    moveNode(child, deltaX, deltaY);
+                    detectCollision(child, deltaX, deltaY);
+                }
+                else
+                // va chạm loại II
                 if (isInRectangle(childPoint.A, movedNodePoint)
                         || isInRectangle(childPoint.B, movedNodePoint)
                         || isInRectangle(childPoint.C, movedNodePoint)
-                        || isInRectangle(childPoint.D, movedNodePoint))
-                    collisions.push(child);
+                        || isInRectangle(childPoint.D, movedNodePoint)) {
+                    moveNode(child, deltaX, deltaY);
+                    detectCollision(child, deltaX, deltaY);
+                }
+
             }
         });
     }
