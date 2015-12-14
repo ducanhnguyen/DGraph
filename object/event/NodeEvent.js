@@ -56,17 +56,6 @@ function drag(myNode) {
                  * Xác định va chạm
                  */
                 resetMoveState(getRoot(myNode));
-//                if (deltaX > deltaY) {
-//                    if (deltaX > 0)
-//                        deltaX += 2;
-//                    else
-//                        deltaX -= 2;
-//                } else {
-//                    if (deltaY > 0)
-//                        deltaY += 2;
-//                    else
-//                        deltaY -= 2;
-//                }
                 detectInnerCollision(myNode, deltaX, deltaY);
                 detectOuterCollision(myNode.parent, deltaX, deltaY);
             })
@@ -111,7 +100,7 @@ function doubleClick(node) {
             });
             pack(node);
             //
-            expandAllNodes(node.parent, oldNode, node);
+            expandAllNodes(oldNode, node);
             pack(node.parent);
             // end
         } else {
