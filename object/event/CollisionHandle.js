@@ -26,7 +26,6 @@ function detectInnerCollision(movedNode, deltaX, deltaY) {
                     moveNode(child, deltaX, deltaY);
                     detectInnerCollision(child, deltaX, deltaY);
                 }
-
             }
         });
     }

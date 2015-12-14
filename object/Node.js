@@ -76,7 +76,7 @@ function moveRight(node, distance) {
 function moveTop(node, distance) {
     node.children.forEach(function (child) {
         if (isAvailable(child)) {
-            setX(child, getY(child) - distance);
+            setY(child, getY(child) - distance);
             moveTop(child, distance);
         }
     });
@@ -86,7 +86,7 @@ function moveTop(node, distance) {
 function moveBottom(node, distance) {
     node.children.forEach(function (child) {
         if (isAvailable(child)) {
-            setX(child, getY(child) + distance);
+            setY(child, getY(child) + distance);
             moveBottom(child, distance);
         }
     });
@@ -102,7 +102,7 @@ function moveBottom(node, distance) {
 function isLeft(nodeA, nodeB) {
     var xA = getX(nodeA), xB = getX(nodeB);
     var widthA = getWidth(nodeA);
-    if (xA + widthA <= xB)
+    if (xA + widthA < xB)
         return true;
     return false;
 }
@@ -115,7 +115,7 @@ function isLeft(nodeA, nodeB) {
 function isRight(nodeA, nodeB) {
     var xA = getX(nodeA), xB = getX(nodeB);
     var widthB = getWidth(nodeB);
-    if (xB + widthB <= xA)
+    if (xB + widthB < xA)
         return true;
     return false;
 }
@@ -128,7 +128,7 @@ function isRight(nodeA, nodeB) {
 function isTop(nodeA, nodeB) {
     var yA = getY(nodeA), yB = getY(nodeB);
     var heightA = getHeight(nodeA);
-    if (yA + heightA <= yB)
+    if (yA + heightA < yB)
         return true;
     return false;
 }
@@ -141,28 +141,19 @@ function isTop(nodeA, nodeB) {
 function isBottom(nodeA, nodeB) {
     var yB = getY(nodeB), yA = getY(nodeA);
     var heightB = getHeight(nodeB);
-    if (yB + heightB <= yA)
+    if (yB + heightB < yA)
         return true;
     return false;
 }
+
+var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3;
 /**
  * Xac dinh vi tri nodeA so voi nodeB
  */
-var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3, LEFT_TOP = 4, LEFT_BOTTOM = 5, RIGHT_TOP = 6, RIGHT_BOTTOM = 7;
 function getRelativeLocation(nodeA, nodeB) {
     if (isLeft(nodeA, nodeB)) {
-        if (isTop(nodeA, nodeB))
-            return LEFT_TOP;
-        else if (isBottom(nodeA, nodeB))
-            return LEFT_BOTTOM;
-        else
             return LEFT_ONLY;
     } else if (isRight(nodeA, nodeB)) {
-        if (isTop(nodeA, nodeB))
-            return RIGHT_TOP;
-        else if (isBottom(nodeA, nodeB))
-            return RIGHT_BOTTOM;
-        else
             return RIGHT_ONLY;
     } else if (isTop(nodeA, nodeB))
         return TOP_ONLY;
