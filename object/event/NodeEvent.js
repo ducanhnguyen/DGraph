@@ -7,6 +7,8 @@ function drag(myNode) {
     var dragEvent =
             d3.behavior.drag()
             .on('dragstart', function () {
+                hightLightSet("[1, 38]", HIGHTLIGHT_IMPACTSET, getRoot(myNode));
+
                 removeSubMenu();
 
                 resetAttributesOfAllNodes(getRoot(myNode));
@@ -131,12 +133,13 @@ function doubleClick(node) {
 function mouseCLick(node) {
     node.rectangle.on('click', function () {
         removeSubMenu();
-        d3.select(this)
-                // add transition
-                .transition()
-                .duration(350)
-                .style("fill", d3.rgb(53, 155, 251))
-                .style('stroke-width', 2)
+        if (node.isChangeSet == false || node.isImpactSet == false)
+            d3.select(this)
+                    // add transition
+                    .transition()
+                    .duration(350)
+                    .style("fill", d3.rgb(53, 155, 251))
+                    .style('stroke-width', 2)
     });
 }
 /**
