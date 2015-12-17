@@ -101,18 +101,14 @@ function addBorderForNode(node) {
  * @param {type} y Tọa độ y hình chữ nhật
  * @returns {undefined}
  */
-function iniNode(node) {
+function iniNodeElement(node) {
     node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
-
-    node.g.append('rect').attr('class', 'child-container');
-    node.g.append('rect').attr('class', 'text-container');
-
-    node.g.append('text').attr('class', 'name')
+    node.childContainer = node.g.append('rect').attr('class', 'child-container');
+    node.textContainer = node.g.append('rect').attr('class', 'text-container');
+    node.name = node.g.append('text').attr('class', 'name')
             .text(getNameFromPath(node.path))
             .attr('x', 20)
             .attr('y', 15);
-
-    node.g.append('image').attr('class', 'state')
+    node.state = node.g.append('image').attr('class', 'state')
             .attr("xlink:href", "images/expand.png");
-    setInvisible(node);
 }

@@ -7,28 +7,25 @@ function drag(myNode) {
     var dragEvent =
             d3.behavior.drag()
             .on('dragstart', function () {
-                hightLightSet("[1, 38]", HIGHTLIGHT_IMPACTSET, getRoot(myNode));
-
                 removeSubMenu();
-
-                resetAttributesOfAllNodes(getRoot(myNode));
-                hightlightNode(myNode);
                 /**
                  * Bat toa do click chuot
                  */
-                myNode.xClick = parseInt(d3.mouse(this)[0]);
-                myNode.yClick = parseInt(d3.mouse(this)[1]);
+                myNode.xClick = parseFloat(d3.mouse(this)[0] + getX(myNode));
+                myNode.yClick = parseFloat(d3.mouse(this)[1] + getY(myNode));
                 /**
                  * Bat toa do doi tuong truoc khi di chuyen
                  */
                 myNode.xCurrent = getX(myNode);
                 myNode.yCurrent = getY(myNode);
+//                console.log("click"+myNode.xCurrent + ":" + myNode.yCurrent);
             })
             .on('drag', function () {
                 var mouseXY = {
-                    x: parseInt(d3.mouse(this)[0]),
-                    y: parseInt(d3.mouse(this)[1])
+                    x: parseFloat(d3.mouse(this)[0] + getX(myNode)),
+                    y: parseFloat(d3.mouse(this)[1] + getY(myNode))
                 };
+                console.log(mouseXY);
                 /**
                  * Tinh toan delta can phai di chuyen doi tuong tu vi tri click den vi tri moi
                  */
@@ -37,8 +34,7 @@ function drag(myNode) {
                 /**
                  * Cap nhat toa do moi cua doi tuong
                  */
-                myNode.rectangle.attr('x', myNode.xCurrent + deltaX)
-                        .attr('y', myNode.yCurrent + deltaY);
+                setNodeLocation(myNode, myNode.xCurrent + deltaX, myNode.yCurrent + deltaY);
                 /**
                  * Cap nhat toa do moi
                  * @returns {undefined}
@@ -49,21 +45,21 @@ function drag(myNode) {
                 myNode.yClick = mouseXY.y;
 
                 // di chuyển children trong node đó
-                updateLocationOfChildren(myNode, deltaX, deltaY);
-                pack(myNode.parent);
-                createLine(dependencies);
-                setTextLocationForNode(myNode);
+//                updateLocationOfChildren(myNode, deltaX, deltaY);
+//                pack(myNode.parent);
+//                createLine(dependencies);
+//                setTextLocationForNode(myNode);
 
                 /**
                  * Xác định va chạm
                  */
-                resetMoveState(getRoot(myNode));
-                detectInnerCollision(myNode, deltaX, deltaY);
-                detectOuterCollision(myNode.parent, deltaX, deltaY);
+//                resetMoveState(getRoot(myNode));
+//                detectInnerCollision(myNode, deltaX, deltaY);
+//                detectOuterCollision(myNode.parent, deltaX, deltaY);
             })
             .on('dragend', function () {
             });
-    myNode.rectangle.call(dragEvent);
+    getGroupElement(myNode).call(dragEvent);
 }
 function doubleClick(node) {
     node.rectangle.on('dblclick', function () {
@@ -131,15 +127,20 @@ function doubleClick(node) {
  * @returns {undefined}
  */
 function mouseCLick(node) {
-    node.rectangle.on('click', function () {
-        removeSubMenu();
-        if (node.isChangeSet == false || node.isImpactSet == false)
-            d3.select(this)
-                    // add transition
-                    .transition()
-                    .duration(350)
-                    .style("fill", d3.rgb(53, 155, 251))
-                    .style('stroke-width', 2)
+    getGroupElement(node).on('click', function () {
+//        removeSubMenu();
+//        if (node.isChangeSet == false || node.isImpactSet == false)
+//            d3.select(this)
+//                    // add transition
+//                    .transition()
+//                    .duration(350)
+//                    .style("fill", d3.rgb(53, 155, 251))
+//                    .style('stroke-width', 2)
+        var mouseXY = {
+            x: parseFloat(d3.mouse(this)[0] + getX(node)),
+            y: parseFloat(d3.mouse(this)[1] + getY(node))
+        };
+        console.log(mouseXY);
     });
 }
 /**

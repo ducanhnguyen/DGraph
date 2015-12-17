@@ -13,16 +13,19 @@ function Node() {
  * @returns {undefined}
  */
 function getX(node) {
-    return parseInt(node.g.select('.container').attr('x'));
+//    return parseInt(getTextContainerInSvg(node).attr('x'));
+    return parseFloat(d3.transform(getGroupElement(node).attr("transform")).translate[0]);
 }
 function getY(node) {
-    return parseInt(node.g.select('.container').attr('y'));
+//    return parseInt(getTextContainerInSvg(node).attr('y'));
+    return parseFloat(d3.transform(getGroupElement(node).attr("transform")).translate[1]);
 }
 function getWidth(node) {
-    return parseInt(node.g.select('.container').attr('width'));
+    return parseFloat(getTextContainerElement(node).attr('width'));
 }
 function getHeight(node) {
-    return parseInt(node.g.select('.container').attr('height'));
+    return parseFloat(getTextContainerElement(node).attr('height')
+            + getChildContainerElement(node).attr('height'));
 }
 /**
  * 
@@ -152,9 +155,9 @@ var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3;
  */
 function getRelativeLocation(nodeA, nodeB) {
     if (isLeft(nodeA, nodeB)) {
-            return LEFT_ONLY;
+        return LEFT_ONLY;
     } else if (isRight(nodeA, nodeB)) {
-            return RIGHT_ONLY;
+        return RIGHT_ONLY;
     } else if (isTop(nodeA, nodeB))
         return TOP_ONLY;
     else
@@ -183,7 +186,7 @@ function setInvisible(node) {
     node.visibility = false;
 }
 function setVisible(node) {
-     getNameElement(node).style('visibility', 'visible');
+    getNameElement(node).style('visibility', 'visible');
     getChildContainerElement(node).style('visibility', 'visible');
     getTextContainerElement(node).style('visibility', 'visible');
     getStateElement(node).style('visibility', 'visible');
@@ -198,15 +201,38 @@ function isAvailable(node) {
     return false;
 }
 //-------------add later
-function getNameElement(node){
+function getNameElement(node) {
     return node.g.select('.name');
 }
-function getChildContainerElement(node){
+function getNameInSvg(node) {
+    return node.g.name;
+}
+
+function getChildContainerElement(node) {
     return node.g.select('.child-container');
 }
-function getTextContainerElement(node){
+function getChildContainerInSvg(node) {
+    return node.g.childContainer;
+}
+
+function getTextContainerElement(node) {
     return node.g.select('.text-container');
 }
-function getStateElement(node){
+function getTextContainerInSvg(node) {
+    return node.g.textContainer;
+}
+
+function getStateElement(node) {
     return node.g.select('.state');
+}
+function getStateInSvg(node) {
+    return node.g.state;
+}
+
+function getGroupElement(node) {
+    return node.g;
+}
+function setNodeLocation(node, x, y) {
+    getGroupElement(node).attr('transform', 'translate(' + x + ',' + y + ')');
+//    console.log(getChildContainerElement(node));
 }
