@@ -20,11 +20,8 @@ function iniWebPage() {
 function updateLocationOfChildren(node, deltaX, deltaY) {
     for (var i = 0; i < node.children.length; i++) {
         var nChild = node.children[i];
-        nChild.rectangle
-                .attr('x', getX(nChild) + deltaX)
-                .attr('y', getY(nChild) + deltaY);
+        setNodeLocation(nChild, getX(nChild) + deltaX, getY(nChild) + deltaY);
         updateLocationOfChildren(nChild, deltaX, deltaY);
-        setTextLocationForNode(nChild);
     }
 }
 /**
@@ -61,21 +58,15 @@ function pack(node) {
             var xOldNode = getX(node) + widthNode;
             var yOldNode = getY(node) + heightNode;
 
-            node.rectangle
-                    .attr('x', xMinLeft)
-                    .attr('y', yMinTop)
-                    .attr('width', widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode))
-                    .attr('height', heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
+            setWidth(node, widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode));
+            setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
             addBorderForNode(node);
-            setTextLocationForNode(node);
             pack(node.parent);
-
             // di chuyển những Node bị đè
-
         } else {
-            node.rectangle
-                    .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
-                    .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+            setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
+            setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+            addBorderForNode(node);
             pack(node.parent);
         }
     }
@@ -87,11 +78,9 @@ function pack(node) {
  */
 function addBorderForNode(node) {
     if (getX(node) > 0) {
-        node.rectangle
-                .attr('x', getX(node) - BORDER_OF_NODE.left)
-                .attr('y', getY(node) - BORDER_OF_NODE.top)
-                .attr('width', getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right)
-                .attr('height', getHeight(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
+        setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
+        setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
+        setHeight(node, getHeight(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
     }
 }
 /**
@@ -103,12 +92,14 @@ function addBorderForNode(node) {
  */
 function iniNodeElement(node) {
     node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
-    node.childContainer = node.g.append('rect').attr('class', 'child-container');
-    node.textContainer = node.g.append('rect').attr('class', 'text-container');
-    node.name = node.g.append('text').attr('class', 'name')
+    node.g.childContainer = node.g.append('rect').attr('class', 'child-container')
+            .attr('width', 100).attr('height', 100);
+    node.g.textContainer = node.g.append('rect').attr('class', 'text-container')
+            .attr('width', 100).attr('height', 20);
+    node.g.name = node.g.append('text').attr('class', 'name')
             .text(getNameFromPath(node.path))
             .attr('x', 20)
             .attr('y', 15);
-    node.state = node.g.append('image').attr('class', 'state')
+    node.g.state = node.g.append('image').attr('class', 'state')
             .attr("xlink:href", "images/expand.png");
 }

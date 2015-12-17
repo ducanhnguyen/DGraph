@@ -45,8 +45,8 @@ function drag(myNode) {
                 myNode.yClick = mouseXY.y;
 
                 // di chuyển children trong node đó
-//                updateLocationOfChildren(myNode, deltaX, deltaY);
-//                pack(myNode.parent);
+                updateLocationOfChildren(myNode, deltaX, deltaY);
+                pack(myNode.parent);;
 //                createLine(dependencies);
 //                setTextLocationForNode(myNode);
 
@@ -93,10 +93,10 @@ function doubleClick(node) {
             node.children.forEach(function (childNode) {
                 setVisible(childNode);
             });
-//            pack(node);
+            pack(node);
             //
 //            expandAllNodes(oldNode, node);
-//            pack(node.parent);
+            pack(node.parent);
             // end
         } else {
             /*
@@ -113,9 +113,9 @@ function doubleClick(node) {
         /**
          * Cap nhat lai danh sach phu thuoc
          */
-        dependencies.list = [];
-        updateDependency(getRoot(node), dependencies);
-        createLine(dependencies);
+//        dependencies.list = [];
+//        updateDependency(getRoot(node), dependencies);
+//        createLine(dependencies);
     });
 }
 /**

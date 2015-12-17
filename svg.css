@@ -1,7 +1,5 @@
 .child-container{
     stroke: yellow;
-    width: 100px;
-    height: 100px;
     x: 0;
     y: 20;
     fill: rgb(205, 221, 51);
@@ -9,8 +7,6 @@
 }
 .text-container{
     stroke: yellow;
-    width: 100px;
-    height: 20px;
     x: 0;
     y: 0;
     fill: rgb(255, 221, 51);
@@ -19,7 +15,7 @@
 .name{
     fill: rgb(154, 102, 0);
     font-family: Arial;
-    font-size: 13px;
+    font-size: 10px;
     font-family: Arial;
     font-weight: bold;
 }

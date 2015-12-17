@@ -19,11 +19,10 @@ function getY(node) {
     return parseFloat(d3.transform(getGroupElement(node).attr("transform")).translate[1]);
 }
 function getWidth(node) {
-    return parseFloat(getChildContainerElement(node).attr('width'));
+    return parseFloat(getChildContainerInSvg(node).attr('width'));
 }
 function getHeight(node) {
-    return parseFloat(getTextContainerElement(node).attr('height')
-            + getChildContainerElement(node).attr('height'));
+    return parseFloat(getTextContainerInSvg(node).attr('height')) + parseFloat(getChildContainerInSvg(node).attr('height'));
 }
 /**
  * 
@@ -43,7 +42,6 @@ function setWidth(node, width) {
 }
 function setHeight(node, height) {
     getChildContainerElement(node).attr('height', height);
-    getTextContainerElement(node).attr('height', height);
 }
 function setBackground(node, color) {
     getChildContainerElement(node).style('fill', color);
