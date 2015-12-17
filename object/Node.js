@@ -13,15 +13,13 @@ function Node() {
  * @returns {undefined}
  */
 function getX(node) {
-//    return parseInt(getTextContainerInSvg(node).attr('x'));
     return parseFloat(d3.transform(getGroupElement(node).attr("transform")).translate[0]);
 }
 function getY(node) {
-//    return parseInt(getTextContainerInSvg(node).attr('y'));
     return parseFloat(d3.transform(getGroupElement(node).attr("transform")).translate[1]);
 }
 function getWidth(node) {
-    return parseFloat(getTextContainerElement(node).attr('width'));
+    return parseFloat(getChildContainerElement(node).attr('width'));
 }
 function getHeight(node) {
     return parseFloat(getTextContainerElement(node).attr('height')
@@ -34,28 +32,24 @@ function getHeight(node) {
  * @returns {undefined}
  */
 function setX(node, x) {
-    node.rectangle.attr('x', x);
-    node.text.attr('x', x + TEXT.MARGIN_LEFT);
-//    pack(node);
+    setNodeLocation(node, x, getY(node));
 }
 function setY(node, y) {
-    node.rectangle.attr('y', y);
-    node.text.attr('y', y + TEXT.MARGIN_TOP);
-//    pack(node);
+    setNodeLocation(node, getX(node), y);
 }
 function setWidth(node, width) {
-    node.rectangle.attr('width', width);
-//    pack(node);
+    getChildContainerElement(node).attr('width', width);
+    getTextContainerElement(node).attr('width', width);
 }
 function setHeight(node, height) {
-    node.rectangle.attr('height', height);
-//    pack(node);
+    getChildContainerElement(node).attr('height', height);
+    getTextContainerElement(node).attr('height', height);
 }
 function setBackground(node, color) {
-    node.rectangle.style('fill', color);
+    getChildContainerElement(node).style('fill', color);
 }
 function setStroke(node, strokeColor) {
-    node.rectangle.style('stroke', strokeColor);
+    getChildContainerElement(node).style('stroke', strokeColor);
 }
 function moveLeft(node, distance) {
     node.children.forEach(function (child) {
@@ -234,5 +228,4 @@ function getGroupElement(node) {
 }
 function setNodeLocation(node, x, y) {
     getGroupElement(node).attr('transform', 'translate(' + x + ',' + y + ')');
-//    console.log(getChildContainerElement(node));
 }

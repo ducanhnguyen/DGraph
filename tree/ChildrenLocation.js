@@ -27,18 +27,15 @@ function inRowStrategy(parentNode) {
         var currentNode = parentNode.children[i];
         if (a > 0) {
             var preNode = parentNode.children[i - 1];
-            currentNode.rectangle.attr('x', getX(preNode) + getWidth(preNode) + 20)
-                    .attr('y', getY(parentNode) + b * 40)
-                    .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
-                    .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+            setNodeLocation(currentNode, getX(preNode) + getWidth(preNode) + 20, getY(parentNode) + b * 40);
+            setWidth(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
+            setHeight(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
         }
         else {
-            currentNode.rectangle.attr('x', getX(parentNode))
-                    .attr('y', getY(parentNode) + b * 40)
-                    .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
-                    .attr('height', DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+            setNodeLocation(currentNode, getX(parentNode), getY(parentNode) + b * 40);
+            setWidth(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
+            setHeight(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
         }
-        setTextLocationForNode(parentNode.children[i]);
     }
 }
 /**

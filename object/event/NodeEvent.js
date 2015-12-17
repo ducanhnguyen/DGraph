@@ -62,10 +62,7 @@ function drag(myNode) {
     getGroupElement(myNode).call(dragEvent);
 }
 function doubleClick(node) {
-    node.rectangle.on('dblclick', function () {
-        resetAttributesOfAllNodes(getRoot(node));
-        hightlightNode(node);
-
+    getGroupElement(node).on('dblclick', function () {
         /**
          * Node được click có hiển thị con hay không
          */
@@ -81,13 +78,13 @@ function doubleClick(node) {
             /**
              * Tạo bản sao Node được click
              */
-            var oldNode = new Node();
-            oldNode.rectangle = d3.select('body').select('svg').append("rect")
-                    .attr('x', getX(node))
-                    .attr('y', getY(node))
-                    .attr('width', getWidth(node))
-                    .attr('height', getHeight(node))
-                    .style('visibility', "hidden");
+//            var oldNode = new Node();
+//            oldNode.rectangle = d3.select('body').select('svg').append("rect")
+//                    .attr('x', getX(node))
+//                    .attr('y', getY(node))
+//                    .attr('width', getWidth(node))
+//                    .attr('height', getHeight(node))
+//                    .style('visibility', "hidden");
             /**
              * Tính toán tọa độ các Node con trong Node được click
              */
@@ -96,10 +93,10 @@ function doubleClick(node) {
             node.children.forEach(function (childNode) {
                 setVisible(childNode);
             });
-            pack(node);
+//            pack(node);
             //
-            expandAllNodes(oldNode, node);
-            pack(node.parent);
+//            expandAllNodes(oldNode, node);
+//            pack(node.parent);
             // end
         } else {
             /*
