@@ -176,15 +176,18 @@ function getRoot(currentNode) {
  * Disable a Node
  */
 function setInvisible(node) {
-    getName(node).style('visibility', "hidden");
-    getContainer(node).style('visibility', "hidden");
+    getNameElement(node).style('visibility', 'hidden');
+    getChildContainerElement(node).style('visibility', 'hidden');
+    getTextContainerElement(node).style('visibility', 'hidden');
+    getStateElement(node).style('visibility', 'hidden');
     node.visibility = false;
 }
 function setVisible(node) {
-    console.log(node.g);
-//    getName(node).style('visibility', 'visible');
-//    getContainer(node).style('visibility', "visible");
-//    node.visibility = true;
+     getNameElement(node).style('visibility', 'visible');
+    getChildContainerElement(node).style('visibility', 'visible');
+    getTextContainerElement(node).style('visibility', 'visible');
+    getStateElement(node).style('visibility', 'visible');
+    node.visibility = true;
 }
 /**
  * Enable a Node
@@ -195,9 +198,15 @@ function isAvailable(node) {
     return false;
 }
 //-------------add later
-function getName(node){
+function getNameElement(node){
     return node.g.select('.name');
 }
-function getContainer(node){
-    return node.g.select('.container');
+function getChildContainerElement(node){
+    return node.g.select('.child-container');
+}
+function getTextContainerElement(node){
+    return node.g.select('.text-container');
+}
+function getStateElement(node){
+    return node.g.select('.state');
 }

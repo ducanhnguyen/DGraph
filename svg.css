@@ -1,3 +1,31 @@
-.node{
-    fill: red;
+.child-container{
+    stroke: yellow;
+    width: 100px;
+    height: 100px;
+    x: 0;
+    y: 20;
+    fill: rgb(205, 221, 51);
+    stroke: rgb(230, 153, 0);
+}
+.text-container{
+    stroke: yellow;
+    width: 100px;
+    height: 20px;
+    x: 0;
+    y: 0;
+    fill: rgb(255, 221, 51);
+    stroke: rgb(230, 153, 0);
+}
+.name{
+    fill: rgb(154, 102, 0);
+    font-family: Arial;
+    font-size: 13px;
+    font-family: Arial;
+    font-weight: bold;
+}
+.state{
+    height: 10px;
+    width: 10px;
+    x: 5;
+    y: 5;
 }

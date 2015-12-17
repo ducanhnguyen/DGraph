@@ -4,8 +4,8 @@
  */
 function iniWebPage() {
     d3.select('body').append('svg')
-            .attr("width", 3000)
-            .attr("height", 3000);
+            .attr('width', 3000)
+            .attr('height', 3000);
 
     d3.select('svg').append('rect').attr('class', 'add-option');
     d3.select('svg').append('rect').attr('class', 'remove-option');
@@ -102,25 +102,17 @@ function addBorderForNode(node) {
  * @returns {undefined}
  */
 function iniNode(node) {
-    var X = 100;
-    var Y = 100;
+    node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
 
-    node.g = d3.select('body').select('svg').append("g").attr("class", "node");
+    node.g.append('rect').attr('class', 'child-container');
+    node.g.append('rect').attr('class', 'text-container');
 
-    node.g.append("rect").attr('class', 'container')
-            .attr("x", X)
-            .attr("y", Y)
-            .attr("width", DEFAULT_WIDTH_NODE)
-            .attr("height", DEFAULT_HEIGHT_NODE);
-    
-    node.g.append("text").attr('class', 'name')
-            .attr("x", getX(node) + TEXT.MARGIN_LEFT)
-            .attr("y", getY(node) + TEXT.MARGIN_TOP)
+    node.g.append('text').attr('class', 'name')
             .text(getNameFromPath(node.path))
-            .style('fill', 'black')
-            .style('font-size', TEXT.SIZE_TEXT)
-            .style('font-weight', 'bold')
-            .style('font-family', 'Arial');
-    
-    setVisible(node);
+            .attr('x', 20)
+            .attr('y', 15);
+
+    node.g.append('image').attr('class', 'state')
+            .attr("xlink:href", "images/expand.png");
+    setInvisible(node);
 }
