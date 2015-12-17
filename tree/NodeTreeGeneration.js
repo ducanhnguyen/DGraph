@@ -69,9 +69,9 @@ function pack(node) {
             addBorderForNode(node);
             setTextLocationForNode(node);
             pack(node.parent);
-            
+
             // di chuyển những Node bị đè
-            
+
         } else {
             node.rectangle
                     .attr('width', DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN)
@@ -96,24 +96,31 @@ function addBorderForNode(node) {
 }
 /**
  * Thêm Hình Chữ Nhật vào một Node
- * @param {type} parentNode Node cần thêm Hình Chữ Nhật
+ * @param {type} node Node cần thêm Hình Chữ Nhật
  * @param {type} x Tọa độ x hình chữ nhật
  * @param {type} y Tọa độ y hình chữ nhật
  * @returns {undefined}
  */
-function iniRectangleOfNode(parentNode, x, y) {
-    var X = 0;
-    var Y = 0;
-    if (typeof (x) === 'undefined')
-        X = -1000;
-    if (typeof (y) === 'undefined')
-        Y = -1000;
+function iniNode(node) {
+    var X = 100;
+    var Y = 100;
 
-    parentNode.rectangle = d3.select('body').select('svg').append("rect")
+    node.g = d3.select('body').select('svg').append("g").attr("class", "node");
+
+    node.g.append("rect").attr('class', 'container')
             .attr("x", X)
             .attr("y", Y)
             .attr("width", DEFAULT_WIDTH_NODE)
-            .attr("height", DEFAULT_HEIGHT_NODE)
-            .style("stroke", d3.rgb(230, 153, 0))
-            .style("fill", "white");
+            .attr("height", DEFAULT_HEIGHT_NODE);
+    
+    node.g.append("text").attr('class', 'name')
+            .attr("x", getX(node) + TEXT.MARGIN_LEFT)
+            .attr("y", getY(node) + TEXT.MARGIN_TOP)
+            .text(getNameFromPath(node.path))
+            .style('fill', 'black')
+            .style('font-size', TEXT.SIZE_TEXT)
+            .style('font-weight', 'bold')
+            .style('font-family', 'Arial');
+    
+    setVisible(node);
 }

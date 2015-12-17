@@ -13,16 +13,16 @@ function Node() {
  * @returns {undefined}
  */
 function getX(node) {
-    return parseInt(node.rectangle.attr('x'));
+    return parseInt(node.g.select('.container').attr('x'));
 }
 function getY(node) {
-    return parseInt(node.rectangle.attr('y'));
+    return parseInt(node.g.select('.container').attr('y'));
 }
 function getWidth(node) {
-    return parseInt(node.rectangle.attr('width'));
+    return parseInt(node.g.select('.container').attr('width'));
 }
 function getHeight(node) {
-    return parseInt(node.rectangle.attr('height'));
+    return parseInt(node.g.select('.container').attr('height'));
 }
 /**
  * 
@@ -176,14 +176,15 @@ function getRoot(currentNode) {
  * Disable a Node
  */
 function setInvisible(node) {
-    node.rectangle.style('visibility', "hidden");
-    node.text.style('visibility', "hidden");
+    getName(node).style('visibility', "hidden");
+    getContainer(node).style('visibility', "hidden");
     node.visibility = false;
 }
 function setVisible(node) {
-    node.rectangle.style('visibility', "visible");
-    node.text.style('visibility', "visible");
-    node.visibility = true;
+    console.log(node.g);
+//    getName(node).style('visibility', 'visible');
+//    getContainer(node).style('visibility', "visible");
+//    node.visibility = true;
 }
 /**
  * Enable a Node
@@ -192,4 +193,11 @@ function isAvailable(node) {
     if (getX(node) >= 0 && getY(node) >= 0 && node.visibility == true)
         return true;
     return false;
+}
+//-------------add later
+function getName(node){
+    return node.g.select('.name');
+}
+function getContainer(node){
+    return node.g.select('.container');
 }

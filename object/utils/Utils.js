@@ -3,7 +3,7 @@ function randomInt(bound) {
         return null;
     return Math.abs(Math.floor(Math.random() * bound));
 }
-function getName(path) {
+function getNameFromPath(path) {
     var elements = path.split(DELIMITER_BETWEEN_COMPONENT_IN_PATH);
     var nameFile = elements[elements.length - 1];
     return nameFile;

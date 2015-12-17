@@ -16,6 +16,7 @@
     </div>
     <!-- load the d3.js library -->
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <link href="svg.css" rel="stylesheet" type="text/css"/>
     <script src="config/Configuration.js"></script>
     <script src="data/JsonParser.js"></script>
 
@@ -55,11 +56,7 @@
             function traverse(jsonTmp, node) {
                 node.id = jsonTmp.id + "";
                 node.path = jsonTmp.path + "";
-                iniRectangleOfNode(node);
-                iniNameOfNode(node);
-                
-                node.isChangeSet = false;
-                node.isImpactSet = false;
+                iniNode(node);                
                 
                 if (jsonTmp.children.length > 0)
                     for (var i = 0; i < jsonTmp.children.length; i++) {
@@ -77,44 +74,44 @@
             /**
              * Tao su phu thuoc giua cac Node
              */
-            var dependency = document.getElementById('dependency').innerHTML;
-            var jsonDependency = JSON.parse(dependency);
-            for (i = 0; i < jsonDependency.length; i++) {
-                var nodeGayPhuThuoc = [];
-                search(rootNode, jsonDependency[i].id, nodeGayPhuThuoc);
-                var idBiPhuThuoc_s = jsonDependency[i].depends;
-                for (j = 0; j < idBiPhuThuoc_s.length; j++) {
-                    var nodeBiPhuThuoc = [];
-                    search(rootNode, idBiPhuThuoc_s[j], nodeBiPhuThuoc);
-
-                    nodeGayPhuThuoc[0].callee.push(nodeBiPhuThuoc[0]);
-                    nodeBiPhuThuoc[0].caller.push(nodeGayPhuThuoc[0]);
-                }
-            }
+//            var dependency = document.getElementById('dependency').innerHTML;
+//            var jsonDependency = JSON.parse(dependency);
+//            for (i = 0; i < jsonDependency.length; i++) {
+//                var nodeGayPhuThuoc = [];
+//                search(rootNode, jsonDependency[i].id, nodeGayPhuThuoc);
+//                var idBiPhuThuoc_s = jsonDependency[i].depends;
+//                for (j = 0; j < idBiPhuThuoc_s.length; j++) {
+//                    var nodeBiPhuThuoc = [];
+//                    search(rootNode, idBiPhuThuoc_s[j], nodeBiPhuThuoc);
+//
+//                    nodeGayPhuThuoc[0].callee.push(nodeBiPhuThuoc[0]);
+//                    nodeBiPhuThuoc[0].caller.push(nodeGayPhuThuoc[0]);
+//                }
+//            }
             /**
              * Hien thi root
              */
-            rootNode.rectangle.attr('x', 420).attr('y', 420);
-            setTextLocationForAllNode(rootNode);
+//            rootNode.rectangle.attr('x', 420).attr('y', 420);
+//            setTextLocationForAllNode(rootNode);
             /**
              * Vẽ đường nối các node lá
              * @returns {undefined}
              */
-            createLine(dependencies);
+//            createLine(dependencies);
             /**
              * Su dung 1000ms de cho thong tin cau hinh
              * @returns {undefined}
              */
-            setTimeout(function () {
-                function setEvent(node) {
-                    drag(node);
-                    doubleClick(node);
-                    rightMouseCLick(node);
-                    for (var i = 0; i < node.children.length; i++)
-                        setEvent(node.children[i]);
-                }
-                setEvent(rootNode);
-            }, 1000);
+//            setTimeout(function () {
+//                function setEvent(node) {
+//                    drag(node);
+//                    doubleClick(node);
+//                    rightMouseCLick(node);
+//                    for (var i = 0; i < node.children.length; i++)
+//                        setEvent(node.children[i]);
+//                }
+//                setEvent(rootNode);
+//            }, 1000);
         }, 0);
     </script>
 </body>
