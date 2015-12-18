@@ -40,7 +40,7 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
     }
 }
 /**
- * Thay đổi kích thước node để chứa vừa đủ các Node con. 
+ * Thay đổi kích thước node để chứa vừa đủ các Node con.
  * @param {type} node Node cần thay đổi kích thước
  * @returns {undefined}
  */
@@ -73,9 +73,14 @@ function pack(node) {
             var xOldNode = getX(node) + widthNode;
             var yOldNode = getY(node) + heightNode;
 
+            var oldNodeInfor = getNodeInfor(node);
+
             setNodeLocation(node, xMinLeft, yMinTop - 15);
             setWidth(node, widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode));
             setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
+
+            expandAllNodes(node, oldNodeInfor);
+            
             pack(node.parent);
         } else {
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);

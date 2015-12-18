@@ -1,7 +1,8 @@
 /**
  * Xác định va chạm đồng mức
- * @param {type} node
  * @param {type} movedNode
+ * @param {type} deltaX
+ * @param {type} deltaY
  * @returns {undefined}
  */
 function detectInnerCollision(movedNode, deltaX, deltaY) {
@@ -32,37 +33,21 @@ function detectInnerCollision(movedNode, deltaX, deltaY) {
 }
 /**
  * 
- * @param {type} movedNode
+ * @param {type} movedNode Node bi di chuyenr
  * @param {type} deltaX
  * @param {type} deltaY
  * @returns {Array}
  */
 function detectOuterCollision(movedNode, deltaX, deltaY) {
-    if (movedNode != null && movedNode.parent != null) {
-        var parent = movedNode.parent;
-        var movedNodePoint = getPoints(movedNode);
-        movedNode.isMoved = true;
-        parent.children.forEach(function (child) {
-            if (child != movedNode && isAvailable(child) && child.isMoved == false) {
-                var childPoint = getPoints(child);
-                // va chạm loại I
-                if (isInRectangle(movedNodePoint.A, childPoint)
-                        || isInRectangle(movedNodePoint.B, childPoint)
-                        || isInRectangle(movedNodePoint.C, childPoint)
-                        || isInRectangle(movedNodePoint.D, childPoint)
-                        || isInRectangle(childPoint.A, movedNodePoint)
-                        || isInRectangle(childPoint.B, movedNodePoint)
-                        || isInRectangle(childPoint.C, movedNodePoint)
-                        || isInRectangle(childPoint.D, movedNodePoint)) {
-                    child.isMoved = true;
-                    moveNode(child, deltaX, deltaY);
-                    detectOuterCollision(child, deltaX, deltaY);
-                }
+    movedNode.parent.children.forEach(function (child) {
+        if (movedNode != child) {
+//            var relative = getRelativeLocation(getNodeInfor(movedNode), getNodeInfor(child));
+//            if (deltaX > 0 && relative == LEFT_ONLY)
+//                moveNode(child, deltaX, deltaY);
+        } else {
 
-            }
-        });
-        detectOuterCollision(parent, deltaX, deltaY);
-    }
+        }
+    });
 }
 /**
  * Lấy danh sách các điểm tạo nên Node

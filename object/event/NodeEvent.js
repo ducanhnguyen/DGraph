@@ -25,15 +25,11 @@ function drag(myNode) {
                     x: parseFloat(d3.mouse(this)[0] + getX(myNode)),
                     y: parseFloat(d3.mouse(this)[1] + getY(myNode))
                 };
-                /**
-                 * Tinh toan delta can phai di chuyen doi tuong tu vi tri click den vi tri moi
-                 */
                 deltaX = mouseXY.x - myNode.xClick;
                 deltaY = mouseXY.y - myNode.yClick;
-                /**
-                 * Cap nhat toa do moi cua doi tuong
-                 */
-                setNodeLocation(myNode, myNode.xCurrent + deltaX, myNode.yCurrent + deltaY);
+
+                moveNode(myNode, deltaX, deltaY);
+
                 /**
                  * Cap nhat toa do moi
                  * @returns {undefined}
@@ -43,9 +39,8 @@ function drag(myNode) {
                 myNode.xClick = mouseXY.x;
                 myNode.yClick = mouseXY.y;
 
-                // di chuyển children trong node đó
-                updateLocationOfChildren(myNode, deltaX, deltaY);
                 pack(myNode.parent);
+                
                 createLine(dependencies);
 
                 /**
@@ -53,7 +48,6 @@ function drag(myNode) {
                  */
                 resetMoveState(getRoot(myNode));
                 detectInnerCollision(myNode, deltaX, deltaY);
-                detectOuterCollision(myNode.parent, deltaX, deltaY);
             })
             .on('dragend', function () {
             });
