@@ -40,25 +40,29 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
         x: 0,
         y: 0
     };
-    if (isTop(nGayPhuThuoc, nBiPhuThuoc)) {
+    if (isTop(getNodeInfor(nGayPhuThuoc), getNodeInfor(nBiPhuThuoc))) {
         startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2;
         startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc);
 
         endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2;
         endPoint.y = getY(nBiPhuThuoc);
-    } else if (isBottom(nGayPhuThuoc, nBiPhuThuoc)) {
+    } else
+    if (isBottom(getNodeInfor(nGayPhuThuoc), getNodeInfor(nBiPhuThuoc))) {
         startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc) / 2;
         startPoint.y = getY(nGayPhuThuoc);
 
         endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc) / 2;
         endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc);
-    } else if (isLeft(nGayPhuThuoc, nBiPhuThuoc)) {
+    }
+    else
+    if (isLeft(getNodeInfor(nGayPhuThuoc), getNodeInfor(nBiPhuThuoc))) {
         startPoint.x = getX(nGayPhuThuoc) + getWidth(nGayPhuThuoc);
         startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc) / 2;
 
         endPoint.x = getX(nBiPhuThuoc);
         endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
-    } else if (isRight(nGayPhuThuoc, nBiPhuThuoc)) {
+    } else
+    if (isRight(getNodeInfor(nGayPhuThuoc), getNodeInfor(nBiPhuThuoc))) {
         startPoint.x = getX(nGayPhuThuoc);
         startPoint.y = getY(nGayPhuThuoc) + getHeight(nGayPhuThuoc) / 2;
 

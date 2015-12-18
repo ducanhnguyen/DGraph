@@ -14,20 +14,10 @@ function expandAllNodes(newNode, oldNodeInfor) {
             bottom: (getY(newNode) + getHeight(newNode)) - (oldNodeInfor.y + oldNodeInfor.height)
         }
         console.log(expandArea);
-        var oldParentInfor = {
-            x: getX(parentNode),
-            y: getY(parentNode),
-            width: getWidth(parentNode),
-            height: getHeight(parentNode)
-        }
+        var oldParentInfor = getNodeInfor(parentNode);
         parentNode.children.forEach(function (child) {
             if (child != newNode) {
-                var oldChildNodeInfor = {
-                    x: getX(child),
-                    y: getY(child),
-                    width: getWidth(child),
-                    height: getHeight(child)
-                }
+                var oldChildNodeInfor = getNodeInfor(child);
                 var relativeLocation = getRelativeLocation(oldChildNodeInfor, oldNodeInfor);
                 switch (relativeLocation) {
                     case LEFT_ONLY:

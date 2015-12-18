@@ -226,3 +226,12 @@ function getGroupElement(node) {
 function setNodeLocation(node, x, y) {
     getGroupElement(node).attr('transform', 'translate(' + x + ',' + y + ')');
 }
+function getNodeInfor(node) {
+    var nodeInfor = {
+        x: getX(node),
+        y: getY(node),
+        width: getWidth(node),
+        height: getHeight(node)
+    }
+    return nodeInfor;
+}

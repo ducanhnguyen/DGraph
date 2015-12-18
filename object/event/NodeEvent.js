@@ -76,12 +76,7 @@ function doubleClick(node) {
                 /**
                  * Tạo bản sao Node được click
                  */
-                var oldNodeInfor = {
-                    x: getX(node),
-                    y: getY(node),
-                    width: getWidth(node),
-                    height: getHeight(node)
-                }
+                var oldNodeInfor = getNodeInfor(node);
                 /**
                  * Tính toán tọa độ các Node con trong Node được click
                  */
