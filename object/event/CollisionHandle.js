@@ -32,24 +32,6 @@ function detectInnerCollision(movedNode, deltaX, deltaY) {
     }
 }
 /**
- * 
- * @param {type} movedNode Node bi di chuyenr
- * @param {type} deltaX
- * @param {type} deltaY
- * @returns {Array}
- */
-function detectOuterCollision(movedNode, deltaX, deltaY) {
-    movedNode.parent.children.forEach(function (child) {
-        if (movedNode != child) {
-//            var relative = getRelativeLocation(getNodeInfor(movedNode), getNodeInfor(child));
-//            if (deltaX > 0 && relative == LEFT_ONLY)
-//                moveNode(child, deltaX, deltaY);
-        } else {
-
-        }
-    });
-}
-/**
  * Lấy danh sách các điểm tạo nên Node
  * @param {type} movedNode
  * @returns {undefined}

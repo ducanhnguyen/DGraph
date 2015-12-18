@@ -43,9 +43,6 @@ function drag(myNode) {
                 
                 createLine(dependencies);
 
-                /**
-                 * Xác định va chạm
-                 */
                 resetMoveState(getRoot(myNode));
                 detectInnerCollision(myNode, deltaX, deltaY);
             })
@@ -64,7 +61,6 @@ function doubleClick(node) {
                 if (!isAvailable(childNode))
                     displayChildren = false;
             });
-            var oldNodeInfor = getNodeInfor(node);
             /**
              * Nếu Node được click chưa hiển thị con
              */
@@ -78,9 +74,6 @@ function doubleClick(node) {
                     setVisible(childNode);
                 });
                 pack(node);
-
-                expandAllNodes(node, oldNodeInfor);
-                pack(node.parent);
             } else {
                 /*
                  * Ẩn các node con
@@ -91,9 +84,6 @@ function doubleClick(node) {
                     setInvisible(childNode);
                 });
                 pack(node);
-
-                collapseAllNodes(node, oldNodeInfor);
-                pack(node.parent);
             }
 
             /**

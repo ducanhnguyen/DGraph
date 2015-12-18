@@ -145,14 +145,18 @@ var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3;
  * @returns {Number|TOP_ONLY|BOTTOM_ONLY|LEFT_ONLY|RIGHT_ONLY}
  */
 function getRelativeLocation(nodeInforA, nodeInforB) {
+    var relative = [];
     if (isLeft(nodeInforA, nodeInforB)) {
-        return LEFT_ONLY;
-    } else if (isRight(nodeInforA, nodeInforB)) {
-        return RIGHT_ONLY;
-    } else if (isTop(nodeInforA, nodeInforB))
-        return TOP_ONLY;
-    else
-        return BOTTOM_ONLY;
+        relative.push(LEFT_ONLY);
+    }
+    if (isRight(nodeInforA, nodeInforB)) {
+        relative.push(RIGHT_ONLY);
+    }
+    if (isTop(nodeInforA, nodeInforB))
+        relative.push(TOP_ONLY);
+    if (isBottom(nodeInforA, nodeInforB))
+        relative.push(BOTTOM_ONLY);
+    return relative;
 }
 /**
  * Lấy root của cây Node

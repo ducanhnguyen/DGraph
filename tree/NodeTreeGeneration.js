@@ -40,7 +40,8 @@ function updateLocationOfChildren(node, deltaX, deltaY) {
     }
 }
 /**
- * Thay đổi kích thước node để chứa vừa đủ các Node con.
+ * Node con có thể bị nở ra, thu hẹp lại. Các node xung quanh luôn giữ một 
+ * khoảng cách tương đối với Node này
  * @param {type} node Node cần thay đổi kích thước
  * @returns {undefined}
  */
@@ -80,7 +81,7 @@ function pack(node) {
             setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
 
             expandAllNodes(node, oldNodeInfor);
-            
+
             pack(node.parent);
         } else {
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
