@@ -70,7 +70,7 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
         endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
     }
     var dAttribute = 'M' + startPoint.x + "," + startPoint.y + "," + endPoint.x + "," + endPoint.y;
-//    console.log(dAttribute);
+
     d3.select('svg').append('path')
             .attr('class', 'path')
             .attr('d', dAttribute)
