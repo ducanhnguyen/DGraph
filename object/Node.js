@@ -140,6 +140,9 @@ function isBottom(nodeInforA, nodeInforB) {
 var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3;
 /**
  * Xac dinh vi tri nodeInforA so voi nodeInforB
+ * @param {type} nodeInforA
+ * @param {type} nodeInforB
+ * @returns {Number|TOP_ONLY|BOTTOM_ONLY|LEFT_ONLY|RIGHT_ONLY}
  */
 function getRelativeLocation(nodeInforA, nodeInforB) {
     if (isLeft(nodeInforA, nodeInforB)) {

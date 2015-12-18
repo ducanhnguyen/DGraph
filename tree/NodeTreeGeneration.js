@@ -4,8 +4,8 @@
  */
 function iniWebPage() {
     d3.select('body').append('svg')
-            .attr('width', 3000)
-            .attr('height', 3000);
+            .attr('width', 5000)
+            .attr('height', 5000);
 
     d3.select('svg').append('rect').attr('class', 'add-option');
     d3.select('svg').append('rect').attr('class', 'remove-option');

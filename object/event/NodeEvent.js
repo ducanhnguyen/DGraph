@@ -144,9 +144,8 @@ function mouseCLick(node) {
  */
 function mouseEnter(node) {
     node.rectangle.on('mouseenter', function () {
-        // select element in current context 
-        d3.select(this)
-                .style("cursor", "pointer");
+//        d3.select(this)
+//                .style("cursor", "pointer");
     });
 }
 /**
@@ -155,12 +154,9 @@ function mouseEnter(node) {
  * @returns {undefined}
  */
 function mouseOut(node) {
-    node.rectangle.on('mouseout', function () {         // select element in current context //        d3.select(this)
-//                // add transition
-//                .transition()
-//                // change attribute
-//                .style('stroke', 'black')
-        //                .style('stroke-width', 1);
+    node.rectangle.on('mouseout', function () {
+//        d3.select(this)
+//                .style("cursor", "pointer");
     });
 }
 /**

@@ -30,7 +30,14 @@ function inRowStrategy(parentNode) {
             setNodeLocation(currentNode, getX(preNode) + getWidth(preNode), getY(parentNode) + b * 50);
         }
         else {
-            setNodeLocation(currentNode, getX(parentNode) , getY(parentNode) + b * 50);
+            setNodeLocation(currentNode, getX(parentNode), getY(parentNode) + b * 50);
+        }
+        if (currentNode.children.length > 0) {
+            currentNode.g.childContainer.attr('width', 100).attr('height', 30);
+            currentNode.g.textContainer.attr('width', 100).attr('height', 15);
+        } else {
+            currentNode.g.childContainer.attr('width', 100).attr('height', 0);
+            currentNode.g.textContainer.attr('width', 100).attr('height', 15);
         }
     }
 }

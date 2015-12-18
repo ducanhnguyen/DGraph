@@ -80,7 +80,7 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
  */
 function createLine(dependencies) {
     removeAllLines();
-//    console.log(dependencies);
+    console.log(dependencies);
     dependencies.list.forEach(function (dependency) {
         drawLine(dependency.gayPhuPhuoc, dependency.biPhuThuoc)
     });
