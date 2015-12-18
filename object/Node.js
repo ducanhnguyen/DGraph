@@ -37,17 +37,17 @@ function setY(node, y) {
     setNodeLocation(node, getX(node), y);
 }
 function setWidth(node, width) {
-    getChildContainerElement(node).attr('width', width);
-    getTextContainerElement(node).attr('width', width);
+    getChildContainerInSvg(node).attr('width', width);
+    getTextContainerInSvg(node).attr('width', width);
 }
 function setHeight(node, height) {
-    getChildContainerElement(node).attr('height', height);
+    getChildContainerInSvg(node).attr('height', height);
 }
 function setBackground(node, color) {
-    getChildContainerElement(node).style('fill', color);
+    getChildContainerInSvg(node).style('fill', color);
 }
 function setStroke(node, strokeColor) {
-    getChildContainerElement(node).style('stroke', strokeColor);
+    getChildContainerInSvg(node).style('stroke', strokeColor);
 }
 function moveLeft(node, distance) {
     node.children.forEach(function (child) {
@@ -89,53 +89,53 @@ function moveBottom(node, distance) {
     pack(node);
 }
 /**
- * node A co nam ben trai nodeB hay khong
- * @param {type} nodeA
- * @param {type} nodeB
+ * node A co nam ben trai nodeInforB hay khong
+ * @param {type} nodeInforA
+ * @param {type} nodeInforB
  * @returns {undefined}
  */
-function isLeft(nodeA, nodeB) {
-    var xA = getX(nodeA), xB = getX(nodeB);
-    var widthA = getWidth(nodeA);
+function isLeft(nodeInforA, nodeInforB) {
+    var xA = nodeInforA.x, xB = nodeInforB.x;
+    var widthA = nodeInforA.width;
     if (xA + widthA < xB)
         return true;
     return false;
 }
 /**
- * node A co nam ben phai nodeB hay khong
- * @param {type} nodeA
- * @param {type} nodeB
+ * node A co nam ben phai nodeInforB hay khong
+ * @param {type} nodeInforA
+ * @param {type} nodeInforB
  * @returns {undefined}
  */
-function isRight(nodeA, nodeB) {
-    var xA = getX(nodeA), xB = getX(nodeB);
-    var widthB = getWidth(nodeB);
+function isRight(nodeInforA, nodeInforB) {
+    var xA = nodeInforA.x, xB = nodeInforB.x;
+    var widthB = nodeInforB.width;
     if (xB + widthB < xA)
         return true;
     return false;
 }
 /**
- * node A co nam ben tren nodeB hay khong
- * @param {type} nodeA
- * @param {type} nodeB
+ * node A co nam ben tren nodeInforB hay khong
+ * @param {type} nodeInforA
+ * @param {type} nodeInforB
  * @returns {undefined}
  */
-function isTop(nodeA, nodeB) {
-    var yA = getY(nodeA), yB = getY(nodeB);
-    var heightA = getHeight(nodeA);
+function isTop(nodeInforA, nodeInforB) {
+    var yA = nodeInforA.y, yB = nodeInforB.y;
+    var heightA = nodeInforA.height;
     if (yA + heightA < yB)
         return true;
     return false;
 }
 /**
- * node A co nam ben duoi nodeB hay khong
- * @param {type} nodeA
- * @param {type} nodeB
+ * node A co nam ben duoi nodeInforB hay khong
+ * @param {type} nodeInforA
+ * @param {type} nodeInforB
  * @returns {undefined}
  */
-function isBottom(nodeA, nodeB) {
-    var yB = getY(nodeB), yA = getY(nodeA);
-    var heightB = getHeight(nodeB);
+function isBottom(nodeInforA, nodeInforB) {
+    var yB = nodeInforB.y, yA = nodeInforA.y;
+    var heightB = nodeInforB.height;
     if (yB + heightB < yA)
         return true;
     return false;
@@ -143,14 +143,14 @@ function isBottom(nodeA, nodeB) {
 
 var LEFT_ONLY = 0, RIGHT_ONLY = 1, TOP_ONLY = 2, BOTTOM_ONLY = 3;
 /**
- * Xac dinh vi tri nodeA so voi nodeB
+ * Xac dinh vi tri nodeInforA so voi nodeInforB
  */
-function getRelativeLocation(nodeA, nodeB) {
-    if (isLeft(nodeA, nodeB)) {
+function getRelativeLocation(nodeInforA, nodeInforB) {
+    if (isLeft(nodeInforA, nodeInforB)) {
         return LEFT_ONLY;
-    } else if (isRight(nodeA, nodeB)) {
+    } else if (isRight(nodeInforA, nodeInforB)) {
         return RIGHT_ONLY;
-    } else if (isTop(nodeA, nodeB))
+    } else if (isTop(nodeInforA, nodeInforB))
         return TOP_ONLY;
     else
         return BOTTOM_ONLY;
@@ -188,7 +188,7 @@ function setVisible(node) {
  * Enable a Node
  */
 function isAvailable(node) {
-    if (getX(node) >= 0 && getY(node) >= 0 && node.visibility == true)
+    if (node.visibility == true)
         return true;
     return false;
 }

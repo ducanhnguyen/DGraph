@@ -1,15 +1,5 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
 <body>
-    <style>
-        *{
-            padding: 0px;
-            margin: 0px;
-        }
-        .option{
-
-        }
-    </style>
     <div id="structure" style="display: none">
     </div>
     <div id="dependency" style="display: none">
@@ -57,6 +47,7 @@
                 node.id = jsonTmp.id + "";
                 node.path = jsonTmp.path + "";
                 iniNodeElement(node);
+                setNodeLocation(node, 0, 0);
                 setInvisible(node);
 
                 if (jsonTmp.children.length > 0)
@@ -92,7 +83,7 @@
             /**
              * Hien thi root
              */
-            setNodeLocation(rootNode, 0, 0);
+            setNodeLocation(rootNode, 100, 100);
             setVisible(rootNode);
 
             /**

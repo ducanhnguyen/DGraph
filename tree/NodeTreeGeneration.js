@@ -20,8 +20,10 @@ function iniWebPage() {
 function updateLocationOfChildren(node, deltaX, deltaY) {
     for (var i = 0; i < node.children.length; i++) {
         var nChild = node.children[i];
-        setNodeLocation(nChild, getX(nChild) + deltaX, getY(nChild) + deltaY);
-        updateLocationOfChildren(nChild, deltaX, deltaY);
+        if (isAvailable(nChild)) {
+            setNodeLocation(nChild, getX(nChild) + deltaX, getY(nChild) + deltaY);
+            updateLocationOfChildren(nChild, deltaX, deltaY);
+        }
     }
 }
 /**
@@ -58,15 +60,16 @@ function pack(node) {
             var xOldNode = getX(node) + widthNode;
             var yOldNode = getY(node) + heightNode;
 
+            setNodeLocation(node, xMinLeft, yMinTop - 20);
             setWidth(node, widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode));
             setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
-            addBorderForNode(node);
+//            addBorderForNode(node);
             pack(node.parent);
             // di chuyển những Node bị đè
         } else {
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
-            addBorderForNode(node);
+//            addBorderForNode(node);
             pack(node.parent);
         }
     }
@@ -76,12 +79,9 @@ function pack(node) {
  * @param {type} node
  * @returns {undefined}
  */
-function addBorderForNode(node) {
-    if (getX(node) > 0) {
-        setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
-        setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
-        setHeight(node, getHeight(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
-    }
+    function addBorderForNode(node) {     setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
+    setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
+    setHeight(node, getHeight(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
 }
 /**
  * Thêm Hình Chữ Nhật vào một Node
@@ -90,16 +90,15 @@ function addBorderForNode(node) {
  * @param {type} y Tọa độ y hình chữ nhật
  * @returns {undefined}
  */
-function iniNodeElement(node) {
-    node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
+    function iniNodeElement(node) {     node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
     node.g.childContainer = node.g.append('rect').attr('class', 'child-container')
             .attr('width', 100).attr('height', 100);
     node.g.textContainer = node.g.append('rect').attr('class', 'text-container')
-            .attr('width', 100).attr('height', 20);
+            .attr('width', 100).attr('height', 15);
     node.g.name = node.g.append('text').attr('class', 'name')
             .text(getNameFromPath(node.path))
             .attr('x', 20)
-            .attr('y', 15);
+            .attr('y', 10);
     node.g.state = node.g.append('image').attr('class', 'state')
             .attr("xlink:href", "images/expand.png");
 }

@@ -18,14 +18,12 @@ function drag(myNode) {
                  */
                 myNode.xCurrent = getX(myNode);
                 myNode.yCurrent = getY(myNode);
-//                console.log("click"+myNode.xCurrent + ":" + myNode.yCurrent);
             })
             .on('drag', function () {
                 var mouseXY = {
                     x: parseFloat(d3.mouse(this)[0] + getX(myNode)),
                     y: parseFloat(d3.mouse(this)[1] + getY(myNode))
                 };
-                console.log(mouseXY);
                 /**
                  * Tinh toan delta can phai di chuyen doi tuong tu vi tri click den vi tri moi
                  */
@@ -46,16 +44,15 @@ function drag(myNode) {
 
                 // di chuyển children trong node đó
                 updateLocationOfChildren(myNode, deltaX, deltaY);
-                pack(myNode.parent);;
-//                createLine(dependencies);
-//                setTextLocationForNode(myNode);
+                pack(myNode.parent);
+                createLine(dependencies);
 
                 /**
                  * Xác định va chạm
                  */
-//                resetMoveState(getRoot(myNode));
-//                detectInnerCollision(myNode, deltaX, deltaY);
-//                detectOuterCollision(myNode.parent, deltaX, deltaY);
+                resetMoveState(getRoot(myNode));
+                detectInnerCollision(myNode, deltaX, deltaY);
+                detectOuterCollision(myNode.parent, deltaX, deltaY);
             })
             .on('dragend', function () {
             });
@@ -78,13 +75,12 @@ function doubleClick(node) {
             /**
              * Tạo bản sao Node được click
              */
-//            var oldNode = new Node();
-//            oldNode.rectangle = d3.select('body').select('svg').append("rect")
-//                    .attr('x', getX(node))
-//                    .attr('y', getY(node))
-//                    .attr('width', getWidth(node))
-//                    .attr('height', getHeight(node))
-//                    .style('visibility', "hidden");
+            var oldNodeInfor = {
+                x: getX(node),
+                y: getY(node),
+                width: getWidth(node),
+                height: getHeight(node)
+            }
             /**
              * Tính toán tọa độ các Node con trong Node được click
              */
@@ -95,7 +91,7 @@ function doubleClick(node) {
             });
             pack(node);
             //
-//            expandAllNodes(oldNode, node);
+            expandAllNodes(node, oldNodeInfor);
             pack(node.parent);
             // end
         } else {

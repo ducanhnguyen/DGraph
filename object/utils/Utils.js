@@ -25,12 +25,9 @@ function getSimplifiedName(path) {
  * @returns {undefined}
  */
 function moveNode(node, deltaX, deltaY) {
-    node.rectangle.attr('x', getX(node) + deltaX)
-            .attr('y', getY(node) + deltaY);
-    node.text.attr('x',parseInt(node.text.attr('x')) + deltaX)
-            .attr('y',parseInt(node.text.attr('y')) + deltaY);
-    node.children.forEach(function (child){
-       if (isAvailable(child)) 
+    setNodeLocation(node, getX(node) + deltaX, getY(node) + deltaY);
+    node.children.forEach(function (child) {
+        if (isAvailable(child))
             moveNode(child, deltaX, deltaY);
     });
 }
