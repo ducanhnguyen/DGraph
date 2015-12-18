@@ -84,8 +84,13 @@ function pack(node) {
 
             pack(node.parent);
         } else {
+            var oldNodeInfor = getNodeInfor(node);
+            
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
+
+            expandAllNodes(node, oldNodeInfor);
+
             pack(node.parent);
         }
     }
