@@ -27,12 +27,12 @@ function inRowStrategy(parentNode) {
         var currentNode = parentNode.children[i];
         if (a > 0) {
             var preNode = parentNode.children[i - 1];
-            setNodeLocation(currentNode, getX(preNode) + getWidth(preNode) + 10, getY(parentNode) + b * 50);
+            setNodeLocation(currentNode, getX(preNode) + getWidth(preNode), getY(parentNode) + b * 50);
             setWidth(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
         }
         else {
-            setNodeLocation(currentNode, getX(parentNode) + 10, getY(parentNode) + b * 50);
+            setNodeLocation(currentNode, getX(parentNode) , getY(parentNode) + b * 50);
             setWidth(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(currentNode, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
         }

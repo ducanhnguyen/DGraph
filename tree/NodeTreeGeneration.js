@@ -64,12 +64,11 @@ function pack(node) {
             setWidth(node, widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode));
             setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
             addBorderForNode(node);
-//            pack(node.parent);
+            pack(node.parent);
             // di chuyển những Node bị đè
         } else {
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
-            addBorderForNode(node);
             pack(node.parent);
         }
     }

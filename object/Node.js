@@ -59,8 +59,6 @@ function moveLeft(node, distance) {
             moveLeft(child, distance)
         }
     });
-
-    pack(node);
 }
 function moveRight(node, distance) {
     node.children.forEach(function (child) {
@@ -69,7 +67,6 @@ function moveRight(node, distance) {
             moveRight(child, distance);
         }
     });
-    pack(node);
 }
 function moveTop(node, distance) {
     node.children.forEach(function (child) {
@@ -78,8 +75,6 @@ function moveTop(node, distance) {
             moveTop(child, distance);
         }
     });
-
-    pack(node);
 }
 function moveBottom(node, distance) {
     node.children.forEach(function (child) {
@@ -88,8 +83,6 @@ function moveBottom(node, distance) {
             moveBottom(child, distance);
         }
     });
-
-    pack(node);
 }
 /**
  * node A co nam ben trai nodeInforB hay khong
@@ -100,7 +93,7 @@ function moveBottom(node, distance) {
 function isLeft(nodeInforA, nodeInforB) {
     var xA = nodeInforA.x, xB = nodeInforB.x;
     var widthA = nodeInforA.width;
-    if (xA + widthA < xB)
+    if (xA + widthA <= xB)
         return true;
     return false;
 }
@@ -113,7 +106,7 @@ function isLeft(nodeInforA, nodeInforB) {
 function isRight(nodeInforA, nodeInforB) {
     var xA = nodeInforA.x, xB = nodeInforB.x;
     var widthB = nodeInforB.width;
-    if (xB + widthB < xA)
+    if (xB + widthB <= xA)
         return true;
     return false;
 }
@@ -126,7 +119,7 @@ function isRight(nodeInforA, nodeInforB) {
 function isTop(nodeInforA, nodeInforB) {
     var yA = nodeInforA.y, yB = nodeInforB.y;
     var heightA = nodeInforA.height;
-    if (yA + heightA < yB)
+    if (yA + heightA <= yB)
         return true;
     return false;
 }
@@ -139,7 +132,7 @@ function isTop(nodeInforA, nodeInforB) {
 function isBottom(nodeInforA, nodeInforB) {
     var yB = nodeInforB.y, yA = nodeInforA.y;
     var heightB = nodeInforB.height;
-    if (yB + heightB < yA)
+    if (yB + heightB <= yA)
         return true;
     return false;
 }

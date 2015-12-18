@@ -8,12 +8,12 @@ function expandAllNodes(newNode, oldNodeInfor) {
     if (newNode.parent != null) {
         var parentNode = newNode.parent;
         var expandArea = {
-            left: -getX(newNode) + oldNodeInfor.x,
+            left: oldNodeInfor.x - getX(newNode),
             right: (getX(newNode) + getWidth(newNode)) - (oldNodeInfor.x + oldNodeInfor.width),
             top: oldNodeInfor.y - getY(newNode),
             bottom: (getY(newNode) + getHeight(newNode)) - (oldNodeInfor.y + oldNodeInfor.height)
         }
-
+        console.log(expandArea);
         var oldParentInfor = {
             x: getX(parentNode),
             y: getY(parentNode),
