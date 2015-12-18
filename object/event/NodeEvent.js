@@ -59,60 +59,61 @@ function drag(myNode) {
     getGroupElement(myNode).call(dragEvent);
 }
 function doubleClick(node) {
-    getGroupElement(node).on('dblclick', function () {
-        /**
-         * Node được click có hiển thị con hay không
-         */
-        var displayChildren = true;
-        node.children.forEach(function (childNode) {
-            if (!isAvailable(childNode))
-                displayChildren = false;
-        });
-        /**
-         * Nếu Node được click chưa hiển thị con
-         */
-        if (!displayChildren) {
+    if (node.children.length > 0)
+        getGroupElement(node).on('dblclick', function () {
             /**
-             * Tạo bản sao Node được click
+             * Node được click có hiển thị con hay không
              */
-            var oldNodeInfor = {
-                x: getX(node),
-                y: getY(node),
-                width: getWidth(node),
-                height: getHeight(node)
-            }
-            /**
-             * Tính toán tọa độ các Node con trong Node được click
-             */
-            calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
-
+            var displayChildren = true;
             node.children.forEach(function (childNode) {
-                setVisible(childNode);
+                if (!isAvailable(childNode))
+                    displayChildren = false;
             });
-            pack(node);
-            //
-            expandAllNodes(node, oldNodeInfor);
-            pack(node.parent);
-            // end
-        } else {
-            /*
-             * Ẩn các node con
+            /**
+             * Nếu Node được click chưa hiển thị con
              */
-            var nodes = [];
-            searchAllNodes(node, nodes);
-            nodes.forEach(function (childNode) {
-                setInvisible(childNode);
-            });
-            pack(node);
-        }
+            if (!displayChildren) {
+                /**
+                 * Tạo bản sao Node được click
+                 */
+                var oldNodeInfor = {
+                    x: getX(node),
+                    y: getY(node),
+                    width: getWidth(node),
+                    height: getHeight(node)
+                }
+                /**
+                 * Tính toán tọa độ các Node con trong Node được click
+                 */
+                calculateLocationOfChildren(node, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
 
-        /**
-         * Cap nhat lai danh sach phu thuoc
-         */
-//        dependencies.list = [];
-//        updateDependency(getRoot(node), dependencies);
-//        createLine(dependencies);
-    });
+                node.children.forEach(function (childNode) {
+                    setVisible(childNode);
+                });
+                pack(node);
+                //
+                expandAllNodes(node, oldNodeInfor);
+                pack(node.parent);
+                // end
+            } else {
+                /*
+                 * Ẩn các node con
+                 */
+                var nodes = [];
+                searchAllNodes(node, nodes);
+                nodes.forEach(function (childNode) {
+                    setInvisible(childNode);
+                });
+                pack(node);
+            }
+
+            /**
+             * Cap nhat lai danh sach phu thuoc
+             */
+            dependencies.list = [];
+            updateDependency(getRoot(node), dependencies);
+            createLine(dependencies);
+        });
 }
 /**
  * When mouse enter a node
@@ -168,7 +169,7 @@ function mouseOut(node) {
  * @returns {undefined}
  */
 function rightMouseCLick(node) {
-    node.rectangle.on('contextmenu', function (data, index) {
+    getGroupElement(node).on('contextmenu', function (data, index) {
         d3.event.preventDefault();
         /**
          * Tạo menu
@@ -178,12 +179,12 @@ function rightMouseCLick(node) {
 
         var add_group = option_group.append('g');
         var addToChangeSet = add_group.append('rect')
-                .attr('x', parseInt(d3.mouse(this)[0]))
-                .attr('y', parseInt(d3.mouse(this)[1]))
+                .attr('x', parseInt(d3.mouse(this)[0]) + getX(node))
+                .attr('y', parseInt(d3.mouse(this)[1]) + getY(node))
                 .attr('width', 100)
                 .attr('height', 20)
                 .style('fill', 'red');
-        var txtAddToChangeSet = add_group.append('text')
+        add_group.append('text')
                 .attr('x', parseInt(addToChangeSet.attr('x')) + 5)
                 .attr('y', parseInt(addToChangeSet.attr('y')) + 12)
                 .style('font-size', 9)
@@ -192,12 +193,12 @@ function rightMouseCLick(node) {
 
         var remove_group = option_group.append('g');
         var removeFromChangeSet = remove_group.append('rect')
-                .attr('x', parseInt(d3.mouse(this)[0]))
-                .attr('y', parseInt(addToChangeSet.attr('y')) + parseInt(addToChangeSet.attr('height')))
+                .attr('x', parseInt(d3.mouse(this)[0]) + getX(node))
+                .attr('y', parseInt(d3.mouse(this)[1]) + getY(node) + 21)
                 .attr('width', 100)
                 .attr('height', 20)
                 .style('fill', 'blue');
-        var txtRemoveFromChangeSet = remove_group.append('text')
+        remove_group.append('text')
                 .attr('x', parseInt(removeFromChangeSet.attr('x')) + 5)
                 .attr('y', parseInt(removeFromChangeSet.attr('y')) + 12)
                 .style('font-size', 9)
