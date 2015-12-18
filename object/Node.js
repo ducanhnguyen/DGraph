@@ -24,6 +24,9 @@ function getWidth(node) {
 function getHeight(node) {
     return parseFloat(getTextContainerInSvg(node).attr('height')) + parseFloat(getChildContainerInSvg(node).attr('height'));
 }
+function getHeightOfChildContainer(node) {
+    return parseFloat(getChildContainerInSvg(node).attr('height'));
+}
 /**
  * 
  * @param {type} node

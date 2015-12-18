@@ -54,7 +54,6 @@ function expandAllNodes(newNode, oldNodeInfor) {
             }
         });
 
-
         expandAllNodes(parentNode, oldParentInfor);
     }
 }
