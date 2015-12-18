@@ -8,27 +8,22 @@ function removeAllLines() {
  * @returns {undefined}
  */
 function isDependencyRelation(nodeA, nodeB) {
-//    console.log("Pair----------------------");
     var leafNodeA = [];
     searchLeaf(nodeA, leafNodeA);
     leafNodeA.push(nodeA);
-//    console.log(leafNodeA);
 
     var leafNodeB = [];
     searchLeaf(nodeB, leafNodeB);
     leafNodeB.push(nodeB);
-//    console.log(leafNodeB);
 
     for (var i = 0; i < leafNodeA.length; i++)
         for (var j = 0; j < leafNodeB.length; j++) {
             for (var k = 0; k < leafNodeA[i].callee.length; k++)
                 if (leafNodeA[i].callee[k] == leafNodeB[j]) {
-//                    console.log('found dependency');
                     return true;
                 }
 
         }
-//    console.log('not found dependency');
     return false;
 }
 function drawLine(nGayPhuThuoc, nBiPhuThuoc) {

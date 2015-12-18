@@ -70,14 +70,11 @@ function doubleClick(node) {
                 if (!isAvailable(childNode))
                     displayChildren = false;
             });
+            var oldNodeInfor = getNodeInfor(node);
             /**
              * Nếu Node được click chưa hiển thị con
              */
             if (!displayChildren) {
-                /**
-                 * Tạo bản sao Node được click
-                 */
-                var oldNodeInfor = getNodeInfor(node);
                 /**
                  * Tính toán tọa độ các Node con trong Node được click
                  */
@@ -87,10 +84,9 @@ function doubleClick(node) {
                     setVisible(childNode);
                 });
                 pack(node);
-                //
+
                 expandAllNodes(node, oldNodeInfor);
                 pack(node.parent);
-                // end
             } else {
                 /*
                  * Ẩn các node con
@@ -101,6 +97,9 @@ function doubleClick(node) {
                     setInvisible(childNode);
                 });
                 pack(node);
+
+                collapseAllNodes(node, oldNodeInfor);
+                pack(node.parent);
             }
 
             /**

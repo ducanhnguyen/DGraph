@@ -22,8 +22,6 @@ function iniWebPage() {
     straightMarkerArrow.append('path')
             .attr('d', 'M0,0 L0,6 L10,3 z')
             .style('fill', 'black');
-    
-    // vẽ mũi tên cong sang bên trái
 }
 /**
  * Di chuyển tất cả các Node con trong một node cha một khoảng cách nào đó
@@ -78,9 +76,7 @@ function pack(node) {
             setNodeLocation(node, xMinLeft, yMinTop - 15);
             setWidth(node, widthNode + (xOldNode - xMinLeft) + (xMaxRight - xOldNode - widthNode));
             setHeight(node, heightNode + (yOldNode - yMinTop) + (yMaxBottom - yOldNode - heightNode));
-            addBorderForNode(node);
             pack(node.parent);
-            // di chuyển những Node bị đè
         } else {
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
@@ -94,7 +90,7 @@ function pack(node) {
  * @returns {undefined}
  */
 function addBorderForNode(node) {
-    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
+//    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
     setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
     setHeight(node, getHeightOfChildContainer(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
 }
