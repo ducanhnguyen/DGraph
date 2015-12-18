@@ -93,7 +93,7 @@ function addBorderForNode(node) {
 function iniNodeElement(node) {
     node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
     node.g.childContainer = node.g.append('rect').attr('class', 'child-container')
-            .attr('width', 100).attr('height', 100);
+            .attr('width', 100).attr('height', 30);
     node.g.textContainer = node.g.append('rect').attr('class', 'text-container')
             .attr('width', 100).attr('height', 15);
     node.g.name = node.g.append('text').attr('class', 'name')
@@ -102,4 +102,16 @@ function iniNodeElement(node) {
             .attr('y', 10);
     node.g.state = node.g.append('image').attr('class', 'state')
             .attr("xlink:href", "images/expand.png");
+}
+function iniNodeFile(node) {
+    node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
+    node.g.childContainer = node.g.append('rect').attr('class', 'child-container')
+            .attr('width', 0).attr('height', 0);
+    node.g.textContainer = node.g.append('rect').attr('class', 'text-container')
+            .attr('width', 100).attr('height', 15);
+    node.g.name = node.g.append('text').attr('class', 'name')
+            .text(getNameFromPath(node.path))
+            .attr('x', 20)
+            .attr('y', 10);
+    node.g.state = node.g.append('image').attr('class', 'state');
 }

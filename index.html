@@ -46,17 +46,19 @@
             function traverse(jsonTmp, node) {
                 node.id = jsonTmp.id + "";
                 node.path = jsonTmp.path + "";
-                iniNodeElement(node);
-                setNodeLocation(node, 0, 0);
-                setInvisible(node);
 
-                if (jsonTmp.children.length > 0)
+                if (jsonTmp.children.length > 0) {
+                    iniNodeElement(node);
                     for (var i = 0; i < jsonTmp.children.length; i++) {
                         var child = new Node();
                         node.children.push(child);
                         child.parent = node;
                         traverse(jsonTmp.children[i], child);
                     }
+                } else
+                    iniNodeFile(node);
+                setNodeLocation(node, 0, 0);
+                setInvisible(node);
             }
 
             var content = document.getElementById('structure').innerHTML;
