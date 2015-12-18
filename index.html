@@ -83,11 +83,19 @@
                 }
             }
             /**
-             * Hien thi root
+             * Hien thi 
              */
-            setNodeLocation(rootNode, 500, 300);
+            setNodeLocation(rootNode, 400, 300);
             setVisible(rootNode);
+            calculateLocationOfChildren(rootNode, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
+            rootNode.children.forEach(function (childNode) {
+                setVisible(childNode);
+            });
+            pack(rootNode);
 
+            dependencies.list = [];
+            updateDependency(getRoot(rootNode), dependencies);
+            createLine(dependencies);
             /**
              * Vẽ đường nối các node lá
              * @returns {undefined}

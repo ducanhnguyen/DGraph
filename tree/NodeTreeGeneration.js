@@ -101,6 +101,8 @@ function iniNodeElement(node) {
             .attr('x', 20)
             .attr('y', 10);
     node.g.state = node.g.append('image').attr('class', 'state')
+            .attr('width', 10)
+            .attr('height', 10)
             .attr("xlink:href", "images/expand.png");
 }
 function iniNodeFile(node) {
@@ -113,5 +115,7 @@ function iniNodeFile(node) {
             .text(getNameFromPath(node.path))
             .attr('x', 20)
             .attr('y', 10);
+
     node.g.state = node.g.append('image').attr('class', 'state');
+
 }

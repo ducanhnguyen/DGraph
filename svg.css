@@ -20,8 +20,13 @@
     font-weight: bold;
 }
 .state{
-    height: 10px;
-    width: 10px;
     x: 5;
-    y: 02;
+    y: 2;
+}
+.node:hover .child-container{
+    stroke-width: 2;
+    fill: rgb(53, 155, 251);
+}
+.node:hover .text-container{
+    stroke-width: 2;
 }

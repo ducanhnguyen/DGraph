@@ -27,10 +27,10 @@ function inRowStrategy(parentNode) {
         var currentNode = parentNode.children[i];
         if (a > 0) {
             var preNode = parentNode.children[i - 1];
-            setNodeLocation(currentNode, getX(preNode) + getWidth(preNode), getY(parentNode) + b * 50);
+            setNodeLocation(currentNode, getX(preNode) + getWidth(preNode), getY(parentNode) + b * 60);
         }
         else {
-            setNodeLocation(currentNode, getX(parentNode), getY(parentNode) + b * 50);
+            setNodeLocation(currentNode, getX(parentNode), getY(parentNode) + b * 60);
         }
         if (currentNode.children.length > 0) {
             currentNode.g.childContainer.attr('width', 100).attr('height', 30);
