@@ -9,6 +9,25 @@ function iniWebPage() {
 
     d3.select('svg').append('rect').attr('class', 'add-option');
     d3.select('svg').append('rect').attr('class', 'remove-option');
+
+    var defs = d3.select('svg').append('defs');
+    var markerArrow = defs.append('marker')
+            .attr('id', 'markerArrow')
+            .attr('refX', 2)
+            .attr('refY', 7)
+            .attr('markerWidth', 13)
+            .attr('markerHeight', 13)
+            .attr('orient', 'auto');
+    markerArrow.append('path')
+            .attr('d', 'M2,2 L2,13 L8,7 L2,2')
+            .style('fill', 'black');
+
+//    d3.select('svg').append('path')
+//            .attr('d', 'M100,20,l50,100')
+//            .style('stroke', '#0000cc')
+//            .style('stroke-width', '1px')
+//            .style('fill', 'none')
+//            .style('marker-end', 'url(#markerArrow)');
 }
 /**
  * Di chuyển tất cả các Node con trong một node cha một khoảng cách nào đó

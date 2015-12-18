@@ -1,5 +1,5 @@
 function removeAllLines() {
-    d3.select('body').select('svg').selectAll("line").remove();
+    d3.selectAll(".path").remove();
 }
 /**
  * NodeA co gay phu thuoc len NodeB khong
@@ -69,13 +69,15 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
         endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc);
         endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
     }
-
-    d3.select('body').select('svg').append("line")
-            .style("stroke", "black")
-            .attr("x1", startPoint.x)
-            .attr("y1", startPoint.y)
-            .attr("x2", endPoint.x)
-            .attr("y2", endPoint.y);
+    var dAttribute = 'M' + startPoint.x + "," + startPoint.y + "," + endPoint.x + "," + endPoint.y;
+//    console.log(dAttribute);
+    d3.select('svg').append('path')
+            .attr('class', 'path')
+            .attr('d', dAttribute)
+            .style('stroke', '#0000cc')
+            .style('stroke-width', '1px')
+            .style('fill', 'none')
+            .style('marker-end', 'url(#markerArrow)');
 }
 /**
  * 

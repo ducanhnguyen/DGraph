@@ -20,6 +20,7 @@ function drag(myNode) {
                 myNode.yCurrent = getY(myNode);
             })
             .on('drag', function () {
+                removeAllLines();
                 var mouseXY = {
                     x: parseFloat(d3.mouse(this)[0] + getX(myNode)),
                     y: parseFloat(d3.mouse(this)[1] + getY(myNode))
