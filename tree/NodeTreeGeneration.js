@@ -11,16 +11,19 @@ function iniWebPage() {
     d3.select('svg').append('rect').attr('class', 'remove-option');
 
     var defs = d3.select('svg').append('defs');
-    var markerArrow = defs.append('marker')
+
+    var straightMarkerArrow = defs.append('marker')
             .attr('id', 'markerArrow')
             .attr('refX', 10)
             .attr('refY', 3)
             .attr('markerWidth', 13)
             .attr('markerHeight', 13)
             .attr('orient', 'auto');
-    markerArrow.append('path')
+    straightMarkerArrow.append('path')
             .attr('d', 'M0,0 L0,6 L10,3 z')
             .style('fill', 'black');
+    
+    // vẽ mũi tên cong sang bên trái
 }
 /**
  * Di chuyển tất cả các Node con trong một node cha một khoảng cách nào đó

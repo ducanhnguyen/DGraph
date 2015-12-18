@@ -69,7 +69,11 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
         endPoint.x = getX(nBiPhuThuoc) + getWidth(nBiPhuThuoc);
         endPoint.y = getY(nBiPhuThuoc) + getHeight(nBiPhuThuoc) / 2;
     }
-    var dAttribute = 'M' + startPoint.x + "," + startPoint.y + "," + endPoint.x + "," + endPoint.y;
+//    var deltaX = Math.abs(startPoint.x - endPoint.x);
+//    var deltaY = Math.abs(startPoint.y - endPoint.y);
+    var gocCong = "";
+//    var gocCong = 'C ' + (startPoint.x + deltaX / 3) + "," + (endPoint.y - deltaY / 3) + "," + (startPoint.x + deltaX / 3 * 2) + "," + (endPoint.y - deltaY / 3 * 2);
+    var dAttribute = 'M' + startPoint.x + "," + startPoint.y + " " + gocCong + " " + endPoint.x + "," + endPoint.y;
 
     d3.select('svg').append('path')
             .attr('class', 'path')
@@ -111,7 +115,6 @@ function updateDependency(node, dependencies) {
                     };
                     dependencies.list.push(dependency);
                 }
-                else
                 /**NodeB co gay phu thuoc len NodeA khong*/
                 if (isDependencyRelation(visibleLeafNodes[j], visibleLeafNodes[i]) == true) {
                     var dependency = {

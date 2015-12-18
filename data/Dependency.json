@@ -1,6 +1,9 @@
 [{
         "id": 4,
         "depends": [46]
+    },{
+        "id": 46,
+        "depends": [4]
     }, {
         "id": 6,
         "depends": [46]
