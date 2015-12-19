@@ -12,6 +12,12 @@
     fill: rgb(255, 221, 51);
     stroke: rgb(230, 153, 0);
 }
+    .text-container:hover{
+        cursor: pointer;
+    }
+    .name:hover{
+        cursor: pointer;
+    }
 .name{
     fill: rgb(154, 102, 0);
     font-family: Arial;

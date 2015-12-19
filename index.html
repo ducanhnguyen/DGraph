@@ -83,16 +83,16 @@
                 }
             }
             /**
-             * Hien thi 
-             */            
+             * Hien thi giao diện đầu tiên
+             */
             setNodeLocation(rootNode, 400, 300);
             setVisible(rootNode);
-            
+
             getNameElement(rootNode).style('visibility', 'hidden');
             getChildContainerElement(rootNode).style('stroke', 'white');
             getTextContainerElement(rootNode).style('visibility', 'hidden');
             getStateElement(rootNode).style('visibility', 'hidden');
-            
+
             calculateLocationOfChildren(rootNode, CHILDREN_DISPLAY_STRATEGY.IN_ROWS);
             rootNode.children.forEach(function (childNode) {
                 setVisible(childNode);
@@ -114,12 +114,14 @@
             setTimeout(function () {
                 function setEvent(node) {
                     drag(node);
-                    doubleClick(node);
+                    clickState(node);
                     rightMouseCLick(node);
                     for (var i = 0; i < node.children.length; i++)
                         setEvent(node.children[i]);
                 }
-                setEvent(rootNode);
+                rootNode.children.forEach(function (child) {
+                    setEvent(child);
+                });
             }, 0);
         }, 0);
     </script>

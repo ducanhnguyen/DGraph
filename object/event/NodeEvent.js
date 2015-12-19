@@ -40,7 +40,7 @@ function drag(myNode) {
                 myNode.yClick = mouseXY.y;
 
                 pack(myNode.parent);
-                
+
                 createLine(dependencies);
 
                 resetMoveState(getRoot(myNode));
@@ -50,9 +50,9 @@ function drag(myNode) {
             });
     getGroupElement(myNode).call(dragEvent);
 }
-function doubleClick(node) {
+function clickState(node) {
     if (node.children.length > 0)
-        getGroupElement(node).on('dblclick', function () {
+        getStateElement(node).on('click', function () {
             /**
              * Node được click có hiển thị con hay không
              */
@@ -65,6 +65,7 @@ function doubleClick(node) {
              * Nếu Node được click chưa hiển thị con
              */
             if (!displayChildren) {
+                node.g.state.attr("xlink:href", "images/minimize.png");
                 /**
                  * Tính toán tọa độ các Node con trong Node được click
                  */
@@ -75,6 +76,7 @@ function doubleClick(node) {
                 });
                 pack(node);
             } else {
+                node.g.state.attr("xlink:href", "images/expand.png");
                 /*
                  * Ẩn các node con
                  */
