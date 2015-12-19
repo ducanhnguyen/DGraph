@@ -108,7 +108,8 @@ function addBorderForNode(node) {
 //    node.children.forEach(function (child) {
 //        moveNode(child, BORDER_OF_NODE.left, BORDER_OF_NODE.top);
 //    });
-    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);    
+    
+    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
     setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
     setHeight(node, getHeightOfChildContainer(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
 

@@ -6,9 +6,10 @@
             <file>file:/C:/xampp/htdocs/DGraph/index.html</file>
             <file>file:/C:/xampp/htdocs/DGraph/tree/NodeTreeGeneration.js</file>
             <file>file:/C:/xampp/htdocs/DGraph/object/event/DrawLine.js</file>
-            <file>file:/C:/xampp/htdocs/DGraph/object/Node.js</file>
+            <file>file:/C:/xampp/htdocs/DGraph/object/event/zoom.js</file>
             <file>file:/C:/xampp/htdocs/DGraph/object/event/Expand.js</file>
-            <file>file:/C:/xampp/htdocs/DGraph/object/event/NodeEvent.js</file>
+            <file>file:/C:/xampp/htdocs/DGraph/object/event/CollisionHandle.js</file>
+            <file>file:/C:/xampp/htdocs/DGraph/svg.css</file>
         </group>
     </open-files>
 </project-private>
