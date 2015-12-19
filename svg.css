@@ -1,27 +1,27 @@
 .child-container{
-    stroke: yellow;
     x: 0;
     y: 15;
-    fill: white;
-    stroke: rgb(230, 153, 0);
+    fill: rgb(228, 238, 245);
+    stroke: rgb(30, 81, 118);
+    stroke-width: 0.5;
 }
 .text-container{
     stroke: yellow;
     x: 0;
     y: 0;
-    fill: rgb(255, 221, 51);
-    stroke: rgb(230, 153, 0);
+    fill: rgb(39, 101, 140);
+    stroke: rgb(30, 81, 118);
 }
-    .text-container:hover{
-        cursor: pointer;
-    }
-    .name:hover{
-        cursor: pointer;
-    }
+.text-container:hover{
+    cursor: pointer;
+}
+.name:hover{
+    cursor: pointer;
+}
 .name{
-    fill: rgb(154, 102, 0);
+    fill: white;
     font-family: Arial;
-    font-size: 10px;
+    font-size: 9px;
     font-family: Arial;
     font-weight: bold;
 }

@@ -20,7 +20,8 @@
     <script src="object/event/NodeEvent.js"></script>
     <script src="object/event/TextDisplayer.js"></script>
     <script src="object/event/Expand.js" type="text/javascript"></script>
-
+    <script src="object/event/zoom.js" type="text/javascript"></script>
+    
     <script src="tree/ChildrenLocation.js"></script>
     <script src="tree/Search.js"></script>
     <script src="tree/NodeTreeGeneration.js"></script>
@@ -89,7 +90,7 @@
             setVisible(rootNode);
 
             getNameElement(rootNode).style('visibility', 'hidden');
-            getChildContainerElement(rootNode).style('stroke', 'white');
+            getChildContainerElement(rootNode).style('stroke', 'white').style('fill', 'white');
             getTextContainerElement(rootNode).style('visibility', 'hidden');
             getStateElement(rootNode).style('visibility', 'hidden');
 

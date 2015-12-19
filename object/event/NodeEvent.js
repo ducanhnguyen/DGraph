@@ -65,7 +65,7 @@ function clickState(node) {
              * Nếu Node được click chưa hiển thị con
              */
             if (!displayChildren) {
-                node.g.state.attr("xlink:href", "images/minimize.png");
+                node.g.state.attr("xlink:href", "images/minimize.jpg");
                 /**
                  * Tính toán tọa độ các Node con trong Node được click
                  */
@@ -76,7 +76,7 @@ function clickState(node) {
                 });
                 pack(node);
             } else {
-                node.g.state.attr("xlink:href", "images/expand.png");
+                node.g.state.attr("xlink:href", "images/expand.jpg");
                 /*
                  * Ẩn các node con
                  */

@@ -21,7 +21,7 @@ function iniWebPage() {
             .attr('orient', 'auto');
     straightMarkerArrow.append('path')
             .attr('d', 'M0,0 L0,6 L10,3 z')
-            .style('fill', 'black');
+            .style('fill', '#1e5476');
 }
 /**
  * Di chuyển tất cả các Node con trong một node cha một khoảng cách nào đó
@@ -125,7 +125,7 @@ function iniNodeElement(node) {
     node.g.state = node.g.append('image').attr('class', 'state')
             .attr('width', 10)
             .attr('height', 10)
-            .attr("xlink:href", "images/expand.png");
+            .attr("xlink:href", "images/expand.jpg");
 }
 function iniNodeFile(node) {
     node.g = d3.select('body').select('svg').append('g').attr('class', 'node');
