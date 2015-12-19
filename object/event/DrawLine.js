@@ -73,7 +73,7 @@ function drawLine(nGayPhuThuoc, nBiPhuThuoc) {
     d3.select('svg').append('path')
             .attr('class', 'path')
             .attr('d', dAttribute)
-            .style('stroke', '#1e5476')
+            .style('stroke', '#a77a22')
             .style('stroke-width', '1')
             .style('marker-end', 'url(#markerArrow)');
 }
