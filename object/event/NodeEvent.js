@@ -115,7 +115,7 @@ function mouseCLick(node) {
             x: parseFloat(d3.mouse(this)[0] + getX(node)),
             y: parseFloat(d3.mouse(this)[1] + getY(node))
         };
-        console.log(mouseXY);
+//        console.log(mouseXY);
     });
 }
 /**

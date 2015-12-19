@@ -64,8 +64,8 @@ function getPoints(movedNode) {
  * @returns {Boolean}
  */
 function isInRectangle(point, rect) {
-    if (point.x >= rect.A.x && point.x <= rect.B.x
-            && point.y >= rect.A.y && point.y <= rect.D.y)
+    if (point.x - 10 >= rect.A.x && point.x - 10 <= rect.B.x
+            && point.y + 10 >= rect.A.y && point.y - 10 <= rect.D.y)
         return true;
     return false;
 }

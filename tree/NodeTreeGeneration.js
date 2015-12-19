@@ -82,10 +82,12 @@ function pack(node) {
 
             expandAllNodes(node, oldNodeInfor);
 
+            addBorderForNode(node);
+
             pack(node.parent);
         } else {
             var oldNodeInfor = getNodeInfor(node);
-            
+
             setWidth(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_WIDTH_CHILDREN);
             setHeight(node, DISPLAY_CHILDREN_STRATEGY.DEFAULT_HEIGHT_CHILDREN);
 
@@ -101,9 +103,16 @@ function pack(node) {
  * @returns {undefined}
  */
 function addBorderForNode(node) {
-//    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);
+    var oldNodeInfor = getNodeInfor(node);
+
+//    node.children.forEach(function (child) {
+//        moveNode(child, BORDER_OF_NODE.left, BORDER_OF_NODE.top);
+//    });
+    setNodeLocation(node, getX(node) - BORDER_OF_NODE.left, getY(node) - BORDER_OF_NODE.top);    
     setWidth(node, getWidth(node) + BORDER_OF_NODE.left + BORDER_OF_NODE.right);
     setHeight(node, getHeightOfChildContainer(node) + BORDER_OF_NODE.top + BORDER_OF_NODE.bottom);
+
+    expandAllNodes(node, oldNodeInfor);
 }
 /**
  * Thêm Hình Chữ Nhật vào một Node
