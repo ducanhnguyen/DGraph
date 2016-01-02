@@ -1,0 +1,38 @@
+.child-container{
+    x: 0;
+    y: 15;
+    fill: rgb(228, 238, 245);
+    stroke: rgb(30, 81, 118);
+    stroke-width: 0.5;
+}
+.text-container{
+    stroke: yellow;
+    x: 0;
+    y: 0;
+    fill: rgb(39, 101, 140);
+    stroke: rgb(30, 81, 118);
+}
+.text-container:hover{
+    cursor: pointer;
+}
+.name:hover{
+    cursor: pointer;
+}
+.name{
+    fill: white;
+    font-family: Arial;
+    font-size: 9px;
+    font-family: Arial;
+    font-weight: bold;
+}
+.state{
+    x: 5;
+    y: 2;
+}
+/*.node:hover .child-container{
+    stroke-width: 2;
+    fill: rgb(53, 155, 251);
+}
+.node:hover .text-container{
+    stroke-width: 2;
+}*/
